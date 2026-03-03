@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+		<meta name="theme-color" content="#0d1117" />
+
+		<!-- Favicon -->
+		<link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48x48.png" />
+		<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/icons/apple-touch-icon-180x180.png" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<!-- Primary Meta -->
+		<title>Md Najib Islam — Portfolio</title>
+		<meta
+			name="description"
+			content="Full-stack Software Engineer from Bangladesh crafting fast, scalable systems. Passionate about clean architecture, open-source, and turning ideas into production-ready products."
+		/>
+		<meta name="author" content="Md Najib Islam" />
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href="https://devnajib.netlify.app" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://devnajib.netlify.app" />
+		<meta property="og:title" content="Md Najib Islam — Portfolio" />
+		<meta
+			property="og:description"
+			content="Full-stack Software Engineer from Bangladesh crafting fast, scalable systems. Passionate about clean architecture, open-source, and turning ideas into production-ready products."
+		/>
+		<meta property="og:image" content="https://devnajib.netlify.app/og-image.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="Md Najib Islam — Portfolio" />
+
+		<!-- Twitter / X Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@developernajib" />
+		<meta name="twitter:creator" content="@developernajib" />
+		<meta name="twitter:title" content="Md Najib Islam — Portfolio" />
+		<meta
+			name="twitter:description"
+			content="Full-stack Software Engineer from Bangladesh crafting fast, scalable systems with Go and React. Passionate about clean architecture, open-source, and turning ideas into production-ready products."
+		/>
+		<meta name="twitter:image" content="https://devnajib.netlify.app/og-image.png" />
+
+		<!-- Preload critical font files to unblock FCP/LCP -->
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="/fonts/jetbrains-mono-latin-400.woff2"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href="/fonts/jetbrains-mono-latin-700.woff2"
+			crossorigin="anonymous"
+		/>
+
+		<!-- DNS prefetch / preconnect for external APIs used at runtime -->
+		<!-- SimpleIcons CDN — tech icons on homepage -->
+		<link rel="preconnect" href="https://cdn.simpleicons.org" />
+		<!-- GitHub API (REST + GraphQL) — used by GitHubActivity bento card -->
+		<link rel="preconnect" href="https://api.github.com" />
+		<link rel="dns-prefetch" href="https://api.github.com" />
+		<!-- CartoCDN map tiles — used by LocationMap -->
+		<link rel="dns-prefetch" href="https://a.basemaps.cartocdn.com" />
+		<link rel="dns-prefetch" href="https://b.basemaps.cartocdn.com" />
+		<link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com" />
+
+		<!-- Structured Data — Person -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Md Najib Islam",
+				"alternateName": "DevNajib",
+				"url": "https://devnajib.netlify.app",
+				"image": "https://devnajib.netlify.app/og-image.png",
+				"jobTitle": "Software Engineer",
+				"description": "Full-stack Software Engineer from Bangladesh crafting fast, scalable systems with Go and React.",
+				"sameAs": [
+					"https://github.com/developernajib",
+					"https://linkedin.com/in/developernajib",
+					"https://t.me/developernajib"
+				]
+			}
+		</script>
+	</head>
+	<body>
+		<!-- Inline theme init: runs before any CSS/JS parses so there's zero flash of wrong theme -->
+		<script>
+			;(function () {
+				var theme = localStorage.getItem('theme') || 'dark'
+				document.documentElement.setAttribute('data-theme', theme)
+				var accent = localStorage.getItem('accent')
+				var dim = localStorage.getItem('accentDim')
+				if (accent) document.documentElement.style.setProperty('--primary', accent)
+				if (dim) document.documentElement.style.setProperty('--primary-dim', dim)
+			})()
+		</script>
+		<div id="root"></div>
+		<script type="module" src="/src/main.tsx"></script>
+	</body>
+</html>

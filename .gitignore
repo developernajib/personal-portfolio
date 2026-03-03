@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Personal data — gitignored, use *.example.ts files as templates
+data/*.ts
+data/*.tsx
+# Keep example files tracked
+!data/*.example.ts
+!data/*.example.tsx
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+public/projects/*
