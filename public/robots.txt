@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devnajib.netlify.app/sitemap.xml
