@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react'
 import { IconX, IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
+import { imgVariant } from '@/lib/utils'
 
 interface LightboxItem {
 	src: string
@@ -90,12 +91,18 @@ export default function Lightbox({ items, currentIndex, onClose, onPrev, onNext 
 				style={{ maxWidth: '100vw', maxHeight: '100vh' }}
 				onClick={(e) => e.stopPropagation()}
 			>
-				<img
-					src={current.src}
-					alt={current.alt}
-					className="object-contain rounded-lg shadow-2xl"
-					style={{ maxWidth: '92vw', maxHeight: '88vh' }}
-				/>
+				<picture>
+					<source
+						media="(max-width: 768px)"
+						srcSet={imgVariant(current.src, '-thumb')}
+					/>
+					<img
+						src={current.src}
+						alt={current.alt}
+						className="object-contain rounded-lg shadow-2xl"
+						style={{ maxWidth: '92vw', maxHeight: '88vh' }}
+					/>
+				</picture>
 				{current.caption && (
 					<p className="text-sm text-center" style={{ color: 'var(--subtext)' }}>
 						{current.caption}

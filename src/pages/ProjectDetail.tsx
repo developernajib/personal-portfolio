@@ -15,7 +15,7 @@ import BackgroundEffect from '@/components/ui/BackgroundEffect'
 import Lightbox from '@/components/ui/Lightbox'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 import { projects } from '@/data/projects'
-import { formatDate } from '@/lib/utils'
+import { formatDate, imgVariant } from '@/lib/utils'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function ProjectDetail() {
@@ -128,13 +128,19 @@ export default function ProjectDetail() {
 						style={{ borderColor: 'var(--overlay)' }}
 					>
 						{!heroError ? (
-							<img
-								src={project.image}
-								alt={project.title}
-								className="w-full object-cover"
-								fetchPriority="high"
-								onError={() => setHeroError(true)}
-							/>
+							<picture>
+								<source
+									media="(max-width: 768px)"
+									srcSet={imgVariant(project.image, '-thumb')}
+								/>
+								<img
+									src={project.image}
+									alt={project.title}
+									className="w-full object-cover"
+									fetchPriority="high"
+									onError={() => setHeroError(true)}
+								/>
+							</picture>
 						) : (
 							<div className="aspect-video">
 								<ImagePlaceholder label="Image not found" />
@@ -182,16 +188,22 @@ export default function ProjectDetail() {
 									style={{ borderColor: 'var(--overlay)' }}
 								>
 									{!thumbErrors.has(i) ? (
-										<img
-											src={item.src.replace(/\.(\w+)$/, '-thumb.$1')}
-											alt={item.caption ?? `Screenshot ${i + 1}`}
-											className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-											loading="lazy"
-											decoding="async"
-											onError={() =>
-												setThumbErrors((prev) => new Set(prev).add(i))
-											}
-										/>
+										<picture>
+											<source
+												media="(max-width: 768px)"
+												srcSet={imgVariant(item.src.replace(/\.(\w+)$/, '-thumb.$1'), '-mobile')}
+											/>
+											<img
+												src={item.src.replace(/\.(\w+)$/, '-thumb.$1')}
+												alt={item.caption ?? `Screenshot ${i + 1}`}
+												className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+												loading="lazy"
+												decoding="async"
+												onError={() =>
+													setThumbErrors((prev) => new Set(prev).add(i))
+												}
+											/>
+										</picture>
 									) : (
 										<ImagePlaceholder />
 									)}

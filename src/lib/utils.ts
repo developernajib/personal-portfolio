@@ -36,6 +36,17 @@ export function cn(...classes: (string | undefined | false | null)[]): string {
 }
 
 
+/**
+ * Returns suffix-based image variant path.
+ * /projects/foo.png → /projects/foo-mobile.png
+ */
+export function imgVariant(src: string, suffix: string): string {
+	if (!src || src.startsWith('http') || src.startsWith('data:')) return src
+	const dot = src.lastIndexOf('.')
+	if (dot === -1) return src
+	return src.slice(0, dot) + suffix + src.slice(dot)
+}
+
 export function isValidHttpUrl(url: string): boolean {
 	try {
 		return ['http:', 'https:'].includes(new URL(url).protocol)

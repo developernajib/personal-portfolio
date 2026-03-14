@@ -72,6 +72,19 @@ export default defineConfig({
 						},
 					},
 					{
+						// Local portfolio images (projects, certificates, photos)
+						urlPattern: /\/(?:projects|certificates|logos)\/.*\.(?:png|jpe?g|webp|svg)$/i,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'portfolio-images',
+							expiration: {
+								maxEntries: 300,
+								maxAgeSeconds: 60 * 60 * 24 * 21,
+							},
+							cacheableResponse: { statuses: [0, 200] },
+						},
+					},
+					{
 						// Map tiles
 						urlPattern: /^https:\/\/[abc]\.basemaps\.cartocdn\.com\/.*/i,
 						handler: 'CacheFirst',
