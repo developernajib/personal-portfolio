@@ -191,6 +191,7 @@ export default defineConfig(({ mode }) => ({
 	},
 	// Watch data/ directory (outside src/) for HMR
 	server: {
+		port: 3000,
 		watch: {
 			ignored: ['!**/data/**'],
 		},

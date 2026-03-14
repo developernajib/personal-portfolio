@@ -151,7 +151,12 @@ export default function TeamSection({ manager, team, accentColor }: Props) {
 
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 						{team.map((member, i) => (
-							<TeamMemberCard key={i} member={member} accentColor={accentColor} isSelf={member.name === Site.fullName} />
+							<TeamMemberCard
+								key={i}
+								member={member}
+								accentColor={accentColor}
+								isSelf={member.name === Site.fullName}
+							/>
 						))}
 					</div>
 				</section>

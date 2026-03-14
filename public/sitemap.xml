@@ -25,21 +25,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://devnajib.netlify.app/certificates</loc>
-    <lastmod>2026-02-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://devnajib.netlify.app/technologies</loc>
     <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://devnajib.netlify.app/pics</loc>
+    <loc>https://devnajib.netlify.app/certificates</loc>
     <lastmod>2026-02-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>

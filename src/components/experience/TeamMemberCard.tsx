@@ -22,7 +22,9 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 				}}
 				onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${accentColor}80`)}
 				onMouseLeave={(e) =>
-					(e.currentTarget.style.borderColor = isSelf ? `${accentColor}50` : 'var(--overlay)')
+					(e.currentTarget.style.borderColor = isSelf
+						? `${accentColor}50`
+						: 'var(--overlay)')
 				}
 			>
 				{/* Avatar */}
@@ -49,7 +51,10 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 				)}
 
 				<div className="flex-1 min-w-0">
-					<p className="text-sm font-semibold flex items-center gap-1.5 min-w-0" style={{ color: 'var(--text)' }}>
+					<p
+						className="text-sm font-semibold flex items-center gap-1.5 min-w-0"
+						style={{ color: 'var(--text)' }}
+					>
 						<span className="truncate">{member.name}</span>
 						{isSelf && (
 							<span
