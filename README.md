@@ -2,7 +2,7 @@
 
 A developer portfolio built with React, TypeScript, and Tailwind CSS. Features a terminal-inspired design with dark/light theme support, custom cursors, and a monospace aesthetic powered by JetBrains Mono.
 
-![Homepage](public/assets/Home-Page.png)
+![Homepage](public/Home-Page.png)
 
 ## Features
 
