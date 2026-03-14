@@ -51,6 +51,9 @@ export default function BottomNav() {
 		(item) => location.pathname === item.href || location.pathname.startsWith(item.href + '/')
 	)
 
+	// In light mode, use bold dark color for active/accent elements so they're visible on glass
+	const accentColor = theme === 'dark' ? 'var(--primary)' : '#1a1a2e'
+
 	return (
 		<>
 			{/* Overlay */}
@@ -111,7 +114,7 @@ export default function BottomNav() {
 									to={item.href}
 									className="flex-1 flex flex-col items-center gap-1.5 py-3 rounded-xl transition-all duration-200"
 									style={({ isActive }) => ({
-										color: isActive ? 'var(--primary)' : 'var(--subtext)',
+										color: isActive ? accentColor : 'var(--subtext)',
 										backgroundColor: isActive
 											? 'rgba(var(--primary-rgb, 0,213,217),0.12)'
 											: 'color-mix(in srgb, var(--bg-mantle) 60%, transparent)',
@@ -142,9 +145,9 @@ export default function BottomNav() {
 						}}
 						className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-mono font-medium mb-4 transition-all duration-200"
 						style={{
-							color: 'var(--primary)',
+							color: accentColor,
 							backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.08)',
-							border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.2)',
+							border: `1px solid ${theme === 'dark' ? 'rgba(var(--primary-rgb, 0,213,217),0.2)' : 'rgba(0,0,0,0.15)'}`,
 						}}
 					>
 						{theme === 'dark' ? <IconSun size={14} /> : <IconMoon size={14} />}
@@ -176,7 +179,11 @@ export default function BottomNav() {
 						</div>
 						<div className="flex items-center gap-1.5" title="Time on site">
 							<IconClock size={13} style={{ color: 'var(--subtext)' }} />
-							<span ref={timerRef} className="font-mono text-xs" style={{ color: 'var(--primary)' }}>
+							<span
+								ref={timerRef}
+								className="font-mono text-xs font-bold"
+								style={{ color: accentColor }}
+							>
 								00:00
 							</span>
 						</div>
@@ -217,7 +224,8 @@ export default function BottomNav() {
 									end={item.href === '/'}
 									className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-xl transition-all duration-200 relative"
 									style={({ isActive }) => ({
-										color: isActive ? 'var(--primary)' : 'var(--subtext)',
+										color: isActive ? accentColor : 'var(--subtext)',
+										fontWeight: isActive ? 700 : undefined,
 									})}
 								>
 									{({ isActive }) => (
@@ -226,7 +234,7 @@ export default function BottomNav() {
 											{isActive && (
 												<span
 													className="absolute -top-0.5 w-1 h-1 rounded-full"
-													style={{ backgroundColor: 'var(--primary)' }}
+													style={{ backgroundColor: accentColor }}
 												/>
 											)}
 											{Icon && <Icon size={21} stroke={isActive ? 2 : 1.5} />}
@@ -244,16 +252,14 @@ export default function BottomNav() {
 							onClick={() => setDrawerOpen((v) => !v)}
 							className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-xl transition-all duration-200 relative"
 							style={{
-								color:
-									drawerOpen || isMoreActive
-										? 'var(--primary)'
-										: 'var(--subtext)',
+								color: drawerOpen || isMoreActive ? accentColor : 'var(--subtext)',
+								fontWeight: drawerOpen || isMoreActive ? 700 : undefined,
 							}}
 						>
 							{(drawerOpen || isMoreActive) && (
 								<span
 									className="absolute -top-0.5 w-1 h-1 rounded-full"
-									style={{ backgroundColor: 'var(--primary)' }}
+									style={{ backgroundColor: accentColor }}
 								/>
 							)}
 							<IconDots size={21} stroke={drawerOpen || isMoreActive ? 2 : 1.5} />

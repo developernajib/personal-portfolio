@@ -21,9 +21,8 @@ export default function CompanyLogo({ logoUrl, logoAlt, company, size = 'md', co
 	const s = SIZE_MAP[size]
 	const fallbackColor = color ?? 'var(--subtext)'
 
-	const logoBg = logoUrl && !imgError
-		? theme === 'dark' ? '#1e2127' : '#ffffff'
-		: 'var(--bg-mantle)'
+	const logoBg =
+		logoUrl && !imgError ? (theme === 'dark' ? '#1e2127' : '#ffffff') : 'var(--bg-mantle)'
 
 	return (
 		<div

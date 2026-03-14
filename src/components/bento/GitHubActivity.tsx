@@ -234,7 +234,11 @@ function ContribGraph({
 								const scaleY = svgRect.height / svgH
 								onHover({
 									text: `${day.date}: ${day.count} contribution${day.count !== 1 ? 's' : ''}`,
-									x: svgRect.left - parentRect.left + x * scaleX + (CELL * scaleX) / 2,
+									x:
+										svgRect.left -
+										parentRect.left +
+										x * scaleX +
+										(CELL * scaleX) / 2,
 									y: svgRect.top - parentRect.top + y * scaleY,
 								})
 							}}
@@ -261,7 +265,9 @@ export default function GitHubActivity() {
 
 	const [yearSnapshot, setYearSnapshot] = useState<Record<string, YearData>>(() => {
 		const seed: Record<string, YearData> = {}
-		yearDataCache.forEach((entry, key) => { seed[key] = entry.data })
+		yearDataCache.forEach((entry, key) => {
+			seed[key] = entry.data
+		})
 		return seed
 	})
 	const [loading, setLoading] = useState(false)
@@ -285,7 +291,9 @@ export default function GitHubActivity() {
 				statsCache.entry = { data: parsed, fetchedAt: Date.now() }
 				setStats(parsed)
 			})
-			.catch(() => { if (!cached) setStatsError(true) })
+			.catch(() => {
+				if (!cached) setStatsError(true)
+			})
 			.finally(() => inFlight.delete(key))
 		inFlight.set(key, promise)
 	}, [])
@@ -310,7 +318,9 @@ export default function GitHubActivity() {
 				yearDataCache.set(cacheKey, { data: processed, fetchedAt: Date.now() })
 				setYearSnapshot((prev) => ({ ...prev, [cacheKey]: processed }))
 			})
-			.catch(() => { if (!cached) setGraphError(true) })
+			.catch(() => {
+				if (!cached) setGraphError(true)
+			})
 			.finally(() => {
 				setLoading(false)
 				inFlight.delete(cacheKey)
@@ -468,8 +478,20 @@ export default function GitHubActivity() {
 						className="flex flex-col items-center justify-center gap-2"
 						style={{ minHeight: '96px' }}
 					>
-						<svg className="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none">
-							<circle cx="12" cy="12" r="10" stroke="var(--overlay)" strokeWidth="3" />
+						<svg
+							className="animate-spin"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+						>
+							<circle
+								cx="12"
+								cy="12"
+								r="10"
+								stroke="var(--overlay)"
+								strokeWidth="3"
+							/>
 							<path
 								d="M12 2a10 10 0 0 1 10 10"
 								stroke="var(--primary)"
@@ -531,7 +553,10 @@ export default function GitHubActivity() {
 										<span
 											key={i}
 											className="inline-block w-3 h-3 rounded-sm"
-											style={{ backgroundColor: c, border: '1px solid var(--overlay)' }}
+											style={{
+												backgroundColor: c,
+												border: '1px solid var(--overlay)',
+											}}
 										/>
 									))}
 								</span>
@@ -548,12 +573,16 @@ export default function GitHubActivity() {
 					{
 						icon: <IconCalendarStats size={16} color="var(--primary)" />,
 						label: 'Contributions This Year',
-						value: yearSnapshot[CURRENT_YEAR.toString()]?.total ?? (statsError ? '—' : '...'),
+						value:
+							yearSnapshot[CURRENT_YEAR.toString()]?.total ??
+							(statsError ? '—' : '...'),
 					},
 					{
 						icon: <IconGitCommit size={16} color="var(--primary)" />,
 						label: 'Contributions Today',
-						value: yearSnapshot[CURRENT_YEAR.toString()]?.today ?? (statsError ? '—' : '...'),
+						value:
+							yearSnapshot[CURRENT_YEAR.toString()]?.today ??
+							(statsError ? '—' : '...'),
 					},
 					{
 						icon: <IconBook size={16} color="var(--primary)" />,
@@ -569,11 +598,17 @@ export default function GitHubActivity() {
 					<div
 						key={stat.label}
 						className="rounded-xl border p-3 flex flex-col items-center justify-center gap-2 text-center"
-						style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--overlay)' }}
+						style={{
+							backgroundColor: 'var(--bg-surface)',
+							borderColor: 'var(--overlay)',
+						}}
 					>
 						<div className="flex items-center gap-2">
 							{stat.icon}
-							<span className="text-lg font-bold font-mono" style={{ color: 'var(--text)' }}>
+							<span
+								className="text-lg font-bold font-mono"
+								style={{ color: 'var(--text)' }}
+							>
 								{stat.value}
 							</span>
 						</div>

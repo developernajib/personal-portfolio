@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IconCertificate, IconExternalLink } from '@tabler/icons-react'
-import { formatDate } from '@/lib/utils'
+import { formatDate, thumbSrc } from '@/lib/utils'
 import TagBadge from './TagBadge'
 import type { Certificate } from '@/data/certificates'
 
@@ -28,7 +28,7 @@ export default function CertificateCard({ certificate, onImageClick }: Certifica
 			>
 				{certificate.image && !imgError ? (
 					<img
-						src={certificate.image}
+						src={thumbSrc(certificate.image)}
 						alt={certificate.title}
 						className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 						loading="lazy"

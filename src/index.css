@@ -6,108 +6,108 @@
    and the @font-face src are the same URL — browser uses the already-fetched file
    instead of re-downloading it from the @fontsource CSS path. */
 @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('/fonts/jetbrains-mono-latin-400.woff2') format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-        U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/fonts/jetbrains-mono-latin-400.woff2') format('woff2');
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+		U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('/fonts/jetbrains-mono-latin-700.woff2') format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
-        U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('/fonts/jetbrains-mono-latin-700.woff2') format('woff2');
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+		U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* Safelist — ensure dynamically-built classes are always included */
 @source inline("max-w-3xl max-w-4xl max-w-6xl");
 
 @theme {
-    --color-primary: #00d5d9;
-    --color-primary-dim: #00b5b8;
-    --color-bg-base: #0d1117;
-    --color-bg-surface: #161b22;
-    --color-bg-mantle: #1c2128;
-    --color-bg-crust: #21262d;
-    --color-text: #e6edf3;
-    --color-subtext: #9da5ad;
-    --color-overlay: #30363d;
-    --font-mono: 'JetBrains Mono', monospace;
+	--color-primary: #00d5d9;
+	--color-primary-dim: #00b5b8;
+	--color-bg-base: #0d1117;
+	--color-bg-surface: #161b22;
+	--color-bg-mantle: #1c2128;
+	--color-bg-crust: #21262d;
+	--color-text: #e6edf3;
+	--color-subtext: #9da5ad;
+	--color-overlay: #30363d;
+	--font-mono: 'JetBrains Mono', monospace;
 }
 
 /* Dark mode (default) */
 :root,
 [data-theme='dark'] {
-    --primary: #00d5d9;
-    --primary-dim: #00b5b8;
-    --primary-rgb: 0, 213, 217;
-    --bg-base: #0d1117;
-    --bg-surface: #161b22;
-    --bg-mantle: #1c2128;
-    --bg-crust: #21262d;
-    --text: #e6edf3;
-    --subtext: #9da5ad;
-    --overlay: #30363d;
+	--primary: #00d5d9;
+	--primary-dim: #00b5b8;
+	--primary-rgb: 0, 213, 217;
+	--bg-base: #0d1117;
+	--bg-surface: #161b22;
+	--bg-mantle: #1c2128;
+	--bg-crust: #21262d;
+	--text: #e6edf3;
+	--subtext: #9da5ad;
+	--overlay: #30363d;
 }
 
 /* Light mode */
 [data-theme='light'] {
-    --primary: #0099a0;
-    --primary-dim: #007a80;
-    --primary-rgb: 0, 153, 160;
-    --bg-base: #f6f8fa;
-    --bg-surface: #ffffff;
-    --bg-mantle: #eaeef2;
-    --bg-crust: #d0d7de;
-    --text: #1f2328;
-    --subtext: #424a53;
-    --overlay: #d0d7de;
+	--primary: #0099a0;
+	--primary-dim: #007a80;
+	--primary-rgb: 0, 153, 160;
+	--bg-base: #f6f8fa;
+	--bg-surface: #ffffff;
+	--bg-mantle: #eaeef2;
+	--bg-crust: #d0d7de;
+	--text: #1f2328;
+	--subtext: #424a53;
+	--overlay: #d0d7de;
 }
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-    scroll-padding-top: 5rem;
-    overflow-x: hidden;
+	scroll-padding-top: 5rem;
+	overflow-x: hidden;
 }
 
 /* Mobile: hide native scrollbar, we render a custom one via MobileScrollbar component */
 @media (pointer: coarse) {
-    html {
-        scrollbar-width: none;
-    }
+	html {
+		scrollbar-width: none;
+	}
 
-    html::-webkit-scrollbar {
-        display: none;
-    }
+	html::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-base);
-    color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-base);
+	color: var(--text);
+	font-family: 'JetBrains Mono', monospace;
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 /* ── Custom cursors (pointer devices only) ──────────────────────────────────
@@ -117,147 +117,150 @@ a {
    - Touch devices (hover: none) use the default OS cursor — no overhead
    ──────────────────────────────────────────────────────────────────────── */
 @media (hover: hover) {
-    body {
-        cursor: url('/cursors/arrow.svg') 4 2, auto;
-    }
+	body {
+		cursor:
+			url('/cursors/arrow.svg') 4 2,
+			auto;
+	}
 
-    button,
-    a,
-    [role='button'],
-    label {
-        cursor: url('/cursors/pointer.svg') 10 2, pointer;
-    }
+	button,
+	a,
+	[role='button'],
+	label {
+		cursor:
+			url('/cursors/pointer.svg') 10 2,
+			pointer;
+	}
 }
 
 /* Reference-style link — dashed underline, hover gives bg flash */
 .link {
-    color: var(--primary);
-    text-decoration: underline;
-    text-decoration-style: dashed;
-    text-underline-offset: 4px;
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-    border-radius: 2px;
-    padding: 0 2px;
+	color: var(--primary);
+	text-decoration: underline;
+	text-decoration-style: dashed;
+	text-underline-offset: 4px;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
+	border-radius: 2px;
+	padding: 0 2px;
 }
 
 .link:hover {
-    background-color: var(--primary);
-    color: var(--bg-base);
-    text-decoration: none;
+	background-color: var(--primary);
+	color: var(--bg-base);
+	text-decoration: none;
 }
 
 /* Hover utilities — replace inline JS hover handlers with pure CSS */
 .hover-primary {
-    transition: color 0.15s ease;
+	transition: color 0.15s ease;
 }
 
 .hover-primary:hover {
-    color: var(--primary) !important;
+	color: var(--primary) !important;
 }
 
 .hover-border-primary {
-    transition: border-color 0.15s ease;
+	transition: border-color 0.15s ease;
 }
 
 .hover-border-primary:hover {
-    border-color: rgba(var(--primary-rgb, 0, 213, 217), 0.4) !important;
+	border-color: rgba(var(--primary-rgb, 0, 213, 217), 0.4) !important;
 }
 
 .hover-opacity {
-    transition: opacity 0.15s ease;
+	transition: opacity 0.15s ease;
 }
 
 .hover-opacity:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 
 .hover-bg-primary-up {
-    transition: background-color 0.15s ease;
+	transition: background-color 0.15s ease;
 }
 
 .hover-bg-primary-up:hover {
-    background-color: rgba(var(--primary-rgb, 0, 213, 217), 0.2) !important;
+	background-color: rgba(var(--primary-rgb, 0, 213, 217), 0.2) !important;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+	width: 6px;
+	height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+	background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, transparent, var(--primary));
-    border-radius: 3px;
+	background: linear-gradient(to bottom, transparent, var(--primary));
+	border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, transparent, var(--primary-dim));
+	background: linear-gradient(to bottom, transparent, var(--primary-dim));
 }
 
 /* Selection */
 ::selection {
-    background-color: rgba(var(--primary-rgb, 0, 213, 217), 0.2);
-    color: var(--primary);
+	background-color: rgba(var(--primary-rgb, 0, 213, 217), 0.2);
+	color: var(--primary);
 }
 
 /* Terminal cursor blink */
 @keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
 
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
+	50% {
+		opacity: 0;
+	}
 }
 
 .terminal-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    vertical-align: middle;
-    animation: blink 1.5s step-start infinite;
+	display: inline-block;
+	width: 8px;
+	height: 15px;
+	vertical-align: middle;
+	animation: blink 1.5s step-start infinite;
 }
 
 /* View Transition — circular reveal for theme toggle */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+	animation: none;
+	mix-blend-mode: normal;
 }
 
 /* Hide scrollbar utility */
 .scrollbar-none {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 .scrollbar-none::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 /* Leaflet overrides */
 .leaflet-container {
-    background: var(--bg-base) !important;
-    font-family: 'JetBrains Mono', monospace !important;
+	background: var(--bg-base) !important;
+	font-family: 'JetBrains Mono', monospace !important;
 }
 
 .leaflet-tile-container {
-    background: var(--bg-base) !important;
+	background: var(--bg-base) !important;
 }
 
 .leaflet-pane {
-    background: transparent !important;
+	background: transparent !important;
 }
 
 .leaflet-control-attribution {
-    display: none !important;
+	display: none !important;
 }

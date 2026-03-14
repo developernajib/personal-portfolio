@@ -69,7 +69,10 @@ export default function LocationMap() {
 
 		function onVisibilityChange() {
 			if (document.hidden) {
-				if (interval) { clearInterval(interval); interval = null }
+				if (interval) {
+					clearInterval(interval)
+					interval = null
+				}
 			} else {
 				updateTime()
 				interval = setInterval(updateTime, 60_000)
@@ -91,7 +94,8 @@ export default function LocationMap() {
 			getLeaflet()
 				.then((mod) => {
 					if (destroyed || !container) return
-					const L = (mod as unknown as { default: typeof import('leaflet') }).default ?? mod
+					const L =
+						(mod as unknown as { default: typeof import('leaflet') }).default ?? mod
 
 					const lat = Site.location.lat || 3.139
 					const lng = Site.location.lng || 101.6869
@@ -165,8 +169,6 @@ export default function LocationMap() {
 			>
 				<IconMapPin size={16} color="var(--primary)" />
 				Currently Based In 📍
-
-                
 			</button>
 
 			<div
