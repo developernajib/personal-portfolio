@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { formatDate } from '@/lib/utils'
+import { formatDate, thumbSrc } from '@/lib/utils'
 import TagBadge from './TagBadge'
 import ImagePlaceholder from './ImagePlaceholder'
 import type { Project } from '@/data/projects'
@@ -25,7 +25,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 			<div className="relative aspect-video w-full overflow-hidden rounded-t-xl">
 				{project.image && !imgError ? (
 					<img
-						src={project.image.replace(/\.(\w+)$/, '-thumb.$1')}
+						src={thumbSrc(project.image)}
 						alt={project.title}
 						width={600}
 						height={338}
