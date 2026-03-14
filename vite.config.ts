@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import viteCompression from 'vite-plugin-compression'
+import { visualizer } from 'rollup-plugin-visualizer'
 import path from 'path'
 import fs from 'fs'
 
@@ -45,11 +47,22 @@ function dataFallbackPlugin() {
 	}
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [
 		dataFallbackPlugin(),
 		react(),
 		tailwindcss(),
+		// Pre-compress assets with Brotli + gzip so Netlify serves pre-built files
+		viteCompression({ algorithm: 'brotliCompress', ext: '.br' }),
+		viteCompression({ algorithm: 'gzip', ext: '.gz' }),
+		// Bundle visualizer — only active when running build:analyze
+		mode === 'analyze' &&
+			visualizer({
+				filename: 'dist/stats.html',
+				open: true,
+				gzipSize: true,
+				brotliSize: true,
+			}),
 		VitePWA({
 			registerType: 'autoUpdate',
 			includeAssets: ['favicon.png', 'fonts/*.woff2', 'cursors/*.cur'],
@@ -168,6 +181,10 @@ export default defineConfig({
 			},
 		},
 	},
+	// Drop console.* and debugger statements in production builds
+	esbuild: {
+		drop: mode === 'development' ? [] : ['console', 'debugger'],
+	},
 	// Pre-bundle core deps during dev server startup so first page load is fast
 	optimizeDeps: {
 		include: ['react', 'react-dom', 'react-router-dom'],
@@ -178,4 +195,4 @@ export default defineConfig({
 			ignored: ['!**/data/**'],
 		},
 	},
-})
+}))

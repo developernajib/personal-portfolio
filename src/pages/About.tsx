@@ -74,6 +74,7 @@ export default function About() {
 									href="https://go.dev"
 									target="_blank"
 									rel="noopener noreferrer"
+									aria-label="Go programming language official website"
 									className="link"
 								>
 									Go
@@ -121,6 +122,7 @@ export default function About() {
 									href="https://go.dev"
 									target="_blank"
 									rel="noopener noreferrer"
+									aria-label="Go programming language official website"
 									className="link"
 								>
 									Go

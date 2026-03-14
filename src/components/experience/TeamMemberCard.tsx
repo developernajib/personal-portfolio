@@ -6,18 +6,24 @@ import type { TeamMember } from '@/data/experience'
 interface Props {
 	member: TeamMember
 	accentColor: string
+	isSelf?: boolean
 }
 
-export default function TeamMemberCard({ member, accentColor }: Props) {
+export default function TeamMemberCard({ member, accentColor, isSelf = false }: Props) {
 	const [photoOpen, setPhotoOpen] = useState(false)
 
 	return (
 		<>
 			<div
 				className="rounded-xl border p-4 flex items-center gap-3 transition-colors duration-150"
-				style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--overlay)' }}
-				onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${accentColor}50`)}
-				onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--overlay)')}
+				style={{
+					backgroundColor: isSelf ? `${accentColor}0d` : 'var(--bg-surface)',
+					borderColor: isSelf ? `${accentColor}50` : 'var(--overlay)',
+				}}
+				onMouseEnter={(e) => (e.currentTarget.style.borderColor = `${accentColor}80`)}
+				onMouseLeave={(e) =>
+					(e.currentTarget.style.borderColor = isSelf ? `${accentColor}50` : 'var(--overlay)')
+				}
 			>
 				{/* Avatar */}
 				{member.photo ? (
@@ -43,8 +49,16 @@ export default function TeamMemberCard({ member, accentColor }: Props) {
 				)}
 
 				<div className="flex-1 min-w-0">
-					<p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>
-						{member.name}
+					<p className="text-sm font-semibold flex items-center gap-1.5 min-w-0" style={{ color: 'var(--text)' }}>
+						<span className="truncate">{member.name}</span>
+						{isSelf && (
+							<span
+								className="flex-shrink-0 text-xs px-1.5 py-0.5 rounded font-mono"
+								style={{ backgroundColor: `${accentColor}20`, color: accentColor }}
+							>
+								me
+							</span>
+						)}
 					</p>
 					<p className="text-xs truncate" style={{ color: 'var(--subtext)' }}>
 						{member.position}

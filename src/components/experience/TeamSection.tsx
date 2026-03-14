@@ -7,6 +7,7 @@ import {
 } from '@tabler/icons-react'
 import { copyEmail } from '@/components/ui/Toast'
 import TeamMemberCard from './TeamMemberCard'
+import Site from '@/lib/config'
 import type { ExperienceManager, TeamMember } from '@/data/experience'
 
 interface Props {
@@ -150,7 +151,7 @@ export default function TeamSection({ manager, team, accentColor }: Props) {
 
 					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 						{team.map((member, i) => (
-							<TeamMemberCard key={i} member={member} accentColor={accentColor} />
+							<TeamMemberCard key={i} member={member} accentColor={accentColor} isSelf={member.name === Site.fullName} />
 						))}
 					</div>
 				</section>
