@@ -75,6 +75,11 @@
     Cache-Control = "public, max-age=1814400"
 
 [[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=1814400"
+
+[[headers]]
   for = "/*.png"
   [headers.values]
     Cache-Control = "public, max-age=1814400"

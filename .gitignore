@@ -27,4 +27,8 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+# Personal images — keep local only, not pushed to GitHub
 public/projects/*
+public/certificates/*
+public/logos/*
+public/assets/*
