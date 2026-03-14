@@ -28,7 +28,7 @@ export default function CertificateCard({ certificate, onImageClick }: Certifica
 			>
 				{certificate.image && !imgError ? (
 					<img
-						src={certificate.image}
+						src={certificate.image.replace(/\.(\w+)$/, '-thumb.$1')}
 						alt={certificate.title}
 						className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 						loading="lazy"

@@ -1,7 +1,6 @@
 import { IconPhoto } from '@tabler/icons-react'
 import Lightbox from '@/components/ui/Lightbox'
 import { useLightbox } from '@/lib/hooks/useLightbox'
-import { thumb } from '@/lib/utils'
 import type { ExperienceGalleryItem } from '@/data/experience'
 
 interface Props {
@@ -38,7 +37,7 @@ export default function GallerySection({ gallery, accentColor }: Props) {
 						style={{ borderColor: 'var(--overlay)', aspectRatio: '16/9' }}
 					>
 						<img
-							src={thumb(img.src)}
+							src={img.src.replace(/\.(\w+)$/, '-thumb.$1')}
 							alt={img.caption || `Gallery image ${i + 1}`}
 							className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
 							loading="lazy"

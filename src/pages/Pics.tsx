@@ -4,7 +4,6 @@ import { IconPhoto } from '@tabler/icons-react'
 import SlabTitle from '@/components/ui/SlabTitle'
 import Lightbox from '@/components/ui/Lightbox'
 import BackgroundEffect from '@/components/ui/BackgroundEffect'
-import { thumb } from '@/lib/utils'
 import { useLightbox } from '@/lib/hooks/useLightbox'
 import { photos } from '@/data/pics'
 import useDocTitle from '@/lib/hooks/useDocTitle'
@@ -38,7 +37,7 @@ function PhotoTile({
 				</div>
 			) : (
 				<img
-					src={thumb(photo.src)}
+					src={photo.src.replace(/\.(\w+)$/, '-thumb.$1')}
 					alt={photo.alt}
 					className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
 					loading="lazy"

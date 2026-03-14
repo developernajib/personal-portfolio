@@ -35,17 +35,6 @@ export function cn(...classes: (string | undefined | false | null)[]): string {
 	return classes.filter(Boolean).join(' ')
 }
 
-/**
- * Returns the thumbnail path for a given image src.
- * Convention: /projects/foo.webp → /projects/foo-thumb.webp
- * Falls back to the original src if it's an external URL or has no extension.
- */
-export function thumb(src: string): string {
-	if (!src || src.startsWith('http') || src.startsWith('data:')) return src
-	const dot = src.lastIndexOf('.')
-	if (dot === -1) return src
-	return src.slice(0, dot) + '-thumb' + src.slice(dot)
-}
 
 export function isValidHttpUrl(url: string): boolean {
 	try {

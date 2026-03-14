@@ -15,7 +15,7 @@ import BackgroundEffect from '@/components/ui/BackgroundEffect'
 import Lightbox from '@/components/ui/Lightbox'
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 import { projects } from '@/data/projects'
-import { formatDate, thumb } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function ProjectDetail() {
@@ -183,7 +183,7 @@ export default function ProjectDetail() {
 								>
 									{!thumbErrors.has(i) ? (
 										<img
-											src={thumb(item.src)}
+											src={item.src.replace(/\.(\w+)$/, '-thumb.$1')}
 											alt={item.caption ?? `Screenshot ${i + 1}`}
 											className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 											loading="lazy"
