@@ -191,10 +191,10 @@ export default function ProjectDetail() {
 										<picture>
 											<source
 												media="(max-width: 768px)"
-												srcSet={imgVariant(item.src.replace(/\.(\w+)$/, '-thumb.$1'), '-mobile')}
+												srcSet={imgVariant(item.src.replace(/\.\w+$/, '-thumb.jpg'), '-mobile')}
 											/>
 											<img
-												src={item.src.replace(/\.(\w+)$/, '-thumb.$1')}
+												src={item.src.replace(/\.\w+$/, '-thumb.jpg')}
 												alt={item.caption ?? `Screenshot ${i + 1}`}
 												className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 												loading="lazy"
