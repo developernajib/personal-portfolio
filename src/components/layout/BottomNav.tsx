@@ -179,7 +179,11 @@ export default function BottomNav() {
 						</div>
 						<div className="flex items-center gap-1.5" title="Time on site">
 							<IconClock size={13} style={{ color: 'var(--subtext)' }} />
-							<span ref={timerRef} className="font-mono text-xs font-bold" style={{ color: accentColor }}>
+							<span
+								ref={timerRef}
+								className="font-mono text-xs font-bold"
+								style={{ color: accentColor }}
+							>
 								00:00
 							</span>
 						</div>
@@ -248,10 +252,7 @@ export default function BottomNav() {
 							onClick={() => setDrawerOpen((v) => !v)}
 							className="flex flex-col items-center justify-center gap-0.5 flex-1 py-1.5 rounded-xl transition-all duration-200 relative"
 							style={{
-								color:
-									drawerOpen || isMoreActive
-										? accentColor
-										: 'var(--subtext)',
+								color: drawerOpen || isMoreActive ? accentColor : 'var(--subtext)',
 								fontWeight: drawerOpen || isMoreActive ? 700 : undefined,
 							}}
 						>

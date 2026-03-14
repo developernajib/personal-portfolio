@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -7,6 +7,8 @@ import MobileScrollbar from './components/ui/MobileScrollbar'
 import { ToastContainer } from './components/ui/Toast'
 import ErrorBoundary from './components/ui/ErrorBoundary'
 import LoadingSpinner from './components/ui/LoadingSpinner'
+import SetupModal from './components/ui/SetupModal'
+import { setupRequired, missingDataFiles } from './lib/dataSetup'
 // Home is the entry page — eager import so LCP renders without waiting for a lazy chunk
 import Home from './pages/Home'
 import {
@@ -117,9 +119,14 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
+	const [modalDismissed, setModalDismissed] = useState(false)
+
 	return (
 		<ErrorBoundary>
 			<RouterProvider router={router} />
+			{setupRequired && !modalDismissed && (
+				<SetupModal missing={missingDataFiles} onDismiss={() => setModalDismissed(true)} />
+			)}
 		</ErrorBoundary>
 	)
 }

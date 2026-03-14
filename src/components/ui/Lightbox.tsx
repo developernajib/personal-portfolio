@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react'
 import { IconX, IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
-import { imgVariant } from '@/lib/utils'
+import { thumbSrc } from '@/lib/utils'
 
 interface LightboxItem {
 	src: string
@@ -92,10 +92,7 @@ export default function Lightbox({ items, currentIndex, onClose, onPrev, onNext 
 				onClick={(e) => e.stopPropagation()}
 			>
 				<picture>
-					<source
-						media="(max-width: 768px)"
-						srcSet={imgVariant(current.src, '-thumb')}
-					/>
+					<source media="(max-width: 768px)" srcSet={thumbSrc(current.src)} />
 					<img
 						src={current.src}
 						alt={current.alt}

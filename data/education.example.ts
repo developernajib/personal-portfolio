@@ -8,7 +8,7 @@ export const education: EducationItem[] = [
 		location: 'Your City, Country',
 		startYear: 2020,
 		endYear: 2024,
-		cgpa: 3.80,
+		cgpa: 3.8,
 		cgpaMax: 4.0,
 	},
 ]
