@@ -4,14 +4,14 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "npx vite",
+		"dev": "vite",
 		"clean": "rimraf dist",
-		"build": "npm run clean && npx tsc -b && npx vite build",
-		"build:analyze": "npm run clean && npx tsc -b && npx vite build --mode analyze",
-		"lint": "npx eslint .",
-		"preview": "npx vite preview",
-		"start": "npx vite preview --port 3000",
-		"format": "npx prettier --write .",
+		"build": "npm run clean && tsc -b && vite build",
+		"build:analyze": "npm run clean && tsc -b && vite build --mode analyze",
+		"lint": "eslint .",
+		"start": "vite preview",
+		"preview": "vite preview",
+		"format": "prettier --write .",
 		"help": "node scripts/help.mjs"
 	},
 	"dependencies": {
