@@ -50,7 +50,8 @@ export default function EducationSection() {
 										className="text-sm mt-0.5"
 										style={{ color: 'var(--subtext)' }}
 									>
-										{item.institution} - {item.location}
+										{item.institution}
+										{item.location ? ` - ${item.location}` : ''}
 									</p>
 								</div>
 							</div>
@@ -63,19 +64,22 @@ export default function EducationSection() {
 								>
 									<IconCalendarEvent size={11} />
 									<span>
-										{item.startYear} - {item.endYear}
+										{item.startYear} - {item.endYear ?? 'Present'}
 									</span>
 								</div>
-								<div
-									className="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded font-mono"
-									style={{
-										backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.12)',
-										color: 'var(--primary)',
-									}}
-								>
-									<IconAward size={11} />
-									CGPA {item.cgpa.toFixed(2)} / {item.cgpaMax.toFixed(1)}
-								</div>
+								{item.cgpa != null && item.cgpaMax != null && (
+									<div
+										className="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded font-mono"
+										style={{
+											backgroundColor:
+												'rgba(var(--primary-rgb, 0,213,217),0.12)',
+											color: 'var(--primary)',
+										}}
+									>
+										<IconAward size={11} />
+										CGPA {item.cgpa.toFixed(2)} / {item.cgpaMax.toFixed(1)}
+									</div>
+								)}
 							</div>
 						</div>
 					</div>

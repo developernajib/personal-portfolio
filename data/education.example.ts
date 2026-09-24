@@ -1,4 +1,15 @@
-import type { EducationItem } from './education'
+// Copy this file to education.ts and fill in your own entries.
+// Only degree, field, institution and startYear are required.
+export interface EducationItem {
+	degree: string
+	field: string
+	institution: string
+	location?: string
+	startYear: number
+	endYear?: number
+	cgpa?: number
+	cgpaMax?: number
+}
 
 export const education: EducationItem[] = [
 	{

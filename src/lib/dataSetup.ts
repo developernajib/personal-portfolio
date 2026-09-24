@@ -6,6 +6,7 @@ import * as _projects from '@data/projects'
 import * as _experience from '@data/experience'
 import * as _certificates from '@data/certificates'
 import * as _technologies from '@data/technologies'
+import * as _skills from '@data/skills'
 import * as _education from '@data/education'
 import * as _workingOn from '@data/currentlyWorkingOn'
 import * as _config from '@data/config'
@@ -50,6 +51,12 @@ const ALL_FILES: Array<{ missing: boolean } & MissingFile> = [
 		file: 'data/technologies.ts',
 		example: 'data/technologies.example.ts',
 		description: 'Tech stack',
+	},
+	{
+		missing: isMissing(_skills),
+		file: 'data/skills.ts',
+		example: 'data/skills.example.ts',
+		description: 'Extra skills for the Technologies page',
 	},
 	{
 		missing: isMissing(_education),

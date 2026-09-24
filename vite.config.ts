@@ -15,6 +15,7 @@ const DATA_STUBS: Record<string, string> = {
 	certificates: `export const certificates = []; export const __missing = true;`,
 	technologies: `export const technologies = []; export const __missing = true;`,
 	education: `export const education = []; export const __missing = true;`,
+	skills: `export const skills = []; export const __missing = true;`,
 	currentlyWorkingOn: `export const currentlyWorkingOn = []; export const currentlyLearning = []; export const __missing = true;`,
 	config: `const Site = { name: '', fullName: '', title: '', image: '', email: '', github: '', linkedin: '', telegram: '', location: '', resume: import.meta.env.VITE_RESUME_URL }; export default Site; export const __missing = true;`,
 }

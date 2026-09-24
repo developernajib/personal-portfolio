@@ -48,11 +48,17 @@ npm run dev
 ```
 src/
 ├── components/
-│   ├── layout/      # Header, Footer, BottomNav, ErrorBoundary
-│   └── ui/          # Reusable components (Container, Buttons, Cards)
+│   ├── bento/       # GitHub heatmap, location map, working-on widget
+│   ├── experience/  # Experience detail sections, journey timeline
+│   ├── home/        # Hero, education, experience preview
+│   ├── layout/      # Header, Footer, BottomNav, ScrollToTop
+│   ├── project/     # Project detail header, gallery, links
+│   └── ui/          # Cards, buttons, lightbox, toast
+├── data/            # Type definitions re-exported from data/
+├── lib/             # Config, sorting, helpers
+│   └── hooks/       # Custom React hooks
 ├── pages/           # Route pages (Home, About, Projects, Experience, etc.)
-├── hooks/           # Custom React hooks
-├── types/           # TypeScript type definitions
+├── routes/          # Route preload helpers
 └── index.css        # Global styles and theme variables
 data/
 ├── *.example.ts     # Template data files (tracked)
@@ -61,10 +67,11 @@ data/
 
 ## Environment Variables
 
-| Variable            | Description                                        |
-| ------------------- | -------------------------------------------------- |
-| `VITE_GITHUB_TOKEN` | GitHub personal access token (for activity widget) |
-| `VITE_RESUME_URL`   | Public URL to your resume PDF                      |
+| Variable            | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| `VITE_GITHUB_TOKEN` | GitHub personal access token (for activity widget)   |
+| `VITE_RESUME_URL`   | Public URL to your resume PDF                        |
+| `VITE_MAP_LAT`      | Optional map pin latitude, pairs with `VITE_MAP_LNG` |
 
 ## Image Thumbnails
 
@@ -72,15 +79,15 @@ Every image in `public/projects/` and `public/certificates/` needs a matching th
 
 ```
 public/projects/my-app.webp           ← full resolution (detail page / lightbox)
-public/projects/my-app-thumb.webp     ← thumbnail ~400px wide (card grid)
-public/projects/my-app-thumb-mobile.webp ← mobile thumbnail ~200px wide
+public/projects/my-app-thumb.webp     ← thumbnail 900px wide (card grid)
+public/projects/my-app-thumb-mobile.webp ← mobile thumbnail 450px wide
 ```
 
 Generate thumbnails with ImageMagick:
 
 ```bash
-magick original.png -resize 400x -strip -quality 80 original-thumb.webp
-magick original-thumb.webp -resize 200x -strip -quality 75 original-thumb-mobile.webp
+magick original.png -resize 900x -strip -quality 82 original-thumb.webp
+magick original-thumb.webp -resize 450x -strip -quality 80 original-thumb-mobile.webp
 ```
 
 Both `-thumb` and `-thumb-mobile` are required for every image referenced in a card grid, and both are WebP regardless of the source format.
