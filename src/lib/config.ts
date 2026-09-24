@@ -33,9 +33,7 @@ function normalizeResumeUrl(raw: unknown): string | undefined {
 }
 
 const envResume = normalizeResumeUrl(import.meta.env.VITE_RESUME_URL)
-const fileResume = normalizeResumeUrl(
-	(BaseSite as { resume?: unknown } | undefined)?.resume
-)
+const fileResume = normalizeResumeUrl((BaseSite as { resume?: unknown } | undefined)?.resume)
 
 // Map marker coordinates - same "Netlify env first, .env fallback" chain:
 //   1. Build-time env `VITE_MAP_LAT` / `VITE_MAP_LNG` (Netlify dashboard

@@ -43,9 +43,7 @@ function isMatch(required: string, candidate: string): boolean {
 	if (!req || !sel) return false
 	if (req === sel) return true
 	if (req.length < 3) return false
-	return (
-		sel.startsWith(req) || sel.endsWith(req) || req.startsWith(sel) || req.endsWith(sel)
-	)
+	return sel.startsWith(req) || sel.endsWith(req) || req.startsWith(sel) || req.endsWith(sel)
 }
 
 function readRequired(): string[] {
@@ -129,7 +127,10 @@ export default function CompareTechnologies() {
 
 				<section className="space-y-3">
 					<SlabTitle title="Stack Compare" config="4c" as="h1" />
-					<p className="max-w-prose text-sm leading-relaxed" style={{ color: 'var(--subtext)' }}>
+					<p
+						className="max-w-prose text-sm leading-relaxed"
+						style={{ color: 'var(--subtext)' }}
+					>
 						List the stack your role or project needs and see how it lines up against
 						the full skill set. Everything is stored in your browser only.
 					</p>
@@ -148,7 +149,8 @@ export default function CompareTechnologies() {
 					<span
 						className="pointer-events-none absolute inset-x-12 top-0 h-px"
 						style={{
-							background: 'linear-gradient(90deg, transparent, var(--primary), transparent)',
+							background:
+								'linear-gradient(90deg, transparent, var(--primary), transparent)',
 							opacity: 0.6,
 						}}
 					/>
@@ -163,7 +165,10 @@ export default function CompareTechnologies() {
 							<IconTrophy size={18} color="var(--primary)" />
 						</span>
 						<div>
-							<h2 className="text-base font-bold leading-tight" style={{ color: 'var(--text)' }}>
+							<h2
+								className="text-base font-bold leading-tight"
+								style={{ color: 'var(--text)' }}
+							>
 								Match score
 							</h2>
 							<p className="text-xs" style={{ color: 'var(--subtext)' }}>
@@ -186,7 +191,8 @@ export default function CompareTechnologies() {
 							className="h-full rounded-full transition-all duration-500"
 							style={{
 								width: `${score}%`,
-								background: 'linear-gradient(90deg, var(--primary-dim), var(--primary))',
+								background:
+									'linear-gradient(90deg, var(--primary-dim), var(--primary))',
 								boxShadow: '0 0 12px rgba(var(--primary-rgb, 0,213,217),0.5)',
 							}}
 						/>
@@ -307,19 +313,31 @@ export default function CompareTechnologies() {
 											</span>
 										) : null}
 										<div className="flex-1 min-w-0">
-											<p className="text-sm font-bold" style={{ color: 'var(--text)' }}>
+											<p
+												className="text-sm font-bold"
+												style={{ color: 'var(--text)' }}
+											>
 												{tech?.name}
-												{tech && tech.name.toLowerCase() !== req.toLowerCase() && (
-													<span
-														className="ml-2 text-xs font-normal"
-														style={{ color: 'var(--subtext)' }}
-													>
-														matched "{req}"
-													</span>
-												)}
+												{tech &&
+													tech.name.toLowerCase() !==
+														req.toLowerCase() && (
+														<span
+															className="ml-2 text-xs font-normal"
+															style={{ color: 'var(--subtext)' }}
+														>
+															matched "{req}"
+														</span>
+													)}
 											</p>
-											<p className="text-xs" style={{ color: 'var(--subtext)' }}>
-												{tech?.desc} · {tech ? getDuration(tech.startDate, tech.endDate) : ''} experience
+											<p
+												className="text-xs"
+												style={{ color: 'var(--subtext)' }}
+											>
+												{tech?.desc} ·{' '}
+												{tech
+													? getDuration(tech.startDate, tech.endDate)
+													: ''}{' '}
+												experience
 											</p>
 										</div>
 										<TagBadge tag={tech?.category ?? ''} />
@@ -335,7 +353,8 @@ export default function CompareTechnologies() {
 								))}
 							{matchedCount === 0 && (
 								<p className="text-xs" style={{ color: 'var(--subtext)' }}>
-									Nothing matched yet - check the spelling or add more requirements.
+									Nothing matched yet - check the spelling or add more
+									requirements.
 								</p>
 							)}
 						</div>
@@ -361,10 +380,16 @@ export default function CompareTechnologies() {
 											borderLeftColor: '#f0b429',
 										}}
 									>
-										<p className="text-sm font-bold" style={{ color: 'var(--text)' }}>
+										<p
+											className="text-sm font-bold"
+											style={{ color: 'var(--text)' }}
+										>
 											{req}
 										</p>
-										<p className="text-xs ml-auto hidden sm:block" style={{ color: 'var(--subtext)' }}>
+										<p
+											className="text-xs ml-auto hidden sm:block"
+											style={{ color: 'var(--subtext)' }}
+										>
 											Not in the stack
 										</p>
 										<button

@@ -26,9 +26,7 @@ export default function ProjectGallery({
 
 	const isControlled = controlledIndex !== undefined
 	const lightboxIndex = isControlled ? controlledIndex : internalIndex
-	function setLightboxIndex(
-		next: number | null | ((prev: number | null) => number | null)
-	) {
+	function setLightboxIndex(next: number | null | ((prev: number | null) => number | null)) {
 		const value = typeof next === 'function' ? next(lightboxIndex ?? null) : next
 		if (isControlled) onLightboxChange?.(value)
 		else setInternalIndex(value)

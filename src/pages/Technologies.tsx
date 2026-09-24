@@ -90,8 +90,16 @@ function TechCard({
 					<button
 						onClick={onToggle}
 						aria-pressed={selected}
-						aria-label={selected ? `Deselect ${tech.name}` : `Select ${tech.name} for comparison`}
-						title={selected ? `Deselect ${tech.name}` : `Select ${tech.name} for comparison`}
+						aria-label={
+							selected
+								? `Deselect ${tech.name}`
+								: `Select ${tech.name} for comparison`
+						}
+						title={
+							selected
+								? `Deselect ${tech.name}`
+								: `Select ${tech.name} for comparison`
+						}
 						className="w-5 h-5 rounded-full border flex items-center justify-center transition-colors duration-150"
 						style={{
 							borderColor: selected ? 'var(--primary)' : 'var(--overlay)',
@@ -181,9 +189,7 @@ export default function Technologies() {
 
 	function toggle(id: string) {
 		setSelectedIds(
-			selectedIds.includes(id)
-				? selectedIds.filter((v) => v !== id)
-				: [...selectedIds, id]
+			selectedIds.includes(id) ? selectedIds.filter((v) => v !== id) : [...selectedIds, id]
 		)
 	}
 
@@ -214,7 +220,9 @@ export default function Technologies() {
 				{/* Tech grid by category */}
 				{CATEGORIES.filter((c) => c !== 'All').map((category) => {
 					const techs = technologies.filter(
-						(t) => t.category === category && (!showSelectedOnly || selectedIds.includes(t.id))
+						(t) =>
+							t.category === category &&
+							(!showSelectedOnly || selectedIds.includes(t.id))
 					)
 					if (techs.length === 0) return null
 					return (
@@ -229,11 +237,18 @@ export default function Technologies() {
 								<button
 									onClick={() => {
 										const ids = techs.map((t) => t.id)
-										const allSelected = ids.every((id) => selectedIds.includes(id))
+										const allSelected = ids.every((id) =>
+											selectedIds.includes(id)
+										)
 										setSelectedIds(
 											allSelected
 												? selectedIds.filter((id) => !ids.includes(id))
-												: [...selectedIds, ...ids.filter((id) => !selectedIds.includes(id))]
+												: [
+														...selectedIds,
+														...ids.filter(
+															(id) => !selectedIds.includes(id)
+														),
+													]
 										)
 									}}
 									className="hover-primary ml-auto text-xs font-medium"
@@ -271,7 +286,8 @@ export default function Technologies() {
 							</h2>
 						</div>
 						<p className="mb-6 text-sm" style={{ color: 'var(--subtext)' }}>
-							Everything else picked up across projects, minus the technologies listed above.
+							Everything else picked up across projects, minus the technologies listed
+							above.
 						</p>
 						<div className="space-y-6">
 							{skills.map((group) => (
@@ -316,7 +332,11 @@ export default function Technologies() {
 							backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.08)',
 							boxShadow: '0 8px 24px rgba(var(--primary-rgb, 0,213,217),0.25)',
 						}}
-						aria-label={showSelectedOnly ? 'Show all technologies' : 'Show only selected technologies'}
+						aria-label={
+							showSelectedOnly
+								? 'Show all technologies'
+								: 'Show only selected technologies'
+						}
 					>
 						<IconCheck size={14} stroke={2.5} />
 						{showSelectedOnly ? 'Show all' : `Selected (${selectedIds.length})`}

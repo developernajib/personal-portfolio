@@ -45,7 +45,7 @@ export default function Lightbox({
 	useEffect(() => {
 		const el = frameRef.current
 		if (!el) return
-		let start: { x: number, y: number } | null = null
+		let start: { x: number; y: number } | null = null
 		const onTouchStart = (e: TouchEvent) => {
 			if (e.touches.length === 1) {
 				start = { x: e.touches[0].clientX, y: e.touches[0].clientY }
@@ -216,13 +216,13 @@ export default function Lightbox({
 						src={current.src}
 						alt={current.alt}
 						className="object-contain rounded-lg shadow-2xl lightbox-img"
-							style={{
-								transform: zoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
-								transformOrigin: `${origin.x}% ${origin.y}%`,
-								transition: 'transform 0.15s ease-out',
-							}}
-							draggable={false}
-						/>
+						style={{
+							transform: zoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
+							transformOrigin: `${origin.x}% ${origin.y}%`,
+							transition: 'transform 0.15s ease-out',
+						}}
+						draggable={false}
+					/>
 					{!zoomed && (current.caption || items.length > 1) && (
 						<div
 							className="pointer-events-none absolute inset-x-0 bottom-0 flex items-baseline justify-center gap-2 px-4 pt-8 pb-3"
@@ -308,7 +308,6 @@ export default function Lightbox({
 						))}
 					</div>
 				)}
-
 			</div>
 		</div>,
 		document.body

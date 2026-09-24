@@ -9,8 +9,7 @@ interface Props {
 export default function ProjectLinks({ project }: Props) {
 	const live = project.liveUrl && isValidHttpUrl(project.liveUrl) ? project.liveUrl : null
 	const extras = (project.extraLiveUrls ?? []).filter((e) => isValidHttpUrl(e.url))
-	const source =
-		project.githubUrl && isValidHttpUrl(project.githubUrl) ? project.githubUrl : null
+	const source = project.githubUrl && isValidHttpUrl(project.githubUrl) ? project.githubUrl : null
 
 	if (!live && extras.length === 0 && !source) return null
 

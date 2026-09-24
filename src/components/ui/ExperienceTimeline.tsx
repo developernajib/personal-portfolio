@@ -105,8 +105,7 @@ export default function ExperienceTimeline({ items }: ExperienceTimelineProps) {
 									className="text-xs px-1.5 py-0.5 rounded font-mono"
 									style={{
 										backgroundColor: EXPERIENCE_TYPE_BG[item.type],
-										color:
-											EXPERIENCE_TYPE_COLOR[item.type] ?? 'var(--primary)',
+										color: EXPERIENCE_TYPE_COLOR[item.type] ?? 'var(--primary)',
 									}}
 								>
 									{EXPERIENCE_TYPE_LABEL[item.type]}

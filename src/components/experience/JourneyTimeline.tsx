@@ -188,7 +188,8 @@ export default function JourneyTimeline({ items }: Props) {
 												boxShadow: item.highlight
 													? `0 0 14px ${color}`
 													: `0 0 8px ${color}55`,
-												transform: hovered === item.id ? 'scale(1.4)' : 'scale(1)',
+												transform:
+													hovered === item.id ? 'scale(1.4)' : 'scale(1)',
 											}}
 										/>
 									</span>
@@ -213,7 +214,10 @@ export default function JourneyTimeline({ items }: Props) {
 													boxShadow: item.highlight
 														? `0 0 14px ${color}`
 														: `0 0 8px ${color}55`,
-													transform: hovered === item.id ? 'scale(1.4)' : 'scale(1)',
+													transform:
+														hovered === item.id
+															? 'scale(1.4)'
+															: 'scale(1)',
 												}}
 											/>
 										</span>
@@ -228,10 +232,14 @@ export default function JourneyTimeline({ items }: Props) {
 												? 'left-[calc(50%+30px)]'
 												: 'right-[calc(50%+30px)]'
 										}`}
-										style={{ color: hovered === item.id ? color : 'var(--subtext)' }}
+										style={{
+											color: hovered === item.id ? color : 'var(--subtext)',
+										}}
 									>
 										{new Date(item.startDate).getFullYear()} -{' '}
-										{item.endDate ? new Date(item.endDate).getFullYear() : 'Present'}
+										{item.endDate
+											? new Date(item.endDate).getFullYear()
+											: 'Present'}
 									</span>
 								) : (
 									<Link
@@ -241,10 +249,14 @@ export default function JourneyTimeline({ items }: Props) {
 												? 'left-[calc(50%+30px)]'
 												: 'right-[calc(50%+30px)]'
 										}`}
-										style={{ color: hovered === item.id ? color : 'var(--subtext)' }}
+										style={{
+											color: hovered === item.id ? color : 'var(--subtext)',
+										}}
 									>
 										{new Date(item.startDate).getFullYear()} -{' '}
-										{item.endDate ? new Date(item.endDate).getFullYear() : 'Present'}
+										{item.endDate
+											? new Date(item.endDate).getFullYear()
+											: 'Present'}
 									</Link>
 								)}
 
@@ -259,7 +271,9 @@ export default function JourneyTimeline({ items }: Props) {
 										className="rounded-xl border p-4 transition-all duration-200 hover:-translate-y-0.5"
 										style={{
 											backgroundColor: 'var(--bg-surface)',
-											borderColor: item.highlight ? 'var(--primary)' : 'var(--overlay)',
+											borderColor: item.highlight
+												? 'var(--primary)'
+												: 'var(--overlay)',
 											...(item.highlight && {
 												boxShadow:
 													'0 0 24px rgba(var(--primary-rgb, 0,213,217), 0.12)',
@@ -299,7 +313,8 @@ export default function JourneyTimeline({ items }: Props) {
 															(e.currentTarget.style.color = color)
 														}
 														onMouseLeave={(e) =>
-															(e.currentTarget.style.color = 'var(--text)')
+															(e.currentTarget.style.color =
+																'var(--text)')
 														}
 													>
 														{item.role}
@@ -324,15 +339,21 @@ export default function JourneyTimeline({ items }: Props) {
 											style={{ color: 'var(--subtext)' }}
 										>
 											<span className="font-mono">
-												{formatDate(item.startDate, { yearMonthOnly: true })} -{' '}
+												{formatDate(item.startDate, {
+													yearMonthOnly: true,
+												})}{' '}
+												-{' '}
 												{item.endDate
-													? formatDate(item.endDate, { yearMonthOnly: true })
+													? formatDate(item.endDate, {
+															yearMonthOnly: true,
+														})
 													: 'Present'}
 											</span>
 											<span
 												className="font-mono px-1.5 py-px rounded"
 												style={{
-													backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.1)',
+													backgroundColor:
+														'rgba(var(--primary-rgb, 0,213,217),0.1)',
 													color: 'var(--primary)',
 												}}
 											>

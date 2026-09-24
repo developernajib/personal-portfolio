@@ -58,11 +58,7 @@ export default function ProjectHeroImage({ src, alt, onOpen, contain }: Props) {
 				</span>
 			</button>
 			{useInternal && open && (
-				<Lightbox
-					items={[{ src, alt }]}
-					currentIndex={0}
-					onClose={() => setOpen(false)}
-				/>
+				<Lightbox items={[{ src, alt }]} currentIndex={0} onClose={() => setOpen(false)} />
 			)}
 		</>
 	)

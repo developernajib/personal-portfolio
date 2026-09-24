@@ -17,10 +17,8 @@ export default function ProjectCard({ project, maxTags, compact }: ProjectCardPr
 	const [imgError, setImgError] = useState(false)
 	const visited = useVisitedProjects()
 	const isVisited = visited.has(project.slug)
-	const visibleTags =
-		maxTags !== undefined ? project.tags.slice(0, maxTags) : project.tags
-	const hiddenCount =
-		maxTags !== undefined ? project.tags.length - visibleTags.length : 0
+	const visibleTags = maxTags !== undefined ? project.tags.slice(0, maxTags) : project.tags
+	const hiddenCount = maxTags !== undefined ? project.tags.length - visibleTags.length : 0
 
 	return (
 		<Link

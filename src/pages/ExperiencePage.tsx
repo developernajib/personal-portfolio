@@ -43,10 +43,7 @@ export default function ExperiencePage() {
 							className="flex items-center gap-2 text-lg font-bold mb-5"
 							style={{ color: 'var(--text)' }}
 						>
-							<IconBriefcase
-								size={18}
-								color={EXPERIENCE_TYPE_COLOR['learning']}
-							/>
+							<IconBriefcase size={18} color={EXPERIENCE_TYPE_COLOR['learning']} />
 							Learning
 						</h2>
 						<div className="space-y-4">
