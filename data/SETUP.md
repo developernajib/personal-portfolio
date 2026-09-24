@@ -1,6 +1,6 @@
 # Personal Data Setup
 
-This folder contains your personal data. **It is gitignored** — your real files are never pushed to GitHub.
+This folder contains your personal data. **It is gitignored** - your real files are never pushed to GitHub.
 
 ## Quick Start
 
@@ -13,6 +13,7 @@ cp experience.example.ts experience.ts
 cp projects.example.ts projects.ts
 cp technologies.example.ts technologies.ts
 cp certificates.example.ts certificates.ts
+cp skills.example.ts skills.ts
 cp education.example.ts education.ts
 cp currentlyWorkingOn.example.ts currentlyWorkingOn.ts
 ```
@@ -26,23 +27,23 @@ cp .env.example .env
 ```
 
 | Variable ----------- | Description -- |-------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_GITHUB_TOKEN` | GitHub Personal Access Token (classic). Scopes: `read:user`. Used for the GitHub Activity heatmap widget. Generate at https://github.com/settings/tokens |
+| `VITE_GITHUB_TOKEN` | GitHub Personal Access Token (classic). Scopes: `read:user`. Used for the GitHub Activity heatmap widget. Generate at https://github.com/settings/tokens - you may mix the literal text `NajIB` anywhere inside the value, the app strips it before use so a leaked value alone cannot authenticate |
 | `VITE_RESUME_URL` | Google Drive (or any public URL) to your resume PDF. Opens in a new tab on click. Leave empty to hide the Resume button. |
 
 ---
 
 ## File-by-File Guide
 
-### `config.ts` — Site & Personal Info
+### `config.ts` - Site & Personal Info
 
-Your identity, location, and social links. Used across the entire site — header, footer, hero section, SEO meta tags, and the location map widget.
+Your identity, location, and social links. Used across the entire site - header, footer, hero section, SEO meta tags, and the location map widget.
 
 | Field               | What to put                                           |
 | ------------------- | ----------------------------------------------------- |
 | `name`              | Display name (shown in header)                        |
 | `fullName`          | Full name (hero section and meta tags)                |
 | `title`             | Job title (e.g. "Software Engineer II")               |
-| `image`             | Profile photo filename — place the image in `public/` |
+| `image`             | Profile photo filename - place the image in `public/` |
 | `url`               | Your portfolio's live URL                             |
 | `description`       | One-liner about yourself (used in meta tags)          |
 | `location.city`     | Your city                                             |
@@ -57,7 +58,7 @@ Your identity, location, and social links. Used across the entire site — heade
 
 ---
 
-### `experience.ts` — Work Experience
+### `experience.ts` - Work Experience
 
 Array of jobs/roles. Displayed on the homepage (featured items) and the Experience page.
 
@@ -68,7 +69,7 @@ Array of jobs/roles. Displayed on the homepage (featured items) and the Experien
 | `company`     | Yes      | Company name                                                                   |
 | `companyUrl`  | No       | Company website URL                                                            |
 | `location`    | No       | City, Country                                                                  |
-| `logoUrl`     | No       | Company logo path — place in `public/logos/`                                   |
+| `logoUrl`     | No       | Company logo path - place in `public/logos/`                                   |
 | `logoAlt`     | No       | Alt text for the logo                                                          |
 | `startDate`   | Yes      | Format: `YYYY-MM-DD`                                                           |
 | `endDate`     | No       | Omit for current position                                                      |
@@ -81,11 +82,11 @@ Array of jobs/roles. Displayed on the homepage (featured items) and the Experien
 | `projects`    | No       | Array of projects at this company: `{ name, purpose, description, tags, url }` |
 | `manager`     | No       | Manager info: `{ name, title, email, linkedin }`                               |
 | `team`        | No       | Team members: `{ name, position, email, github, linkedin }`                    |
-| `gallery`     | No       | Photos: `{ src, caption }` — place images in `public/gallery/`                 |
+| `gallery`     | No       | Photos: `{ src, caption }` - place images in `public/gallery/`                 |
 
 ---
 
-### `projects.ts` — Portfolio Projects
+### `projects.ts` - Portfolio Projects
 
 Array of projects to showcase. Displayed on the Projects page with card layout and detail pages.
 
@@ -94,18 +95,19 @@ Array of projects to showcase. Displayed on the Projects page with card layout a
 | `slug`            | Yes      | URL slug (e.g. `my-saas-app`)                  |
 | `title`           | Yes      | Project name                                   |
 | `description`     | Yes      | Short description (shown in card view)         |
-| `longDescription` | No       | Detailed description — supports **markdown**   |
-| `image`           | Yes      | Cover image path — place in `public/projects/` |
+| `longDescription` | No       | Detailed description - supports **markdown**   |
+| `image`           | Yes      | Cover image path - place in `public/projects/` |
 | `gallery`         | No       | Additional screenshots: `{ src, caption }`     |
 | `date`            | Yes      | Format: `YYYY-MM-DD`                           |
 | `tags`            | Yes      | Tech stack (array of strings)                  |
 | `liveUrl`         | No       | Live demo URL                                  |
 | `githubUrl`       | No       | Source code URL                                |
 | `featured`        | No       | `true` to highlight                            |
+| `order`           | No       | Display serial, lower shows first (e.g. `1`, `2`, `3`). Items without `order` keep file position after ordered ones |
 
 ---
 
-### `technologies.ts` — Tech Stack
+### `technologies.ts` - Tech Stack
 
 Array of technologies you know. The **first 7 items** appear on the homepage preview, so order them by importance.
 
@@ -115,18 +117,18 @@ Array of technologies you know. The **first 7 items** appear on the homepage pre
 | `name`      | Yes      | Display name                                                        |
 | `desc`      | Yes      | Short description (e.g. "JavaScript library for UIs")               |
 | `category`  | Yes      | `Frontend`, `Backend`, `Language`, `Database`, `DevOps`, etc.       |
-| `icon`      | Yes      | Icon URL — use `https://cdn.simpleicons.org/{name}/{hexcolor}`      |
+| `icon`      | Yes      | Local icon path - download the SVG into `public/icons/` as `{slug}-{hex}.svg` and use `/icons/{slug}-{hex}.svg` (never hotlink `cdn.simpleicons.org`, links can break) |
 | `iconBg`    | Yes      | Background tint for the icon (hex + alpha, e.g. `#61DAFB20`)        |
 | `startDate` | Yes      | When you started using it (`YYYY-MM-DD`)                            |
 | `endDate`   | No       | Set if you no longer actively use it                                |
 | `featured`  | No       | `true` to prioritize in display                                     |
-| `usage`     | No       | Where you used it — array of `{ context, company, role, from, to }` |
+| `usage`     | No       | Where you used it - array of `{ context, company, role, from, to }` |
 
-**Finding icons:** Browse [Simple Icons](https://simpleicons.org/) for brand icons. URL format: `https://cdn.simpleicons.org/{slug}/{hexcolor}`
+**Finding icons:** Browse [Simple Icons](https://simpleicons.org/) for brand icons. Download the SVG into `public/icons/` - never hotlink the CDN in data files.
 
 ---
 
-### `certificates.ts` — Certifications
+### `certificates.ts` - Certifications
 
 Array of certificates and credentials.
 
@@ -136,14 +138,29 @@ Array of certificates and credentials.
 | `title`         | Yes      | Certificate name                                         |
 | `issuer`        | Yes      | Issuing organization (e.g. Udemy, AWS, Coursera)         |
 | `date`          | Yes      | Date received (`YYYY-MM-DD`)                             |
-| `image`         | Yes      | Certificate image path — place in `public/certificates/` |
+| `image`         | Yes      | Certificate image path - place in `public/certificates/` |
+| `gallery`       | No       | Extra images for the detail page, `{ src, caption? }[]`  |
 | `credentialUrl` | No       | Verification/credential link                             |
 | `description`   | No       | What the certificate covers                              |
 | `skills`        | No       | Related skills (array of strings)                        |
+| `order`         | No       | Display serial, lower shows first. Items without `order` keep file position after ordered ones |
+
+Each certificate gets a detail page at `/certificates/:id`, opened by clicking the card. Image preview lives on that detail page: click the hero or a gallery thumbnail for the full-screen viewer.
 
 ---
 
-### `education.ts` — Education
+### `skills.ts` - Skills
+
+Grouped skill names shown at the bottom of the Technologies page. Keep out anything already listed in `technologies.ts`. Plain strings only, no icons or detail pages.
+
+| Field   | Required | Notes                                  |
+| ------- | -------- | -------------------------------------- |
+| `title` | Yes      | Group name (e.g. `Backend and APIs`)   |
+| `items` | Yes      | Skill names (array of strings)         |
+
+---
+
+### `education.ts` - Education
 
 Array of degrees and education entries.
 
@@ -160,13 +177,13 @@ Array of degrees and education entries.
 
 ---
 
-### `currentlyWorkingOn.ts` — Bento Widget
+### `currentlyWorkingOn.ts` - Bento Widget
 
 What you're currently building and learning. Shown in the homepage bento grid widget.
 
 Two arrays to fill out:
 
-**`currentlyWorkingOn`** — active projects:
+**`currentlyWorkingOn`** - active projects:
 
 | Field      | Required | Notes                      |
 | ---------- | -------- | -------------------------- |
@@ -174,7 +191,7 @@ Two arrays to fill out:
 | `subtitle` | Yes      | Stack or short description |
 | `url`      | No       | Link to the project        |
 
-**`currentlyLearning`** — what you're studying:
+**`currentlyLearning`** - what you're studying:
 
 | Field      | Required | Notes                   |
 | ---------- | -------- | ----------------------- |
@@ -210,7 +227,7 @@ The app uses thumbnails in grids/cards for performance, and full-res images in l
 **Convention:** for every image, create a smaller `-thumb` version alongside it. If a `-thumb` file doesn't exist, the browser will show a broken image in the grid.
 
 ```bash
-# Using ImageMagick — resize to 400px wide, keep aspect ratio
+# Using ImageMagick - resize to 400px wide, keep aspect ratio
 magick foo.webp -resize 400x foo-thumb.webp
 ```
 
@@ -231,8 +248,8 @@ Or use [Squoosh](https://squoosh.app) for a web-based tool.
 ## Tips
 
 - All dates use `YYYY-MM-DD` format
-- The first 7 technologies appear on the homepage — order them by what you want to highlight
+- The first 7 technologies appear on the homepage - order them by what you want to highlight
 - Set `featured: true` on your best projects and most relevant experience
 - Use `noDetail: true` on experience entries to skip generating a detail page (good for short freelance gigs)
 - Markdown is supported in project `longDescription`
-- Use `.webp` for images — significantly smaller file size than PNG/JPEG
+- Use `.webp` for images - significantly smaller file size than PNG/JPEG

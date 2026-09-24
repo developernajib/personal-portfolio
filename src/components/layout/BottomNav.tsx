@@ -198,7 +198,21 @@ export default function BottomNav() {
 				</div>
 			</div>
 
-			{/* Floating bottom nav bar — glass morphism */}
+			{/* Soft veil above the nav - hints content below without showing it */}
+			<div
+				aria-hidden="true"
+				className="fixed bottom-0 left-0 right-0 z-40 lg:hidden pointer-events-none"
+				style={{
+					height: '6.5rem',
+					background: 'linear-gradient(to top, var(--bg-base) 25%, transparent)',
+					backdropFilter: 'blur(3px)',
+					WebkitBackdropFilter: 'blur(3px)',
+					maskImage: 'linear-gradient(to top, black 45%, transparent)',
+					WebkitMaskImage: 'linear-gradient(to top, black 45%, transparent)',
+				}}
+			/>
+
+			{/* Floating bottom nav bar - glass morphism */}
 			<div
 				className="fixed bottom-0 left-0 right-0 z-50 lg:hidden px-3"
 				style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))' }}

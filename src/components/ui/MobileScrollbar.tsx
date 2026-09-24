@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * Custom scrollbar for mobile/touch devices — mimics the desktop
+ * Custom scrollbar for mobile/touch devices - mimics the desktop
  * gradient scrollbar (fades from transparent at top to primary at bottom).
  * Only renders on touch devices. Hidden on pointer (desktop) devices.
  */

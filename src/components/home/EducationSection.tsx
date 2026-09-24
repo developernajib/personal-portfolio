@@ -23,7 +23,7 @@ export default function EducationSection() {
 						}}
 					>
 						<div className="flex items-start justify-between gap-4 flex-wrap">
-							{/* Left — degree + institution */}
+							{/* Left - degree + institution */}
 							<div className="flex items-start gap-3">
 								<div
 									className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg"
@@ -50,12 +50,12 @@ export default function EducationSection() {
 										className="text-sm mt-0.5"
 										style={{ color: 'var(--subtext)' }}
 									>
-										{item.institution} — {item.location}
+										{item.institution} - {item.location}
 									</p>
 								</div>
 							</div>
 
-							{/* Right — year + CGPA */}
+							{/* Right - year + CGPA */}
 							<div className="flex flex-col items-end gap-2 flex-shrink-0">
 								<div
 									className="flex items-center gap-1.5 text-xs"
@@ -63,7 +63,7 @@ export default function EducationSection() {
 								>
 									<IconCalendarEvent size={11} />
 									<span>
-										{item.startYear} — {item.endYear}
+										{item.startYear} - {item.endYear}
 									</span>
 								</div>
 								<div

@@ -1,19 +1,33 @@
 import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { IconArrowLeft } from '@tabler/icons-react'
 import Container from '@/components/ui/Container'
 import BackgroundEffect from '@/components/ui/BackgroundEffect'
 import ProjectDetailHeader from '@/components/project/ProjectDetailHeader'
 import ProjectHeroImage from '@/components/project/ProjectHeroImage'
+import ProjectLinks from '@/components/project/ProjectLinks'
 import ProjectDescription from '@/components/project/ProjectDescription'
 import ProjectGallery from '@/components/project/ProjectGallery'
 import { projects } from '@/data/projects'
+import { markProjectVisited } from '@/lib/visited'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function ProjectDetail() {
 	const { slug } = useParams<{ slug: string }>()
 	const project = projects.find((p) => p.slug === slug)
 	useDocTitle(project?.title)
+	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+	const gallery = project?.gallery ?? []
+	const heroIndex = Math.max(
+		0,
+		gallery.findIndex((g) => g.src === project?.image)
+	)
+
+	useEffect(() => {
+		if (slug) markProjectVisited(slug)
+	}, [slug])
 
 	if (!project) {
 		return (
@@ -44,7 +58,13 @@ export default function ProjectDetail() {
 						className="mb-8 overflow-hidden rounded-xl border"
 						style={{ borderColor: 'var(--overlay)' }}
 					>
-						<ProjectHeroImage src={project.image} alt={project.title} />
+						<ProjectHeroImage
+							src={project.image}
+							alt={project.title}
+							onOpen={
+								gallery.length > 0 ? () => setLightboxIndex(heroIndex) : undefined
+							}
+						/>
 					</div>
 				)}
 
@@ -54,8 +74,15 @@ export default function ProjectDetail() {
 				/>
 
 				{project.gallery && project.gallery.length > 0 && (
-					<ProjectGallery gallery={project.gallery} projectTitle={project.title} />
+					<ProjectGallery
+						gallery={project.gallery}
+						projectTitle={project.title}
+						lightboxIndex={lightboxIndex}
+						onLightboxChange={setLightboxIndex}
+					/>
 				)}
+
+				<ProjectLinks project={project} />
 			</Container>
 		</div>
 	)

@@ -4,6 +4,8 @@ export interface ExperienceProject {
 	description: string
 	tags: string[]
 	url?: string
+	liveUrl?: string
+	githubUrl?: string
 }
 
 export interface ExperienceManager {
@@ -42,7 +44,8 @@ export interface ExperienceItem {
 	details?: string
 	tags: string[]
 	featured?: boolean
-	type: 'fulltime' | 'freelance' | 'contract' | 'parttime'
+	highlight?: boolean
+	type: 'fulltime' | 'freelance' | 'contract' | 'parttime' | 'learning'
 	projects?: ExperienceProject[]
 	manager?: ExperienceManager
 	team?: TeamMember[]

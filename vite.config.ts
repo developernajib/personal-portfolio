@@ -7,7 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import path from 'path'
 import fs from 'fs'
 
-// Stubs for each data file — exported when the real file doesn't exist.
+// Stubs for each data file - exported when the real file doesn't exist.
 // Each stub exports empty data + __missing = true so the app can detect and show setup guide.
 const DATA_STUBS: Record<string, string> = {
 	projects: `export const projects = []; export const __missing = true;`,
@@ -16,7 +16,7 @@ const DATA_STUBS: Record<string, string> = {
 	technologies: `export const technologies = []; export const __missing = true;`,
 	education: `export const education = []; export const __missing = true;`,
 	currentlyWorkingOn: `export const currentlyWorkingOn = []; export const currentlyLearning = []; export const __missing = true;`,
-	config: `const Site = { name: '', fullName: '', title: '', image: '', email: '', github: '', linkedin: '', telegram: '', location: '', resume: '' }; export default Site; export const __missing = true;`,
+	config: `const Site = { name: '', fullName: '', title: '', image: '', email: '', github: '', linkedin: '', telegram: '', location: '', resume: import.meta.env.VITE_RESUME_URL }; export default Site; export const __missing = true;`,
 }
 
 /** Vite plugin: resolves @data/* imports with __missing flag support.
@@ -55,7 +55,7 @@ export default defineConfig(({ mode }) => ({
 		// Pre-compress assets with Brotli + gzip so Netlify serves pre-built files
 		viteCompression({ algorithm: 'brotliCompress', ext: '.br' }),
 		viteCompression({ algorithm: 'gzip', ext: '.gz' }),
-		// Bundle visualizer — only active when running build:analyze
+		// Bundle visualizer - only active when running build:analyze
 		mode === 'analyze' &&
 			visualizer({
 				filename: 'dist/stats.html',
@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => ({
 			registerType: 'autoUpdate',
 			includeAssets: ['favicon.png', 'fonts/*.woff2', 'cursors/*.cur'],
 			manifest: {
-				name: 'DevNajib — Portfolio',
+				name: 'DevNajib - Portfolio',
 				short_name: 'DevNajib',
 				description:
 					'Full-stack Software Engineer from Bangladesh crafting fast, scalable systems.',
@@ -141,8 +141,8 @@ export default defineConfig(({ mode }) => ({
 						},
 					},
 					{
-						// Map tiles
-						urlPattern: /^https:\/\/[abc]\.basemaps\.cartocdn\.com\/.*/i,
+						// Map tiles (Wikimedia - free, no API key, English labels)
+						urlPattern: /^https:\/\/maps\.wikimedia\.org\/.*/i,
 						handler: 'CacheFirst',
 						options: {
 							cacheName: 'map-tiles',
@@ -164,14 +164,14 @@ export default defineConfig(({ mode }) => ({
 		},
 	},
 	build: {
-		// Target modern browsers — smaller output, no legacy polyfills
+		// Target modern browsers - smaller output, no legacy polyfills
 		target: 'esnext',
 		// Split CSS per chunk so Leaflet's CSS only loads when LocationMap is used
 		cssCodeSplit: true,
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					// Core React runtime — cached across all page navigations
+					// Core React runtime - cached across all page navigations
 					vendor: ['react', 'react-dom', 'react-router-dom'],
 					// Leaflet is ~150kb and only used in LocationMap
 					leaflet: ['leaflet'],

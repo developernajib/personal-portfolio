@@ -38,7 +38,7 @@ function item(text) {
 // ─── Title ────────────────────────────────────────────────────────────────────
 
 line()
-console.log(`${BOLD}${MAGENTA}  DevNajib Portfolio — Setup & Usage Guide${RESET}`)
+console.log(`${BOLD}${MAGENTA}  DevNajib Portfolio - Setup & Usage Guide${RESET}`)
 console.log(`${DIM}  A personal portfolio built with React + Vite + TypeScript${RESET}`)
 
 // ─── 1. Installation ──────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ cmd('npm install')
 
 header('2. Data Files Setup')
 line(`  ${DIM}The portfolio reads personal data from the data/ directory.${RESET}`)
-line(`  ${DIM}These files are not included in the repo — copy from examples:${RESET}`)
+line(`  ${DIM}These files are not included in the repo - copy from examples:${RESET}`)
 line()
 
 const dataFiles = [
@@ -73,7 +73,7 @@ const dataFiles = [
 ]
 
 dataFiles.forEach(([target, example, desc]) => {
-	console.log(`  ${CYAN}${target}${RESET} — ${DIM}${desc}${RESET}`)
+	console.log(`  ${CYAN}${target}${RESET} - ${DIM}${desc}${RESET}`)
 	cmd(`cp ${example} ${target}`)
 })
 
@@ -85,7 +85,7 @@ cmd(dataFiles.map(([t, e]) => `cp ${e} ${t}`).join(' && '))
 
 header('3. Editing Data Files')
 
-line(`  ${BOLD}data/config.ts${RESET} — Site-wide settings`)
+line(`  ${BOLD}data/config.ts${RESET} - Site-wide settings`)
 item('name         → short name shown in header (e.g. "Najib")')
 item('fullName     → full name for SEO / titles')
 item('title        → your role (e.g. "Full-Stack Engineer")')
@@ -96,7 +96,7 @@ item('image        → path to your photo in public/assets/')
 item('resume       → path or URL to your resume')
 
 line()
-line(`  ${BOLD}data/projects.ts${RESET} — Each project entry:`)
+line(`  ${BOLD}data/projects.ts${RESET} - Each project entry:`)
 item('slug         → URL key (e.g. "my-project" → /projects/my-project)')
 item('image        → /projects/my-project.jpg')
 item('gallery      → array of { src, caption } for screenshots')
@@ -105,7 +105,7 @@ item('githubUrl    → source code URL')
 item('featured     → true to show on homepage')
 
 line()
-line(`  ${BOLD}data/certificates.ts${RESET} — Each certificate:`)
+line(`  ${BOLD}data/certificates.ts${RESET} - Each certificate:`)
 item('image        → /certificates/my-cert.jpg')
 item('credentialUrl → link to verify the credential')
 
@@ -121,14 +121,14 @@ item(`${CYAN}public/logos/${RESET}        → company logos`)
 
 line()
 line(`  ${BOLD}Image naming conventions:${RESET}`)
-item('my-project.jpg           → full-res (used in hero / lightbox)')
-item('my-project-thumb.jpg     → thumbnail (450px, used in gallery grid / mobile hero)')
-item('my-project-thumb-mobile.jpg → mobile gallery thumbnail (200px)')
+item('my-project.webp           → full-res (used in hero / lightbox)')
+item('my-project-thumb.webp     → thumbnail (450px, used in gallery grid / mobile hero)')
+item('my-project-thumb-mobile.webp → mobile gallery thumbnail (200px)')
 
 line()
 line(`  ${BOLD}Generate thumbnails with ImageMagick:${RESET}`)
-cmd('magick input.jpg -resize 450x -strip -quality 80 output-thumb.jpg')
-cmd('magick output-thumb.jpg -resize 200x -strip -quality 75 output-thumb-mobile.jpg')
+cmd('magick input.png -resize 450x -strip -quality 80 output-thumb.webp')
+cmd('magick output-thumb.webp -resize 200x -strip -quality 75 output-thumb-mobile.webp')
 
 // ─── 5. Development ───────────────────────────────────────────────────────────
 

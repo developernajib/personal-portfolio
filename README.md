@@ -1,4 +1,4 @@
-# Md Najib Islam — Personal Portfolio
+# Md Najib Islam - Personal Portfolio
 
 A developer portfolio built with React, TypeScript, and Tailwind CSS. Features a terminal-inspired design with dark/light theme support, custom cursors, and a monospace aesthetic powered by JetBrains Mono.
 
@@ -6,12 +6,12 @@ A developer portfolio built with React, TypeScript, and Tailwind CSS. Features a
 
 ## Features
 
-- **Terminal-inspired UI** — monospace typography, custom cursor, blinking terminal caret
-- **Dark / Light theme** — smooth toggle with view-transition circular reveal
-- **Bento grid widgets** — GitHub activity heatmap, location map, currently working on
-- **Fully responsive** — mobile-first with glassmorphism bottom navigation
-- **Fast** — Vite build, preloaded fonts, optimized asset loading
-- **SEO ready** — Open Graph meta, sitemap, robots.txt
+- **Terminal-inspired UI** - monospace typography, custom cursor, blinking terminal caret
+- **Dark / Light theme** - smooth toggle with view-transition circular reveal
+- **Bento grid widgets** - GitHub activity heatmap, location map, currently working on
+- **Fully responsive** - mobile-first with glassmorphism bottom navigation
+- **Fast** - Vite build, preloaded fonts, optimized asset loading
+- **SEO ready** - Open Graph meta, sitemap, robots.txt
 
 ## Tech Stack
 
@@ -68,18 +68,22 @@ data/
 
 ## Image Thumbnails
 
-Every image in `public/projects/` and `public/certificates/` needs a matching thumbnail with a `-thumb` suffix. Thumbnails are used in card grids for faster loading — full-res images load only when clicked.
+Every image in `public/projects/` and `public/certificates/` needs a matching thumbnail with a `-thumb` suffix. Thumbnails are used in card grids for faster loading - full-res images load only when clicked.
 
 ```
-public/projects/my-app.png           ← full resolution (detail page / lightbox)
-public/projects/my-app-thumb.png     ← thumbnail ~300-400px wide (card grid)
+public/projects/my-app.webp           ← full resolution (detail page / lightbox)
+public/projects/my-app-thumb.webp     ← thumbnail ~400px wide (card grid)
+public/projects/my-app-thumb-mobile.webp ← mobile thumbnail ~200px wide
 ```
 
 Generate thumbnails with ImageMagick:
 
 ```bash
-magick original.png -resize 400x -strip -define png:compression-level=9 original-thumb.png
+magick original.png -resize 400x -strip -quality 80 original-thumb.webp
+magick original-thumb.webp -resize 200x -strip -quality 75 original-thumb-mobile.webp
 ```
+
+Both `-thumb` and `-thumb-mobile` are required for every image referenced in a card grid, and both are WebP regardless of the source format.
 
 See [`data/setup.md`](data/setup.md) for detailed image guidelines.
 

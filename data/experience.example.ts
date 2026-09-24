@@ -13,7 +13,7 @@ export const experience: ExperienceItem[] = [
 		// endDate: '2024-01-01', // omit if current job
 		description: 'What you did at this company.',
 		details: 'Longer description of your role and achievements.',
-		tags: ['React', 'Node.js', 'TypeScript'],
+		tags: ['React', 'NodeJS', 'TypeScript'],
 		featured: true,
 		type: 'fulltime',
 		projects: [
@@ -21,7 +21,7 @@ export const experience: ExperienceItem[] = [
 				name: 'Project Name',
 				purpose: 'Internal tool',
 				description: 'What this project does.',
-				tags: ['React', 'Node.js'],
+				tags: ['React', 'NodeJS'],
 				url: 'https://project.com',
 			},
 		],

@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom'
 import { IconCalendarEvent } from '@tabler/icons-react'
 import { formatDate, getDuration, isValidHttpUrl } from '@/lib/utils'
 import TagBadge from './TagBadge'
 import CompanyLogo from './CompanyLogo'
+import { EXPERIENCE_TYPE_LABEL, EXPERIENCE_TYPE_COLOR, EXPERIENCE_TYPE_BG } from '@/lib/constants'
 import type { ExperienceItem } from '@/data/experience'
 
 interface ExperienceTimelineProps {
@@ -14,11 +16,24 @@ export default function ExperienceTimeline({ items }: ExperienceTimelineProps) {
 			{items.map((item) => (
 				<div
 					key={item.id}
-					className="rounded-xl border p-3.5 sm:p-5 transition-colors duration-200"
+					className="rounded-xl border p-3.5 sm:p-5 transition-all duration-200 hover:-translate-y-px"
 					style={{
 						backgroundColor: 'var(--bg-surface)',
-						borderColor: item.featured ? 'var(--primary)' : 'var(--overlay)',
-						borderLeftWidth: item.featured ? '3px' : '1px',
+						borderColor: item.highlight ? 'var(--primary)' : 'var(--overlay)',
+						borderLeftWidth: item.highlight ? '3px' : '1px',
+						...(item.highlight && {
+							boxShadow: '0 0 24px rgba(var(--primary-rgb, 0,213,217), 0.12)',
+						}),
+					}}
+					onMouseEnter={(e) => {
+						e.currentTarget.style.borderColor = item.highlight
+							? 'var(--primary)'
+							: 'rgba(var(--primary-rgb, 0,213,217),0.35)'
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.borderColor = item.highlight
+							? 'var(--primary)'
+							: 'var(--overlay)'
 					}}
 				>
 					<div className="flex items-start gap-3 mb-3">
@@ -27,17 +42,34 @@ export default function ExperienceTimeline({ items }: ExperienceTimelineProps) {
 							logoAlt={item.logoAlt}
 							company={item.company}
 							size="md"
-							color={item.featured ? 'var(--primary)' : 'var(--subtext)'}
+							color={item.highlight ? 'var(--primary)' : 'var(--subtext)'}
 						/>
 
 						{/* Role + company + dates */}
 						<div className="flex-1 min-w-0">
-							<h3
-								className="font-semibold text-base"
-								style={{ color: 'var(--text)' }}
-							>
-								{item.role}
-							</h3>
+							{item.noDetail ? (
+								<h3
+									className="font-semibold text-base"
+									style={{ color: 'var(--text)' }}
+								>
+									{item.role}
+								</h3>
+							) : (
+								<Link
+									to={`/experience/${item.id}`}
+									className="font-semibold text-base transition-colors duration-150"
+									style={{ color: 'var(--text)' }}
+									onMouseEnter={(e) =>
+										(e.currentTarget.style.color =
+											EXPERIENCE_TYPE_COLOR[item.type] ?? 'var(--primary)')
+									}
+									onMouseLeave={(e) =>
+										(e.currentTarget.style.color = 'var(--text)')
+									}
+								>
+									{item.role}
+								</Link>
+							)}
 							{isValidHttpUrl(item.companyUrl) ? (
 								<a
 									href={item.companyUrl}
@@ -63,19 +95,29 @@ export default function ExperienceTimeline({ items }: ExperienceTimelineProps) {
 								>
 									<IconCalendarEvent size={12} />
 									<span>
-										{formatDate(item.startDate, { yearMonthOnly: true })} —{' '}
+										{formatDate(item.startDate, { yearMonthOnly: true })} -{' '}
 										{item.endDate
 											? formatDate(item.endDate, { yearMonthOnly: true })
 											: 'Present'}
 									</span>
 								</div>
 								<span
+									className="text-xs px-1.5 py-0.5 rounded font-mono"
+									style={{
+										backgroundColor: EXPERIENCE_TYPE_BG[item.type],
+										color:
+											EXPERIENCE_TYPE_COLOR[item.type] ?? 'var(--primary)',
+									}}
+								>
+									{EXPERIENCE_TYPE_LABEL[item.type]}
+								</span>
+								<span
 									className="text-xs px-2 py-0.5 rounded"
 									style={{
-										backgroundColor: item.featured
+										backgroundColor: item.highlight
 											? 'rgba(var(--primary-rgb, 0,213,217),0.1)'
 											: 'var(--bg-mantle)',
-										color: item.featured ? 'var(--primary)' : 'var(--subtext)',
+										color: item.highlight ? 'var(--primary)' : 'var(--subtext)',
 									}}
 								>
 									{getDuration(item.startDate, item.endDate)}

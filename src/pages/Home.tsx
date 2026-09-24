@@ -9,8 +9,9 @@ import ExperienceSection from '@/components/home/ExperienceSection'
 import EducationSection from '@/components/home/EducationSection'
 import ProjectCard from '@/components/ui/ProjectCard'
 import { projects } from '@/data/projects'
+import { sortByOrder } from '@/lib/sort'
 
-// Heavy below-the-fold components — lazy loaded
+// Heavy below-the-fold components - lazy loaded
 const BackgroundEffect = lazy(() => import('@/components/ui/BackgroundEffect'))
 const GitHubActivity = lazy(() => import('@/components/bento/GitHubActivity'))
 const LocationMap = lazy(() => import('@/components/bento/LocationMap'))
@@ -28,22 +29,22 @@ function SectionSkeleton({ height = 200 }: { height?: number }) {
 
 export default function Home() {
 	useDocTitle()
-	const featuredProjects = useMemo(() => projects.filter((p) => p.featured), [])
+	const featuredProjects = useMemo(() => sortByOrder(projects.filter((p) => p.featured)), [])
 
 	return (
 		<div className="relative">
-			{/* Background is non-critical — load lazily */}
+			{/* Background is non-critical - load lazily */}
 			<Suspense fallback={null}>
 				<BackgroundEffect />
 			</Suspense>
 
 			<Container className="relative z-10 space-y-10 py-8 md:py-10">
-				{/* Above the fold — eager, no Suspense wrapper needed */}
+				{/* Above the fold - eager, no Suspense wrapper needed */}
 				<HeroSection />
 				<TechPreviewSection />
 				<ExperienceSection />
 
-				{/* Featured Projects — data is local so renders fast, no skeleton needed */}
+				{/* Featured Projects - data is local so renders fast, no skeleton needed */}
 				<section>
 					<div className="mb-5 flex items-center justify-between">
 						<h2
@@ -63,14 +64,14 @@ export default function Home() {
 						</Link>
 					</div>
 
-					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 						{featuredProjects.slice(0, 4).map((project) => (
-							<ProjectCard key={project.slug} project={project} />
+							<ProjectCard key={project.slug} project={project} maxTags={5} compact />
 						))}
 					</div>
 				</section>
 
-				{/* GitHub Activity — makes network requests, lazy load */}
+				{/* GitHub Activity - makes network requests, lazy load */}
 				<Suspense fallback={<SectionSkeleton height={240} />}>
 					<GitHubActivity />
 				</Suspense>
@@ -78,7 +79,7 @@ export default function Home() {
 				{/* Education */}
 				<EducationSection />
 
-				{/* Bento Grid — LocationMap loads Leaflet, lazy load the whole row */}
+				{/* Bento Grid - LocationMap loads Leaflet, lazy load the whole row */}
 				<section>
 					<h2 className="mb-5 text-xl font-bold" style={{ color: 'var(--text)' }}>
 						More About Me

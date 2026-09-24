@@ -14,7 +14,7 @@ export default function EmailCopyButton({ email, label, size = 15, style, classN
 		<button
 			onClick={() => copyEmail(email)}
 			className={`flex items-center gap-1.5 transition-colors duration-150 ${className ?? ''}`}
-			style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', ...style }}
+			style={{ background: 'none', border: 'none', padding: 0, ...style }}
 			aria-label={`Copy email: ${email}`}
 		>
 			<IconMail size={size} />

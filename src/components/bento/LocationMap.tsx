@@ -13,7 +13,7 @@ import type { Map as LeafletMap } from 'leaflet'
 let leafletPromise: Promise<typeof import('leaflet')> | null = null
 function getLeaflet(): Promise<typeof import('leaflet')> {
 	if (!leafletPromise) {
-		// Inject Leaflet's CSS lazily via a <link> tag — keeps ~150 KB out of the main bundle.
+		// Inject Leaflet's CSS lazily via a <link> tag - keeps ~150 KB out of the main bundle.
 		// Only runs once; subsequent calls return the cached promise.
 		if (!document.getElementById('leaflet-css')) {
 			const link = document.createElement('link')
@@ -102,7 +102,7 @@ export default function LocationMap() {
 
 					const map = L.map(container, {
 						zoomControl: false,
-						attributionControl: false,
+						attributionControl: true,
 						dragging: true,
 						scrollWheelZoom: 'center',
 						doubleClickZoom: true,
@@ -111,12 +111,23 @@ export default function LocationMap() {
 						touchZoom: true,
 					}).setView([lat, lng], 11)
 
-					const tileUrl =
-						mapTheme === 'light'
-							? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-							: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-
-					L.tileLayer(tileUrl, { maxZoom: 19, attribution: '' }).addTo(map)
+					const tileLayer = L.tileLayer(
+						'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+						{
+							maxZoom: 19,
+							attribution: '© OpenStreetMap contributors · © Wikimedia maps',
+						}
+					).addTo(map)
+					// OSM ships a light style only - darken tiles in dark mode
+					// so the map matches the site theme and labels stay readable.
+					if (mapTheme !== 'light') {
+						const tiles = tileLayer.getContainer()
+						if (tiles) {
+							tiles.style.filter =
+								'invert(100%) hue-rotate(180deg) brightness(0.92) contrast(0.92)'
+						}
+					}
+					map.attributionControl.setPrefix(false)
 
 					mapInstanceRef.current = map
 					setLeafletLoaded(true)
@@ -126,7 +137,7 @@ export default function LocationMap() {
 				})
 		}
 
-		// Only load Leaflet when the map scrolls into view — keeps it off the critical path
+		// Only load Leaflet when the map scrolls into view - keeps it off the critical path
 		const observer = new IntersectionObserver(
 			(entries) => {
 				if (entries[0].isIntersecting) {
@@ -168,7 +179,7 @@ export default function LocationMap() {
 				style={{ color: 'var(--text)' }}
 			>
 				<IconMapPin size={16} color="var(--primary)" />
-				Currently Based In 📍
+				Currently Based In
 			</button>
 
 			<div
@@ -212,13 +223,13 @@ export default function LocationMap() {
 			<div className="mt-3 flex items-center justify-between gap-2">
 				<button
 					onClick={recenterMap}
-					className="hover-primary text-xs truncate cursor-pointer"
+					className="hover-primary text-xs truncate cursor-hand"
 					style={{ color: 'var(--subtext)' }}
 				>
 					{Site.location.city}, {Site.location.country}
 				</button>
 				{currentTime && (
-					<div className="relative flex items-center gap-1 group cursor-default px-2 py-1 -mx-2 -my-1 rounded">
+					<div className="relative flex items-center gap-1 group cursor-arrow px-2 py-1 -mx-2 -my-1 rounded">
 						{isDaytime ? (
 							<IconSun size={12} color="#facc15" />
 						) : (

@@ -31,7 +31,7 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 				{member.photo ? (
 					<button
 						className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 transition-opacity duration-150 hover:opacity-80"
-						style={{ borderColor: `${accentColor}60`, cursor: 'zoom-in' }}
+						style={{ borderColor: `${accentColor}60` }}
 						onClick={() => setPhotoOpen(true)}
 						title="View photo"
 					>
@@ -73,12 +73,11 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 						{member.email && (
 							<button
 								onClick={() => copyEmail(member.email!)}
-								className="transition-colors duration-150"
+								className="transition-colors duration-150 cursor-hand"
 								style={{
 									background: 'none',
 									border: 'none',
 									padding: 0,
-									cursor: 'pointer',
 									color: 'var(--subtext)',
 									fontFamily: 'inherit',
 								}}

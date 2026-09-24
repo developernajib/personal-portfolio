@@ -7,7 +7,7 @@ import { useTheme } from '@/lib/useTheme'
 import { experience } from '@/data/experience'
 import { projects } from '@/data/projects'
 
-/* Module-level lookup maps — built once, O(1) access vs O(n) find() */
+/* Module-level lookup maps - built once, O(1) access vs O(n) find() */
 const experienceById = Object.fromEntries(experience.map((e) => [e.id, e.role]))
 const projectsBySlug = Object.fromEntries(projects.map((p) => [p.slug, p.title]))
 
@@ -50,7 +50,7 @@ export default function Header() {
 				{/* Breadcrumb */}
 				<div className="flex items-center text-sm md:text-base font-mono min-w-0 overflow-hidden">
 					{breadcrumb.map((crumb, i) => (
-						<span key={crumb.href} className="flex items-center cursor-pointer">
+						<span key={crumb.href} className="flex items-center">
 							{i > 0 && (
 								<span className="mx-1" style={{ color: 'var(--subtext)' }}>
 									/
@@ -58,7 +58,7 @@ export default function Header() {
 							)}
 							{i === breadcrumb.length - 1 ? (
 								<span
-									className="truncate max-w-[45vw] sm:max-w-none inline-block"
+									className="truncate max-w-[45vw] sm:max-w-none inline-block ibeam"
 									style={{ color: 'var(--primary)' }}
 								>
 									{crumb.label}
@@ -104,7 +104,7 @@ export default function Header() {
 								})}
 								onMouseEnter={(e) => {
 									e.currentTarget.style.color = 'var(--primary)'
-									// Prefetch the page chunk on hover — fires the dynamic import
+									// Prefetch the page chunk on hover - fires the dynamic import
 									// so the bundle is cached before the user clicks
 									item.preload?.()
 								}}
@@ -122,7 +122,7 @@ export default function Header() {
 						))}
 					</nav>
 
-					{/* Theme toggle — hidden on mobile, available in BottomNav More drawer */}
+					{/* Theme toggle - hidden on mobile, available in BottomNav More drawer */}
 					<button
 						onClick={(e) => toggle(e)}
 						className="ml-3 hidden lg:flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-medium hover-bg-primary-up"

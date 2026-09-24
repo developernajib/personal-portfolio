@@ -229,28 +229,23 @@ svg.leaflet-zoom-animated {
 /* cursors */
 
 .leaflet-interactive {
-	cursor: pointer;
+	cursor: url('/cursors/pointer.svg') 10 2, pointer;
 }
 .leaflet-grab {
-	cursor: -webkit-grab;
-	cursor: -moz-grab;
-	cursor: grab;
+	cursor: url('/cursors/pointer.svg') 10 2, pointer;
 }
 .leaflet-crosshair,
 .leaflet-crosshair .leaflet-interactive {
-	cursor: crosshair;
+	cursor: url('/cursors/arrow.svg') 6 3, auto;
 }
 .leaflet-popup-pane,
 .leaflet-control {
-	cursor: auto;
+	cursor: url('/cursors/arrow.svg') 6 3, auto;
 }
 .leaflet-dragging .leaflet-grab,
 .leaflet-dragging .leaflet-grab .leaflet-interactive,
 .leaflet-dragging .leaflet-marker-draggable {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor: -moz-grabbing;
-	cursor: grabbing;
+	cursor: url('/cursors/pointer.svg') 10 2, pointer;
 }
 
 /* marker & overlays interactivity */
@@ -329,7 +324,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	border-bottom: none;
 }
 .leaflet-bar a.leaflet-disabled {
-	cursor: default;
+	cursor: url('/cursors/arrow.svg') 6 3, auto;
 	background-color: #f4f4f4;
 	color: #bbb;
 }
@@ -606,7 +601,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 .leaflet-tooltip.leaflet-interactive {
-	cursor: pointer;
+	cursor: url('/cursors/pointer.svg') 10 2, pointer;
 	pointer-events: auto;
 }
 .leaflet-tooltip-top:before,

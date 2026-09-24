@@ -1,7 +1,9 @@
+import { NavLink } from 'react-router-dom'
 import {
 	IconBrandGithub,
 	IconBrandLinkedin,
 	IconBrandTelegram,
+	IconArrowUp,
 	IconClock,
 } from '@tabler/icons-react'
 import Site from '@/lib/config'
@@ -15,6 +17,13 @@ const socialLinks = [
 	{ href: Site.socials.telegram, label: 'Telegram', Icon: IconBrandTelegram },
 ]
 
+const quickLinks = [
+	{ to: '/projects', label: 'Projects' },
+	{ to: '/experience', label: 'Experience' },
+	{ to: '/technologies', label: 'Technologies' },
+	{ to: '/about', label: 'About' },
+]
+
 export default function Footer() {
 	const year = new Date().getFullYear()
 	const timerRef = useSiteTimer()
@@ -23,20 +32,39 @@ export default function Footer() {
 		<footer className="hidden lg:block mb-4 mt-8">
 			<Container>
 				<div
-					className="flex flex-col items-center justify-between gap-4 rounded-xl border p-5 text-sm md:flex-row md:gap-0"
+					className="flex flex-col items-center justify-between gap-4 rounded-xl border p-5 text-sm lg:flex-row lg:gap-3"
 					style={{
 						backgroundColor: 'var(--bg-crust)',
 						borderColor: 'var(--overlay)',
+						borderTop: '2px solid var(--primary)',
 						color: 'var(--subtext)',
 					}}
 				>
-					<span className="whitespace-nowrap font-mono">
-						© {year} {Site.fullName}
+					<span className="whitespace-nowrap font-mono text-xs">
+						© {year} {Site.fullName} · {Site.location.city}, {Site.location.country}
 					</span>
+
+					<nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs">
+						{quickLinks.map(({ to, label }) => (
+							<NavLink
+								key={to}
+								to={to}
+								className="hover-primary font-mono"
+								style={({ isActive }) => ({
+									color: isActive ? 'var(--primary)' : undefined,
+									textDecoration: isActive ? 'underline' : 'none',
+									textUnderlineOffset: '4px',
+									textDecorationThickness: '2px',
+								})}
+							>
+								{label}
+							</NavLink>
+						))}
+					</nav>
 
 					<div className="flex items-center gap-3">
 						<div className="flex items-center gap-1.5" title="Total visit time">
-							<IconClock size={14} style={{ color: 'var(--subtext)' }} />
+							<IconClock size={14} style={{ color: 'var(--primary)' }} />
 							<span
 								ref={timerRef}
 								className="font-mono text-xs"
@@ -65,8 +93,20 @@ export default function Footer() {
 							email={Site.socials.email}
 							size={18}
 							style={{ color: 'var(--subtext)' }}
-							className="hover:text-[var(--primary)]"
+							className="hover-primary"
 						/>
+
+						<span style={{ color: 'var(--overlay)' }}>-</span>
+
+						<button
+							onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+							aria-label="Back to top"
+							title="Back to top"
+							className="hover-primary"
+							style={{ color: 'var(--subtext)' }}
+						>
+							<IconArrowUp size={18} stroke={1.5} />
+						</button>
 					</div>
 				</div>
 			</Container>

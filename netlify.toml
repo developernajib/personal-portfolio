@@ -30,7 +30,7 @@
     # - font-src: self only (fonts served from /public/fonts/)
     # - connect-src: self + external APIs used at runtime
     # - frame-ancestors: none (reinforces X-Frame-Options)
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.simpleicons.org https://avatars.githubusercontent.com https://*.basemaps.cartocdn.com; font-src 'self'; connect-src 'self' https://api.github.com https://github-contributions-api.jogruber.de; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.simpleicons.org https://avatars.githubusercontent.com https://maps.wikimedia.org; font-src 'self'; connect-src 'self' https://api.github.com https://github-contributions-api.jogruber.de; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'"
 
 [[headers]]
   for = "/assets/*"

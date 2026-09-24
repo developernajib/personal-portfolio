@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { useDocumentTheme } from '@/lib/hooks/useDocumentTheme'
 import { useThrottledMouseMove } from '@/lib/hooks/useThrottledMouseMove'
 
-// Skip entirely on touch/mobile — cursor is meaningless on touch devices
+// Skip entirely on touch/mobile - cursor is meaningless on touch devices
 const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
 function CustomCursorInner() {
@@ -15,7 +15,7 @@ function CustomCursorInner() {
 	const primary = theme === 'light' ? '#0099a0' : '#00D5D9'
 
 	const hoveringRef = useRef(false)
-	/* Throttle elementFromPoint to every 100ms — it forces layout recalc so
+	/* Throttle elementFromPoint to every 100ms - it forces layout recalc so
 	   running it every rAF frame (~16ms) burns unnecessary CPU */
 	const lastHitTestRef = useRef(0)
 
@@ -61,7 +61,7 @@ function CustomCursorInner() {
 	}, [])
 
 	// Use scale() instead of animating width/height/margin.
-	// scale() is a composited-only property — no layout reflow, no repaint,
+	// scale() is a composited-only property - no layout reflow, no repaint,
 	// handled entirely on the GPU compositor thread.
 	const scale = clicking ? 0.57 : hovering ? 1.43 : 1 // 8/14, 20/14, 14/14
 
@@ -109,7 +109,7 @@ function CustomCursorInner() {
 				/>
 			))}
 
-			{/* Center dot — fixed size, scale inherited from parent */}
+			{/* Center dot - fixed size, scale inherited from parent */}
 			<div
 				style={{
 					position: 'absolute',

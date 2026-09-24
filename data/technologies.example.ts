@@ -1,7 +1,7 @@
 import type { Technology } from '@/data/technologies'
 
 // NOTE: usage[] only lists notable job/project entries for context.
-// Most technologies here have been used across many personal projects —
+// Most technologies here have been used across many personal projects -
 // listing all of them would add noise without adding value.
 
 export const technologies: Technology[] = [
@@ -11,7 +11,7 @@ export const technologies: Technology[] = [
 		name: 'React',
 		desc: 'JavaScript library for UIs',
 		category: 'Frontend',
-		icon: 'https://cdn.simpleicons.org/react/61DAFB',
+		icon: '/icons/react-61DAFB.svg',
 		iconBg: '#61DAFB20',
 		startDate: '2022-01-01',
 		featured: true,
@@ -31,7 +31,7 @@ export const technologies: Technology[] = [
 		name: 'TypeScript',
 		desc: 'Typed JavaScript',
 		category: 'Language',
-		icon: 'https://cdn.simpleicons.org/typescript/3178C6',
+		icon: '/icons/typescript-3178C6.svg',
 		iconBg: '#3178C620',
 		startDate: '2022-06-01',
 		featured: true,
@@ -39,10 +39,10 @@ export const technologies: Technology[] = [
 	},
 	{
 		id: 'nodejs',
-		name: 'Node.js',
+		name: 'NodeJS',
 		desc: 'JS backend runtime',
 		category: 'Backend',
-		icon: 'https://cdn.simpleicons.org/nodedotjs/339933',
+		icon: '/icons/nodedotjs-339933.svg',
 		iconBg: '#33993320',
 		startDate: '2021-05-01',
 		endDate: '2023-12-31', // set endDate if no longer using

@@ -28,7 +28,7 @@ export const projects: Project[] = [
 		description: 'Another project description.',
 		image: '/projects/another-project.webp',
 		date: '2023-06-15',
-		tags: ['Laravel', 'Vue.js', 'MySQL'],
+		tags: ['Laravel', 'VueJS', 'MySQL'],
 		githubUrl: 'https://github.com/yourusername/another-project',
 	},
 ]

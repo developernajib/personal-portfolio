@@ -85,7 +85,7 @@ export default function ExperienceHero({ item, accentColor }: Props) {
 						>
 							<IconCalendarEvent size={13} />
 							<span>
-								{formatDate(item.startDate, { yearMonthOnly: true })} —{' '}
+								{formatDate(item.startDate, { yearMonthOnly: true })} -{' '}
 								{item.endDate
 									? formatDate(item.endDate, { yearMonthOnly: true })
 									: 'Present'}

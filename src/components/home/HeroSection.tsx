@@ -51,11 +51,11 @@ export default function HeroSection() {
 				<HeroLink href="https://go.dev" label="Go" ariaLabel="Go programming language" />.{' '}
 				I've designed and shipped{' '}
 				<HeroLink
-					href="/projects/lyncafe"
+					href="/projects/lyncafe-microservice"
 					label="Multi-Tenant SaaS"
 					ariaLabel="LynCafe multi-tenant SaaS project"
 				/>{' '}
-				platforms — applying clean architecture, Domain-Driven Design, and event-driven
+				platforms - applying clean architecture, Domain-Driven Design, and event-driven
 				patterns to real production problems. I believe the best engineers never stop
 				questioning their assumptions, and that mindset drives everything{' '}
 				<HeroLink href="/projects" label="I build" ariaLabel="View my projects" />.
@@ -63,28 +63,32 @@ export default function HeroSection() {
 
 			{/* Actions row */}
 			<div className="flex flex-wrap items-center gap-3">
-				{/* Resume button — styled pill, only shown when VITE_RESUME_URL is set */}
+				{/* Resume button - only shown when a valid resume URL resolves
+				    (Netlify env VITE_RESUME_URL first, then data/config.ts fallback).
+				    Invalid placeholders like "test" resolve to undefined and hide it. */}
 				{Site.resume && (
-					<a
-						href={Site.resume}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-150 hover-bg-primary-up"
-						style={{
-							color: 'var(--primary)',
-							backgroundColor: 'rgba(var(--primary-rgb, 0,213,217), 0.1)',
-							border: '1px solid rgba(var(--primary-rgb, 0,213,217), 0.3)',
-						}}
-					>
-						<IconFileText size={15} stroke={1.5} className="pointer-events-none" />
-						View Resume
-					</a>
-				)}
+					<>
+						<a
+							href={Site.resume}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-150 hover-bg-primary-up"
+							style={{
+								color: 'var(--primary)',
+								backgroundColor: 'rgba(var(--primary-rgb, 0,213,217), 0.1)',
+								border: '1px solid rgba(var(--primary-rgb, 0,213,217), 0.3)',
+							}}
+						>
+							<IconFileText size={15} stroke={1.5} className="pointer-events-none" />
+							View Resume
+						</a>
 
-				{/* Divider */}
-				<span className="select-none text-sm" style={{ color: 'var(--overlay)' }}>
-					|
-				</span>
+						{/* Divider */}
+						<span className="select-none text-sm" style={{ color: 'var(--overlay)' }}>
+							|
+						</span>
+					</>
+				)}
 
 				{/* Social links */}
 				{socialLinks.map(({ href, label, Icon }, i) => (

@@ -21,7 +21,7 @@ function PhotoTile({
 
 	return (
 		<button
-			className="hover-border-primary break-inside-avoid block w-full overflow-hidden rounded-xl border cursor-zoom-in group"
+			className="hover-border-primary break-inside-avoid block w-full overflow-hidden rounded-xl border cursor-hand group"
 			style={{ borderColor: 'var(--overlay)' }}
 			onClick={() => onClick(index)}
 			aria-label={`View ${photo.alt}`}
@@ -99,7 +99,7 @@ export default function Pics() {
 				)}
 			</Container>
 
-			{/* Lightbox — always uses full-res src */}
+			{/* Lightbox - always uses full-res src */}
 			{lightbox.index !== null && (
 				<Lightbox
 					items={lightboxItems}

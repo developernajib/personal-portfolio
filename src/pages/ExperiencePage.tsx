@@ -7,13 +7,15 @@ import CompanyLogo from '@/components/ui/CompanyLogo'
 import { experience } from '@/data/experience'
 import { formatDate, getDuration, isValidHttpUrl } from '@/lib/utils'
 import Container from '@/components/ui/Container'
+import JourneyTimeline from '@/components/experience/JourneyTimeline'
 import { EXPERIENCE_TYPE_LABEL, EXPERIENCE_TYPE_COLOR, EXPERIENCE_TYPE_BG } from '@/lib/constants'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function ExperiencePage() {
 	useDocTitle('Experience')
+	const learning = experience.filter((e) => e.type === 'learning')
 	const fulltime = experience.filter((e) => e.type === 'fulltime')
-	const other = experience.filter((e) => e.type !== 'fulltime')
+	const other = experience.filter((e) => e.type !== 'fulltime' && e.type !== 'learning')
 
 	return (
 		<div className="relative">
@@ -29,19 +31,40 @@ export default function ExperiencePage() {
 						className="max-w-prose text-sm leading-relaxed"
 						style={{ color: 'var(--subtext)' }}
 					>
-						My full professional history — full-time roles, freelance, and part-time
-						work.
+						My full professional history - self-learning, full-time roles, freelance,
+						and part-time work.
 					</p>
 				</section>
 
-				{/* Full-time */}
+				{/* Self Learning */}
+				{learning.length > 0 && (
+					<section>
+						<h2
+							className="flex items-center gap-2 text-lg font-bold mb-5"
+							style={{ color: 'var(--text)' }}
+						>
+							<IconBriefcase
+								size={18}
+								color={EXPERIENCE_TYPE_COLOR['learning']}
+							/>
+							Learning
+						</h2>
+						<div className="space-y-4">
+							{learning.map((item) => (
+								<ExperienceCard key={item.id} item={item} />
+							))}
+						</div>
+					</section>
+				)}
+
+				{/* Full Time Job */}
 				<section>
 					<h2
 						className="flex items-center gap-2 text-lg font-bold mb-5"
 						style={{ color: 'var(--text)' }}
 					>
 						<IconBriefcase size={18} color="var(--primary)" />
-						Full-time
+						Full Time Job
 					</h2>
 					<div className="space-y-4">
 						{fulltime.map((item) => (
@@ -58,7 +81,7 @@ export default function ExperiencePage() {
 							style={{ color: 'var(--text)' }}
 						>
 							<IconBriefcase size={18} color={EXPERIENCE_TYPE_COLOR['freelance']} />
-							Freelance & Part-time
+							Freelance & Part Time Job
 						</h2>
 						<div className="space-y-4">
 							{other.map((item) => (
@@ -67,6 +90,8 @@ export default function ExperiencePage() {
 						</div>
 					</section>
 				)}
+
+				<JourneyTimeline items={experience} />
 			</Container>
 		</div>
 	)
@@ -79,7 +104,7 @@ function ExperienceCard({ item }: { item: (typeof experience)[0] }) {
 
 	return (
 		<div
-			className={`rounded-xl border p-3.5 sm:p-5 transition-colors duration-150${canNavigate ? ' lg:cursor-auto cursor-pointer active:scale-[0.99]' : ''}`}
+			className={`rounded-xl border p-3.5 sm:p-5 transition-colors duration-150${canNavigate ? ' cursor-hand-until-lg active:scale-[0.99]' : ''}`}
 			style={{
 				backgroundColor: 'var(--bg-surface)',
 				borderColor: 'var(--overlay)',
@@ -155,7 +180,7 @@ function ExperienceCard({ item }: { item: (typeof experience)[0] }) {
 						</span>
 						<IconCalendarEvent size={11} />
 						<span>
-							{formatDate(item.startDate, { yearMonthOnly: true })} —{' '}
+							{formatDate(item.startDate, { yearMonthOnly: true })} -{' '}
 							{item.endDate
 								? formatDate(item.endDate, { yearMonthOnly: true })
 								: 'Present'}
