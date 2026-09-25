@@ -65,7 +65,7 @@ export default function Home() {
 					</div>
 
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-						{featuredProjects.slice(0, 4).map((project) => (
+						{featuredProjects.map((project) => (
 							<ProjectCard key={project.slug} project={project} maxTags={5} compact />
 						))}
 					</div>
