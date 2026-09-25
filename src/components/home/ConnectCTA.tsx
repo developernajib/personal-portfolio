@@ -19,8 +19,8 @@ export default function ConnectCTA() {
 			</div>
 
 			<p className="text-sm leading-relaxed mb-5 flex-1" style={{ color: 'var(--subtext)' }}>
-				I enjoy chatting about technology, ideas, or anything that sparks curiosity. If you
-				feel like saying hi or sharing a thought, I’d be happy to hear from you anytime.
+				If you want to discuss work or just say hello, send a message. My
+				inbox stays open and I reply as soon as possible.
 			</p>
 
 			<div className="space-y-2">

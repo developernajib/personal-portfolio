@@ -320,8 +320,8 @@ export default function About() {
 						className="text-sm mb-6 mx-auto leading-relaxed"
 						style={{ color: 'var(--subtext)', maxWidth: '46ch' }}
 					>
-						Whether you have a project in mind, a question, or just want to say hi - my
-						inbox is always open.
+						Have a project, a question, or just want to say hi. My inbox is
+						open. I will get back to you.
 					</p>
 					<div className="flex flex-wrap justify-center gap-3">
 						<button

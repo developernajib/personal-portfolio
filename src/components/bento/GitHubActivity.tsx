@@ -190,12 +190,10 @@ function ContribGraph({
 	weeks,
 	monthLabels,
 	onHover,
-	graphRef,
 }: {
 	weeks: (ContribDay | null)[][]
 	monthLabels: { label: string; colIndex: number }[]
-	onHover: (tip: { text: string; x: number; y: number } | null) => void
-	graphRef: React.RefObject<HTMLDivElement | null>
+	onHover: (tip: { text: string; vx: number; vy: number; h: number } | null) => void
 }) {
 	const LABEL_W = 28
 	const GAP = 2
@@ -252,20 +250,13 @@ function ContribGraph({
 							rx={2}
 							fill={getColor(day.count)}
 							onMouseEnter={(e) => {
-								const parentRect = graphRef.current?.getBoundingClientRect()
-								const svgEl = e.currentTarget.closest('svg') as SVGSVGElement | null
-								if (!parentRect || !svgEl) return
-								const svgRect = svgEl.getBoundingClientRect()
-								const scaleX = svgRect.width / svgW
-								const scaleY = svgRect.height / svgH
+								const cellRect = e.currentTarget.getBoundingClientRect()
+								if (cellRect.width === 0 && cellRect.height === 0) return
 								onHover({
 									text: `${day.date}: ${day.count} contribution${day.count !== 1 ? 's' : ''}`,
-									x:
-										svgRect.left -
-										parentRect.left +
-										x * scaleX +
-										(CELL * scaleX) / 2,
-									y: svgRect.top - parentRect.top + y * scaleY,
+									vx: cellRect.left + cellRect.width / 2,
+									vy: cellRect.top,
+									h: cellRect.height,
 								})
 							}}
 							onMouseLeave={() => onHover(null)}
@@ -298,11 +289,11 @@ export default function GitHubActivity() {
 	})
 	const [loading, setLoading] = useState(false)
 	const [graphError, setGraphError] = useState(false)
-	const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null)
+	const [tooltip, setTooltip] = useState<{ text: string; vx: number; vy: number; h: number } | null>(null)
 	const graphRef = useRef<HTMLDivElement>(null)
 
 	const handleTooltip = useCallback(
-		(tip: { text: string; x: number; y: number } | null) => setTooltip(tip),
+		(tip: { text: string; vx: number; vy: number; h: number } | null) => setTooltip(tip),
 		[]
 	)
 
@@ -515,7 +506,7 @@ export default function GitHubActivity() {
 						style={{ minHeight: '96px' }}
 					>
 						<p className="text-xs font-mono" style={{ color: 'var(--subtext)' }}>
-							Could not load contributions due to server inaccessibility.
+							Could not load contributions. GitHub is unreachable.
 						</p>
 						<button
 							onClick={() => window.location.reload()}
@@ -575,31 +566,50 @@ export default function GitHubActivity() {
 								weeks={yearData.weeks}
 								monthLabels={monthLabels}
 								onHover={handleTooltip}
-								graphRef={graphRef}
 							/>
 
 							{/* Tooltip */}
-							{tooltip && (
-								<div
-									style={{
-										position: 'absolute',
-										left: tooltip.x,
-										top: tooltip.y - 32,
-										transform: 'translateX(-50%)',
-										backgroundColor: 'var(--bg-crust)',
-										border: '1px solid var(--overlay)',
-										borderRadius: '6px',
-										padding: '3px 8px',
-										fontSize: '11px',
-										color: 'var(--text)',
-										whiteSpace: 'nowrap',
-										pointerEvents: 'none',
-										zIndex: 10,
-									}}
-								>
-									{tooltip.text}
-								</div>
-							)}
+							{tooltip &&
+								(() => {
+									const vw =
+										typeof window !== 'undefined' ? window.innerWidth : 1000
+									const halfW = 90
+									const safeX = Math.min(
+										Math.max(tooltip.vx, halfW),
+										Math.max(halfW, vw - halfW)
+									)
+									const flipBelow = tooltip.vy < 48
+									return (
+										<div
+											style={{
+												position: 'fixed',
+												left: safeX,
+												top: flipBelow
+													? tooltip.vy + tooltip.h + 8
+													: tooltip.vy - 8,
+												transform: flipBelow
+													? 'translateX(-50%)'
+													: 'translateX(-50%) translateY(-100%)',
+												backgroundColor: 'var(--bg-mantle)',
+												border: '1px solid var(--overlay)',
+												borderRadius: '8px',
+												padding: '6px 10px',
+												fontSize: '12px',
+												lineHeight: 1.4,
+												color: 'var(--text)',
+												whiteSpace: 'nowrap',
+												maxWidth: 'min(240px, calc(100vw - 16px))',
+												overflow: 'hidden',
+												textOverflow: 'ellipsis',
+												pointerEvents: 'none',
+												zIndex: 9999,
+												boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+											}}
+										>
+											{tooltip.text}
+										</div>
+									)
+								})()}
 
 							{/* Legend */}
 							<div

@@ -113,7 +113,7 @@ export default function Projects() {
 						))}
 					</div>
 				) : (
-					<p style={{ color: 'var(--subtext)' }}>No projects found.</p>
+					<p style={{ color: 'var(--subtext)' }}>No projects match this filter.</p>
 				)}
 			</Container>
 		</div>

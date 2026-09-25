@@ -178,7 +178,7 @@ export default function ExperienceSection() {
 				className="mt-4 inline-flex items-center gap-1.5 text-sm hover-primary"
 				style={{ color: 'var(--subtext)' }}
 			>
-				Full experience page <IconArrowRight size={14} />
+				Full experience <IconArrowRight size={14} />
 			</Link>
 		</section>
 	)

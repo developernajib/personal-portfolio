@@ -1,5 +1,6 @@
 import { IconCode, IconArrowRight } from '@tabler/icons-react'
 import { currentlyWorkingOn, currentlyLearning } from '@data/currentlyWorkingOn'
+import Tooltip from '@/components/ui/Tooltip'
 
 export default function CurrentlyWorkingOn() {
 	return (
@@ -12,16 +13,18 @@ export default function CurrentlyWorkingOn() {
 				<span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
 					Currently Working On
 				</span>
-				<span className="ml-auto flex h-2 w-2 relative" title="Active">
-					<span
-						className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-						style={{ backgroundColor: 'var(--primary)' }}
-					/>
-					<span
-						className="relative inline-flex h-2 w-2 rounded-full"
-						style={{ backgroundColor: 'var(--primary)' }}
-					/>
-				</span>
+				<Tooltip content="Active" position="top">
+					<span className="ml-auto flex h-2 w-2 relative">
+						<span
+							className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+							style={{ backgroundColor: 'var(--primary)' }}
+						/>
+						<span
+							className="relative inline-flex h-2 w-2 rounded-full"
+							style={{ backgroundColor: 'var(--primary)' }}
+						/>
+					</span>
+				</Tooltip>
 			</div>
 
 			<div className="space-y-3 flex-1">

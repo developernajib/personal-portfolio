@@ -6,6 +6,7 @@ import BackgroundEffect from '@/components/ui/BackgroundEffect'
 import Container from '@/components/ui/Container'
 import SlabTitle from '@/components/ui/SlabTitle'
 import TagBadge from '@/components/ui/TagBadge'
+import Tooltip from '@/components/ui/Tooltip'
 import { technologies } from '@/data/technologies'
 import { skills } from '@/data/skills'
 import { experience } from '@/data/experience'
@@ -87,30 +88,34 @@ function TechCard({
 					>
 						{getTotalDuration(tech)}
 					</span>
-					<button
-						onClick={onToggle}
-						aria-pressed={selected}
-						aria-label={
+					<Tooltip
+						content={
 							selected
 								? `Deselect ${tech.name}`
 								: `Select ${tech.name} for comparison`
 						}
-						title={
-							selected
-								? `Deselect ${tech.name}`
-								: `Select ${tech.name} for comparison`
-						}
-						className="w-5 h-5 rounded-full border flex items-center justify-center transition-colors duration-150"
-						style={{
-							borderColor: selected ? 'var(--primary)' : 'var(--overlay)',
-							backgroundColor: selected
-								? 'rgba(var(--primary-rgb, 0,213,217),0.15)'
-								: 'transparent',
-							color: 'var(--primary)',
-						}}
+						position="top"
 					>
-						{selected && <IconCheck size={13} stroke={3} />}
-					</button>
+						<button
+							onClick={onToggle}
+							aria-pressed={selected}
+							aria-label={
+								selected
+									? `Deselect ${tech.name}`
+									: `Select ${tech.name} for comparison`
+							}
+							className="w-5 h-5 rounded-full border flex items-center justify-center transition-colors duration-150"
+							style={{
+								borderColor: selected ? 'var(--primary)' : 'var(--overlay)',
+								backgroundColor: selected
+									? 'rgba(var(--primary-rgb, 0,213,217),0.15)'
+									: 'transparent',
+								color: 'var(--primary)',
+							}}
+						>
+							{selected && <IconCheck size={13} stroke={3} />}
+						</button>
+					</Tooltip>
 				</div>
 			</div>
 
@@ -207,13 +212,12 @@ export default function Technologies() {
 						className="max-w-prose text-sm leading-relaxed"
 						style={{ color: 'var(--subtext)' }}
 					>
-						A full breakdown of the technologies I've worked with - including where I've
-						used them, for how long, and in what capacity. Usage entries highlight
-						notable jobs and projects only. All of these have also been used across many
-						personal projects that aren't listed individually.
+						Every tech I use in production. Where I used it, for how long, and
+						in what role. Listed entries are the highlights. I have used all of
+						these across many personal builds too.
 					</p>
 					<p className="text-xs" style={{ color: 'var(--primary)' }}>
-						Tap cards to select technologies, then compare them against your stack.
+						Pick cards to compare them with your stack.
 					</p>
 				</section>
 
@@ -286,7 +290,7 @@ export default function Technologies() {
 							</h2>
 						</div>
 						<p className="mb-6 text-sm" style={{ color: 'var(--subtext)' }}>
-							Everything else picked up across projects, minus the technologies listed
+							Other skills from real projects. This leaves out the tech cards
 							above.
 						</p>
 						<div className="space-y-6">

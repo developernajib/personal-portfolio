@@ -6,7 +6,7 @@ export const EXPERIENCE_TYPE_LABEL: Record<string, string> = {
 	freelance: 'Freelance',
 	contract: 'Contract',
 	parttime: 'Part-time',
-	learning: 'Self-Learning',
+	learning: 'Learning',
 }
 
 export const EXPERIENCE_TYPE_COLOR: Record<string, string> = {

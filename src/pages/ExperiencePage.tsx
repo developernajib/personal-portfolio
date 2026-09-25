@@ -31,8 +31,8 @@ export default function ExperiencePage() {
 						className="max-w-prose text-sm leading-relaxed"
 						style={{ color: 'var(--subtext)' }}
 					>
-						My full professional history - self-learning, full-time roles, freelance,
-						and part-time work.
+						Full work history. Study, full time roles, freelance and part time
+						work.
 					</p>
 				</section>
 

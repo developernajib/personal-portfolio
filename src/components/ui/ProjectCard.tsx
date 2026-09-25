@@ -5,6 +5,7 @@ import { formatDate, thumbSrc } from '@/lib/utils'
 import { useVisitedProjects } from '@/lib/visited'
 import TagBadge from './TagBadge'
 import ImagePlaceholder from './ImagePlaceholder'
+import Tooltip from './Tooltip'
 import type { Project } from '@/data/projects'
 
 interface ProjectCardProps {
@@ -46,32 +47,34 @@ export default function ProjectCard({ project, maxTags, compact }: ProjectCardPr
 					<ImagePlaceholder label="No preview" />
 				)}
 				{project.featured && (
-					<span
-						title="Featured"
-						className="absolute top-2 right-2 text-base leading-none px-1.5 py-1 rounded-md"
-						style={{
-							color: 'var(--primary)',
-							backgroundColor: 'rgba(0,0,0,0.55)',
-							border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.4)',
-						}}
-					>
-						★
-					</span>
+					<Tooltip content="Featured" position="bottom">
+						<span
+							className="absolute top-2 right-2 text-base leading-none px-1.5 py-1 rounded-md"
+							style={{
+								color: 'var(--primary)',
+								backgroundColor: 'rgba(0,0,0,0.55)',
+								border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.4)',
+							}}
+						>
+							★
+						</span>
+					</Tooltip>
 				)}
 				{isVisited && (
-					<span
-						title="You have visited this project"
-						className="absolute bottom-2 left-2 inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-md"
-						style={{
-							color: 'var(--primary)',
-							backgroundColor: 'rgba(0,0,0,0.65)',
-							border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.45)',
-							backdropFilter: 'blur(4px)',
-						}}
-					>
-						<IconCheck size={12} stroke={2.5} />
-						Reviewed
-					</span>
+					<Tooltip content="You have visited this project" position="top">
+						<span
+							className="absolute bottom-2 left-2 inline-flex items-center gap-1 text-[11px] font-medium px-2 py-1 rounded-md"
+							style={{
+								color: 'var(--primary)',
+								backgroundColor: 'rgba(0,0,0,0.65)',
+								border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.45)',
+								backdropFilter: 'blur(4px)',
+							}}
+						>
+							<IconCheck size={12} stroke={2.5} />
+							Reviewed
+						</span>
+					</Tooltip>
 				)}
 			</div>
 
@@ -107,17 +110,18 @@ export default function ProjectCard({ project, maxTags, compact }: ProjectCardPr
 						<TagBadge key={tag} tag={tag} />
 					))}
 					{hiddenCount > 0 && (
-						<span
-							className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ibeam hover:border-[var(--primary)]"
-							style={{
-								backgroundColor: 'var(--bg-mantle)',
-								color: 'var(--subtext)',
-								borderColor: 'var(--overlay)',
-							}}
-							title={`${hiddenCount} more tags`}
-						>
-							...
-						</span>
+						<Tooltip content={`${hiddenCount} more tags`} position="top">
+							<span
+								className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ibeam hover:border-[var(--primary)]"
+								style={{
+									backgroundColor: 'var(--bg-mantle)',
+									color: 'var(--subtext)',
+									borderColor: 'var(--overlay)',
+								}}
+							>
+								...
+							</span>
+						</Tooltip>
 					)}
 				</div>
 			</div>

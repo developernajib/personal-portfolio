@@ -9,6 +9,7 @@ import {
 import Site from '@/lib/config'
 import Container from '@/components/ui/Container'
 import EmailCopyButton from '@/components/ui/EmailCopyButton'
+import Tooltip from '@/components/ui/Tooltip'
 import { useSiteTimer } from '@/lib/hooks/useSiteTimer'
 
 const socialLinks = [
@@ -63,16 +64,18 @@ export default function Footer() {
 					</nav>
 
 					<div className="flex items-center gap-3">
-						<div className="flex items-center gap-1.5" title="Total visit time">
-							<IconClock size={14} style={{ color: 'var(--primary)' }} />
-							<span
-								ref={timerRef}
-								className="font-mono text-xs"
-								style={{ color: 'var(--primary)' }}
-							>
-								00:00
-							</span>
-						</div>
+						<Tooltip content="Total visit time" position="top">
+							<div className="flex items-center gap-1.5">
+								<IconClock size={14} style={{ color: 'var(--primary)' }} />
+								<span
+									ref={timerRef}
+									className="font-mono text-xs"
+									style={{ color: 'var(--primary)' }}
+								>
+									00:00
+								</span>
+							</div>
+						</Tooltip>
 
 						<span style={{ color: 'var(--overlay)' }}>-</span>
 
@@ -98,15 +101,16 @@ export default function Footer() {
 
 						<span style={{ color: 'var(--overlay)' }}>-</span>
 
-						<button
-							onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-							aria-label="Back to top"
-							title="Back to top"
-							className="hover-primary"
-							style={{ color: 'var(--subtext)' }}
-						>
-							<IconArrowUp size={18} stroke={1.5} />
-						</button>
+						<Tooltip content="Back to top" position="top">
+							<button
+								onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+								aria-label="Back to top"
+								className="hover-primary"
+								style={{ color: 'var(--subtext)' }}
+							>
+								<IconArrowUp size={18} stroke={1.5} />
+							</button>
+						</Tooltip>
 					</div>
 				</div>
 			</Container>

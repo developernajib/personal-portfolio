@@ -57,12 +57,12 @@ function readRequired(): string[] {
 }
 
 function verdict(score: number, total: number): string {
-	if (total === 0) return 'Add your required technologies to see the match score.'
-	if (score === 100) return 'Perfect match - every requirement is covered.'
-	if (score >= 70) return 'Strong match - most requirements are covered.'
-	if (score >= 40) return 'Partial match - some gaps to be aware of.'
-	if (score > 0) return 'Low match - considerable gaps here.'
-	return 'No overlap yet - none of the requirements match.'
+	if (total === 0) return 'Add what you need. I will show the match score.'
+	if (score === 100) return 'Perfect. Everything you listed is covered.'
+	if (score >= 70) return 'Strong. Most of what you listed is covered.'
+	if (score >= 40) return 'Partial. A few gaps to note.'
+	if (score > 0) return 'Low. Clear gaps here.'
+	return 'No overlap yet. None of the requirements match.'
 }
 
 export default function CompareTechnologies() {
@@ -131,8 +131,8 @@ export default function CompareTechnologies() {
 						className="max-w-prose text-sm leading-relaxed"
 						style={{ color: 'var(--subtext)' }}
 					>
-						List the stack your role or project needs and see how it lines up against
-						the full skill set. Everything is stored in your browser only.
+						List what your role or project needs. See how it lines up with my
+						stack. Nothing leaves your browser.
 					</p>
 				</section>
 
@@ -353,7 +353,7 @@ export default function CompareTechnologies() {
 								))}
 							{matchedCount === 0 && (
 								<p className="text-xs" style={{ color: 'var(--subtext)' }}>
-									Nothing matched yet - check the spelling or add more
+									Nothing matched yet. Check the spelling or add more
 									requirements.
 								</p>
 							)}
@@ -404,7 +404,7 @@ export default function CompareTechnologies() {
 								))}
 							{matchedCount === required.length && (
 								<p className="text-xs" style={{ color: 'var(--subtext)' }}>
-									No gaps - every requirement is covered.
+									No gaps. Every requirement is covered.
 								</p>
 							)}
 						</div>

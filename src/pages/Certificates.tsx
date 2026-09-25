@@ -23,7 +23,7 @@ export default function Certificates() {
 				</div>
 
 				<p className="mb-8 text-sm" style={{ color: 'var(--subtext)' }}>
-					Certifications and professional development courses I've completed.
+					Courses and certs I finished, with proof.
 				</p>
 
 				{ordered.length > 0 ? (

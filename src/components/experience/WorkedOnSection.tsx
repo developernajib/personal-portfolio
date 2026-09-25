@@ -144,7 +144,7 @@ export default function WorkedOnSection({ projects, accentColor }: Props) {
 				})}
 			</div>
 			<p className="text-xs mt-3" style={{ color: 'var(--subtext)', fontStyle: 'italic' }}>
-				* Some projects cannot be disclosed due to confidentiality and other reasons.
+				Some client work stays private, so it is not listed here.
 			</p>
 		</section>
 	)

@@ -2,6 +2,7 @@ import { useEffect, useCallback, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IconX, IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { thumbSrc } from '@/lib/utils'
+import Tooltip from './Tooltip'
 
 interface LightboxItem {
 	src: string
@@ -201,55 +202,59 @@ export default function Lightbox({
 				style={{ maxWidth: '100vw', maxHeight: '100dvh' }}
 				onClick={(e) => e.stopPropagation()}
 			>
-				<div
-					ref={frameRef}
-					onClick={toggleZoom}
-					onMouseMove={panZoom}
-					className="relative rounded-lg cursor-hand"
-					style={{
-						overflow: 'hidden',
-						maxWidth: '96vw',
-					}}
-					title={zoomed ? 'Click to exit zoom' : 'Click to zoom in'}
+				<Tooltip
+					content={zoomed ? 'Click to exit zoom' : 'Click to zoom in'}
+					position="top"
 				>
-					<img
-						src={current.src}
-						alt={current.alt}
-						className="object-contain rounded-lg shadow-2xl lightbox-img"
+					<div
+						ref={frameRef}
+						onClick={toggleZoom}
+						onMouseMove={panZoom}
+						className="relative rounded-lg cursor-hand"
 						style={{
-							transform: zoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
-							transformOrigin: `${origin.x}% ${origin.y}%`,
-							transition: 'transform 0.15s ease-out',
+							overflow: 'hidden',
+							maxWidth: '96vw',
 						}}
-						draggable={false}
-					/>
-					{!zoomed && (current.caption || items.length > 1) && (
-						<div
-							className="pointer-events-none absolute inset-x-0 bottom-0 flex items-baseline justify-center gap-2 px-4 pt-8 pb-3"
+					>
+						<img
+							src={current.src}
+							alt={current.alt}
+							className="object-contain rounded-lg shadow-2xl lightbox-img"
 							style={{
-								background:
-									'linear-gradient(to top, rgba(0,0,0,0.75), transparent)',
+								transform: zoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
+								transformOrigin: `${origin.x}% ${origin.y}%`,
+								transition: 'transform 0.15s ease-out',
 							}}
-						>
-							{current.caption && (
-								<p
-									className="text-sm text-center truncate"
-									style={{ color: '#e6edf3' }}
-								>
-									{current.caption}
-								</p>
-							)}
-							{items.length > 1 && (
-								<p
-									className="text-xs flex-shrink-0"
-									style={{ color: 'var(--subtext)' }}
-								>
-									{currentIndex + 1} / {items.length}
-								</p>
-							)}
-						</div>
-					)}
-				</div>
+							draggable={false}
+						/>
+						{!zoomed && (current.caption || items.length > 1) && (
+							<div
+								className="pointer-events-none absolute inset-x-0 bottom-0 flex items-baseline justify-center gap-2 px-4 pt-8 pb-3"
+								style={{
+									background:
+										'linear-gradient(to top, rgba(0,0,0,0.75), transparent)',
+								}}
+							>
+								{current.caption && (
+									<p
+										className="text-sm text-center truncate"
+										style={{ color: '#e6edf3' }}
+									>
+										{current.caption}
+									</p>
+								)}
+								{items.length > 1 && (
+									<p
+										className="text-xs flex-shrink-0"
+										style={{ color: 'var(--subtext)' }}
+									>
+										{currentIndex + 1} / {items.length}
+									</p>
+								)}
+							</div>
+						)}
+					</div>
+				</Tooltip>
 
 				{/* Exit zoom pill, centered between the arrows, only while zoomed */}
 				{zoomed && (

@@ -1,6 +1,26 @@
 import { IconSchool, IconCalendarEvent, IconAward } from '@tabler/icons-react'
 import { education } from '@data/education'
 
+const MONTHS = [
+	'Jan',
+	'Feb',
+	'Mar',
+	'Apr',
+	'May',
+	'Jun',
+	'Jul',
+	'Aug',
+	'Sep',
+	'Oct',
+	'Nov',
+	'Dec',
+]
+
+function formatDate(year: number, month?: number) {
+	if (month && month >= 1 && month <= 12) return `${MONTHS[month - 1]} ${year}`
+	return `${year}`
+}
+
 export default function EducationSection() {
 	return (
 		<section>
@@ -64,7 +84,10 @@ export default function EducationSection() {
 								>
 									<IconCalendarEvent size={11} />
 									<span>
-										{item.startYear} - {item.endYear ?? 'Present'}
+										{formatDate(item.startYear, item.startMonth)} -{' '}
+										{item.endYear
+											? formatDate(item.endYear, item.endMonth)
+											: 'Present'}
 									</span>
 								</div>
 								{item.cgpa != null && item.cgpaMax != null && (

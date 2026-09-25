@@ -15,6 +15,7 @@ import { useTheme } from '@/lib/useTheme'
 import { useSiteTimer } from '@/lib/hooks/useSiteTimer'
 import Site from '@/lib/config'
 import EmailCopyButton from '@/components/ui/EmailCopyButton'
+import Tooltip from '@/components/ui/Tooltip'
 
 const socialLinks = [
 	{ href: Site.socials.github, label: 'GitHub', Icon: IconBrandGithub },
@@ -177,16 +178,18 @@ export default function BottomNav() {
 								className="p-2 rounded-lg"
 							/>
 						</div>
-						<div className="flex items-center gap-1.5" title="Time on site">
-							<IconClock size={13} style={{ color: 'var(--subtext)' }} />
-							<span
-								ref={timerRef}
-								className="font-mono text-xs font-bold"
-								style={{ color: accentColor }}
-							>
-								00:00
-							</span>
-						</div>
+						<Tooltip content="Time on site" position="top">
+							<div className="flex items-center gap-1.5">
+								<IconClock size={13} style={{ color: 'var(--subtext)' }} />
+								<span
+									ref={timerRef}
+									className="font-mono text-xs font-bold"
+									style={{ color: accentColor }}
+								>
+									00:00
+								</span>
+							</div>
+						</Tooltip>
 					</div>
 
 					{/* Copyright */}

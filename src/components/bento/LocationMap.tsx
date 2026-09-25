@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { IconMapPin, IconSun, IconMoon } from '@tabler/icons-react'
 import Site from '@/lib/config'
 import { useDocumentTheme } from '@/lib/hooks/useDocumentTheme'
+import Tooltip from '@/components/ui/Tooltip'
 import type { Map as LeafletMap } from 'leaflet'
 
 // ─── Module-level Leaflet singleton ──────────────────────────────────────────
@@ -229,33 +230,21 @@ export default function LocationMap() {
 					{Site.location.city}, {Site.location.country}
 				</button>
 				{currentTime && (
-					<div className="relative flex items-center gap-1 group cursor-arrow px-2 py-1 -mx-2 -my-1 rounded">
-						{isDaytime ? (
-							<IconSun size={12} color="#facc15" />
-						) : (
-							<IconMoon size={12} color="#60a5fa" />
-						)}
-						<span
-							className="font-mono text-xs whitespace-nowrap"
-							style={{ color: 'var(--primary)' }}
-						>
-							{currentTime}
-						</span>
-						{/* Tooltip */}
-						<div className="absolute top-full right-0 mt-1.5 hidden group-hover:block z-50">
-							<div
-								className="rounded px-2 py-1 text-xs whitespace-nowrap font-mono"
-								style={{
-									backgroundColor: 'var(--bg-mantle)',
-									color: 'var(--text)',
-									border: '1px solid var(--overlay)',
-									boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-								}}
+					<Tooltip content={currentDate} position="top">
+						<div className="flex items-center gap-1 cursor-arrow px-2 py-1 -mx-2 -my-1 rounded">
+							{isDaytime ? (
+								<IconSun size={12} color="#facc15" />
+							) : (
+								<IconMoon size={12} color="#60a5fa" />
+							)}
+							<span
+								className="font-mono text-xs whitespace-nowrap"
+								style={{ color: 'var(--primary)' }}
 							>
-								{currentDate}
-							</div>
+								{currentTime}
+							</span>
 						</div>
-					</div>
+					</Tooltip>
 				)}
 			</div>
 		</div>
