@@ -113,10 +113,10 @@ export default function LocationMap() {
 					}).setView([lat, lng], 11)
 
 					const tileLayer = L.tileLayer(
-						'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+						'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 						{
 							maxZoom: 19,
-							attribution: '© OpenStreetMap contributors · © Wikimedia maps',
+							attribution: '© OpenStreetMap contributors',
 						}
 					).addTo(map)
 					// OSM ships a light style only - darken tiles in dark mode
