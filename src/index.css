@@ -1,9 +1,9 @@
-/* ── 1. Tailwind FIRST — unblocks critical utility CSS immediately ── */
+/* ── 1. Tailwind FIRST - unblocks critical utility CSS immediately ── */
 @import 'tailwindcss';
 
-/* ── 2. Fonts — declared directly so the browser uses the preloaded /fonts/* files ── */
+/* ── 2. Fonts - declared directly so the browser uses the preloaded /fonts/* files ── */
 /* Pointing @font-face at /public/fonts/* means the <link rel="preload"> in index.html
-   and the @font-face src are the same URL — browser uses the already-fetched file
+   and the @font-face src are the same URL - browser uses the already-fetched file
    instead of re-downloading it from the @fontsource CSS path. */
 @font-face {
 	font-family: 'JetBrains Mono';
@@ -27,7 +27,7 @@
 		U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Safelist — ensure dynamically-built classes are always included */
+/* Safelist - ensure dynamically-built classes are always included */
 @source inline("max-w-3xl max-w-4xl max-w-6xl");
 
 @theme {
@@ -38,7 +38,7 @@
 	--color-bg-mantle: #1c2128;
 	--color-bg-crust: #21262d;
 	--color-text: #e6edf3;
-	--color-subtext: #9da5ad;
+	--color-subtext: #b6bdc6;
 	--color-overlay: #30363d;
 	--font-mono: 'JetBrains Mono', monospace;
 }
@@ -54,7 +54,7 @@
 	--bg-mantle: #1c2128;
 	--bg-crust: #21262d;
 	--text: #e6edf3;
-	--subtext: #9da5ad;
+	--subtext: #b6bdc6;
 	--overlay: #30363d;
 }
 
@@ -114,12 +114,12 @@ a {
    External SVG files instead of inline data-URIs:
    - Parsed once and cached by the browser
    - Not re-parsed on every style recalculation
-   - Touch devices (hover: none) use the default OS cursor — no overhead
+   - Touch devices (hover: none) use the default OS cursor - no overhead
    ──────────────────────────────────────────────────────────────────────── */
 @media (hover: hover) {
 	body {
 		cursor:
-			url('/cursors/arrow.svg') 4 2,
+			url('/cursors/arrow.svg') 6 3,
 			auto;
 	}
 
@@ -131,9 +131,75 @@ a {
 			url('/cursors/pointer.svg') 10 2,
 			pointer;
 	}
+
+	/* Selectable, non-clickable text shows an I-beam so users know they can select it */
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	li,
+	td,
+	th,
+	blockquote,
+	figcaption,
+	pre,
+	code,
+	input:not([type='checkbox']):not([type='radio']),
+	textarea,
+	.ibeam {
+		cursor:
+			url('/cursors/text.svg') 10 10,
+			text;
+	}
+
+	/* Whole card navigates on click - force pointer cursor on all descendants,
+	   overriding the text-cursor rules above */
+	.clickable-card,
+	.clickable-card * {
+		cursor:
+			url('/cursors/pointer.svg') 10 2,
+			pointer !important;
+	}
+
+	/* Explicit helpers for elements the semantic rules above do not cover */
+	.cursor-arrow {
+		cursor:
+			url('/cursors/arrow.svg') 6 3,
+			auto;
+	}
+
+	.cursor-hand {
+		cursor:
+			url('/cursors/pointer.svg') 10 2,
+			pointer;
+	}
+
+	.cursor-ibeam {
+		cursor:
+			url('/cursors/text.svg') 10 10,
+			text;
+	}
+
+	/* Card body only navigates below lg, the title link takes over above it */
+	.cursor-hand-until-lg {
+		cursor:
+			url('/cursors/pointer.svg') 10 2,
+			pointer;
+	}
 }
 
-/* Reference-style link — dashed underline, hover gives bg flash */
+@media (hover: hover) and (min-width: 1024px) {
+	.cursor-hand-until-lg {
+		cursor:
+			url('/cursors/arrow.svg') 6 3,
+			auto;
+	}
+}
+
+/* Reference-style link - dashed underline, hover gives bg flash */
 .link {
 	color: var(--primary);
 	text-decoration: underline;
@@ -152,7 +218,7 @@ a {
 	text-decoration: none;
 }
 
-/* Hover utilities — replace inline JS hover handlers with pure CSS */
+/* Hover utilities - replace inline JS hover handlers with pure CSS */
 .hover-primary {
 	transition: color 0.15s ease;
 }
@@ -230,7 +296,7 @@ a {
 	animation: blink 1.5s step-start infinite;
 }
 
-/* View Transition — circular reveal for theme toggle */
+/* View Transition - circular reveal for theme toggle */
 ::view-transition-old(root),
 ::view-transition-new(root) {
 	animation: none;
@@ -247,10 +313,140 @@ a {
 	display: none;
 }
 
+/* Lightbox */
+.lightbox-img {
+	max-width: 96vw;
+	max-height: calc(100dvh - 110px);
+}
+
+.touch-filmstrip {
+	display: none;
+}
+
+@media (pointer: fine) and (min-width: 640px) {
+	.touch-filmstrip {
+		display: flex;
+	}
+}
+
+@media (pointer: coarse) {
+	.lightbox-img {
+		max-width: 98vw;
+		max-height: calc(100dvh - 40px);
+	}
+}
+
+/* Journey timeline pulse ring */
+@keyframes journey-ping {
+	0% {
+		box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 213, 217), 0.45);
+	}
+	70% {
+		box-shadow: 0 0 0 9px rgba(var(--primary-rgb, 0, 213, 217), 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(var(--primary-rgb, 0, 213, 217), 0);
+	}
+}
+
+.journey-pulse {
+	border-radius: 9999px;
+	animation: journey-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
 /* Leaflet overrides */
 .leaflet-container {
 	background: var(--bg-base) !important;
 	font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Project details markdown */
+.project-md {
+	line-height: 1.75;
+}
+
+.project-md > *:first-child {
+	margin-top: 0;
+}
+
+.project-md > *:last-child {
+	margin-bottom: 0;
+}
+
+.project-md p {
+	margin: 0 0 0.9rem;
+}
+
+.project-md strong {
+	color: var(--text);
+	font-weight: 600;
+}
+
+.project-md h2 {
+	color: var(--text);
+	font-size: 0.95rem;
+	font-weight: 700;
+	margin: 1.4rem 0 0.6rem;
+	padding-bottom: 0.4rem;
+	border-bottom: 1px solid var(--overlay);
+}
+
+.project-md h2:first-child {
+	margin-top: 0;
+}
+
+.project-md ul,
+.project-md ol {
+	margin: 0 0 0.9rem;
+	padding-left: 1.25rem;
+	list-style: disc;
+}
+
+.project-md ol {
+	list-style: decimal;
+}
+
+.project-md li {
+	margin-bottom: 0.35rem;
+}
+
+@media (min-width: 768px) {
+	/* Two columns only past 6 items, short lists stay on one line */
+	.project-md ul:has(> li:nth-child(7)),
+	.project-md ol:has(> li:nth-child(7)) {
+		column-count: 2;
+		column-gap: 2rem;
+	}
+
+	.project-md li {
+		break-inside: avoid;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.project-md li::marker {
+	color: var(--primary);
+}
+
+.project-md code {
+	font-size: 0.8em;
+	padding: 0.15em 0.4em;
+	border-radius: 0.375rem;
+	background-color: var(--bg-mantle);
+	border: 1px solid var(--overlay);
+	color: var(--primary);
+}
+
+.project-md a {
+	color: var(--primary);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.project-md hr {
+	border: none;
+	border-top: 1px solid var(--overlay);
+	margin: 1.2rem 0;
 }
 
 .leaflet-tile-container {

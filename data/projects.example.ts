@@ -19,8 +19,12 @@ export const projects: Project[] = [
 		date: '2024-01-01',
 		tags: ['React', 'TypeScript'],
 		liveUrl: 'https://myproject.com',
+		extraLiveUrls: [
+			{ label: 'Play Store', url: 'https://play.google.com/store/apps/details?id=example' },
+		],
 		githubUrl: 'https://github.com/yourusername/my-project',
 		featured: true,
+		order: 1,
 	},
 	{
 		slug: 'another-project',
@@ -28,7 +32,8 @@ export const projects: Project[] = [
 		description: 'Another project description.',
 		image: '/projects/another-project.webp',
 		date: '2023-06-15',
-		tags: ['Laravel', 'Vue.js', 'MySQL'],
+		tags: ['Laravel', 'VueJS', 'MySQL'],
 		githubUrl: 'https://github.com/yourusername/another-project',
+		order: 2,
 	},
 ]

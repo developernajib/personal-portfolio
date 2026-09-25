@@ -74,6 +74,7 @@ function ToastNotification({
 
 	return (
 		<div
+			className="cursor-hand"
 			style={{
 				display: 'flex',
 				alignItems: 'center',
@@ -92,7 +93,6 @@ function ToastNotification({
 				transition: 'all 0.3s ease',
 				opacity: visible ? 1 : 0,
 				transform: visible ? 'translateY(0)' : 'translateY(12px)',
-				cursor: 'pointer',
 			}}
 			onClick={() => {
 				setVisible(false)

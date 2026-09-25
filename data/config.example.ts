@@ -2,7 +2,7 @@ const Site = {
 	name: 'Your Name',
 	fullName: 'Your Full Name',
 	title: 'Your Job Title',
-	image: 'your-photo.jpg',
+	image: '/assets/your-photo.jpg', // place the file in public/assets/
 	url: 'https://yourportfolio.com',
 	description: 'A short description about yourself.',
 	location: {

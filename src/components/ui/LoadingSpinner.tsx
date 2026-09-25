@@ -1,7 +1,7 @@
 export default function LoadingSpinner() {
 	return (
 		<div
-			className="flex items-center justify-center min-h-screen"
+			className="flex items-center justify-center min-h-[60dvh]"
 			style={{ backgroundColor: 'var(--bg-base)' }}
 		>
 			<div className="flex flex-col items-center gap-3">

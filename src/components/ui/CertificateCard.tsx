@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { IconCertificate, IconExternalLink } from '@tabler/icons-react'
 import { formatDate, thumbSrc } from '@/lib/utils'
 import TagBadge from './TagBadge'
@@ -6,26 +7,21 @@ import type { Certificate } from '@/data/certificates'
 
 interface CertificateCardProps {
 	certificate: Certificate
-	onImageClick: (certificate: Certificate) => void
 }
 
-export default function CertificateCard({ certificate, onImageClick }: CertificateCardProps) {
+export default function CertificateCard({ certificate }: CertificateCardProps) {
 	const [imgError, setImgError] = useState(false)
 
 	return (
 		<div
-			className="hover-border-primary group rounded-xl border overflow-hidden"
+			className="hover-border-primary group relative rounded-xl border overflow-hidden"
 			style={{
 				backgroundColor: 'var(--bg-surface)',
 				borderColor: 'var(--overlay)',
 			}}
 		>
 			{/* Certificate Image / Badge */}
-			<button
-				onClick={() => onImageClick(certificate)}
-				className="relative block w-full aspect-video overflow-hidden cursor-zoom-in"
-				aria-label={`View ${certificate.title} certificate`}
-			>
+			<div className="relative block w-full aspect-video overflow-hidden">
 				{certificate.image && !imgError ? (
 					<img
 						src={thumbSrc(certificate.image)}
@@ -36,7 +32,7 @@ export default function CertificateCard({ certificate, onImageClick }: Certifica
 						onError={() => setImgError(true)}
 					/>
 				) : null}
-				{/* Fallback — only shown when no image or load error */}
+				{/* Fallback - only shown when no image or load error */}
 				{(!certificate.image || imgError) && (
 					<div
 						className="absolute inset-0 flex items-center justify-center"
@@ -50,11 +46,14 @@ export default function CertificateCard({ certificate, onImageClick }: Certifica
 					className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
 					style={{ backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.1)' }}
 				/>
-			</button>
+			</div>
 
 			{/* Content */}
 			<div className="p-4 space-y-2">
-				<h3 className="font-semibold text-sm leading-snug" style={{ color: 'var(--text)' }}>
+				<h3
+					className="hover-primary font-semibold text-sm leading-snug"
+					style={{ color: 'var(--text)' }}
+				>
 					{certificate.title}
 				</h3>
 
@@ -86,15 +85,21 @@ export default function CertificateCard({ certificate, onImageClick }: Certifica
 						href={certificate.credentialUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="hover-primary inline-flex items-center gap-1 text-xs pt-1"
+						className="hover-primary relative z-10 inline-flex items-center gap-1 text-xs pt-1 cursor-hand"
 						style={{ color: 'var(--subtext)' }}
-						onClick={(e) => e.stopPropagation()}
 					>
 						<IconExternalLink size={12} />
 						Verify credential
 					</a>
 				)}
 			</div>
+
+			{/* Stretched link - covers the card but sits under the credential link */}
+			<Link
+				to={`/certificates/${certificate.id}`}
+				className="absolute inset-0 cursor-hand"
+				aria-label={`Open details for ${certificate.title}`}
+			/>
 		</div>
 	)
 }

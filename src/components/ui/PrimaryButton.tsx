@@ -8,7 +8,7 @@ export default function PrimaryButton({ icon, children, className = '', ...rest 
 	return (
 		<button
 			{...rest}
-			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border transition-colors duration-150 cursor-pointer ${className}`}
+			className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border transition-colors duration-150 cursor-hand ${className}`}
 			style={{
 				color: 'var(--primary)',
 				borderColor: 'rgba(var(--primary-rgb, 0,213,217),0.3)',

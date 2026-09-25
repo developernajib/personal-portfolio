@@ -13,16 +13,19 @@ export const experience: ExperienceItem[] = [
 		// endDate: '2024-01-01', // omit if current job
 		description: 'What you did at this company.',
 		details: 'Longer description of your role and achievements.',
-		tags: ['React', 'Node.js', 'TypeScript'],
+		tags: ['React', 'NodeJS', 'TypeScript'],
 		featured: true,
+		highlight: true, // glowing border on the About / Experience timeline
 		type: 'fulltime',
 		projects: [
 			{
 				name: 'Project Name',
 				purpose: 'Internal tool',
 				description: 'What this project does.',
-				tags: ['React', 'Node.js'],
+				tags: ['React', 'NodeJS'],
 				url: 'https://project.com',
+				liveUrl: 'https://project.com',
+				githubUrl: 'https://github.com/yourusername/project',
 			},
 		],
 		manager: {
@@ -30,11 +33,13 @@ export const experience: ExperienceItem[] = [
 			title: 'Engineering Manager',
 			email: 'manager@company.com',
 			linkedin: 'https://linkedin.com/in/manager',
+			github: 'https://github.com/manager',
 		},
 		team: [
 			{
 				name: 'Colleague Name',
 				position: 'Backend Developer',
+				photo: '/gallery/colleague.webp',
 				email: 'colleague@company.com',
 				github: 'https://github.com/colleague',
 				linkedin: 'https://linkedin.com/in/colleague',

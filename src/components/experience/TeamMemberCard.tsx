@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { IconMail, IconBrandLinkedin, IconBrandGithub, IconX } from '@tabler/icons-react'
 import { copyEmail } from '@/components/ui/Toast'
+import Tooltip from '@/components/ui/Tooltip'
 import type { TeamMember } from '@/data/experience'
 
 interface Props {
@@ -29,18 +30,19 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 			>
 				{/* Avatar */}
 				{member.photo ? (
-					<button
-						className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 transition-opacity duration-150 hover:opacity-80"
-						style={{ borderColor: `${accentColor}60`, cursor: 'zoom-in' }}
-						onClick={() => setPhotoOpen(true)}
-						title="View photo"
-					>
-						<img
-							src={member.photo}
-							alt={member.name}
-							className="w-full h-full object-cover"
-						/>
-					</button>
+					<Tooltip content="View photo" position="top">
+						<button
+							className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 transition-opacity duration-150 hover:opacity-80"
+							style={{ borderColor: `${accentColor}60` }}
+							onClick={() => setPhotoOpen(true)}
+						>
+							<img
+								src={member.photo}
+								alt={member.name}
+								className="w-full h-full object-cover"
+							/>
+						</button>
+					</Tooltip>
 				) : (
 					<div
 						className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
@@ -71,57 +73,59 @@ export default function TeamMemberCard({ member, accentColor, isSelf = false }: 
 					{/* Socials */}
 					<div className="flex items-center gap-3 mt-1.5">
 						{member.email && (
-							<button
-								onClick={() => copyEmail(member.email!)}
-								className="transition-colors duration-150"
-								style={{
-									background: 'none',
-									border: 'none',
-									padding: 0,
-									cursor: 'pointer',
-									color: 'var(--subtext)',
-									fontFamily: 'inherit',
-								}}
-								onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color = 'var(--subtext)')
-								}
-								title="Copy email"
-							>
-								<IconMail size={13} />
-							</button>
+							<Tooltip content="Copy email" position="top">
+								<button
+									onClick={() => copyEmail(member.email!)}
+									className="transition-colors duration-150 cursor-hand"
+									style={{
+										background: 'none',
+										border: 'none',
+										padding: 0,
+										color: 'var(--subtext)',
+										fontFamily: 'inherit',
+									}}
+									onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
+									onMouseLeave={(e) =>
+										(e.currentTarget.style.color = 'var(--subtext)')
+									}
+								>
+									<IconMail size={13} />
+								</button>
+							</Tooltip>
 						)}
 						{member.linkedin && (
-							<a
-								href={member.linkedin}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="transition-colors duration-150"
-								style={{ color: 'var(--subtext)' }}
-								onMouseEnter={(e) => (e.currentTarget.style.color = '#0077b5')}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color = 'var(--subtext)')
-								}
-								title="LinkedIn"
-							>
-								<IconBrandLinkedin size={13} />
-							</a>
+							<Tooltip content="LinkedIn" position="top">
+								<a
+									href={member.linkedin}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="transition-colors duration-150"
+									style={{ color: 'var(--subtext)' }}
+									onMouseEnter={(e) => (e.currentTarget.style.color = '#0077b5')}
+									onMouseLeave={(e) =>
+										(e.currentTarget.style.color = 'var(--subtext)')
+									}
+								>
+									<IconBrandLinkedin size={13} />
+								</a>
+							</Tooltip>
 						)}
 						{member.github && (
-							<a
-								href={member.github}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="transition-colors duration-150"
-								style={{ color: 'var(--subtext)' }}
-								onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
-								onMouseLeave={(e) =>
-									(e.currentTarget.style.color = 'var(--subtext)')
-								}
-								title="GitHub"
-							>
-								<IconBrandGithub size={13} />
-							</a>
+							<Tooltip content="GitHub" position="top">
+								<a
+									href={member.github}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="transition-colors duration-150"
+									style={{ color: 'var(--subtext)' }}
+									onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text)')}
+									onMouseLeave={(e) =>
+										(e.currentTarget.style.color = 'var(--subtext)')
+									}
+								>
+									<IconBrandGithub size={13} />
+								</a>
+							</Tooltip>
 						)}
 					</div>
 				</div>

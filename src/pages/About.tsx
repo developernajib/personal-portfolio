@@ -47,7 +47,7 @@ export default function About() {
 								className="h-full w-full max-h-72 sm:max-h-none rounded-md object-cover shadow-lg transition-transform duration-300 hover:scale-[1.02]"
 								onError={(e) => {
 									const t = e.currentTarget as HTMLImageElement
-									t.src = 'https://avatars.githubusercontent.com/u/82390004'
+									t.src = '/images/avatar-fallback.jpg'
 								}}
 							/>
 						</div>
@@ -117,7 +117,7 @@ export default function About() {
 								>
 									TypeScript
 								</a>{' '}
-								— now I'm fully transitioning to{' '}
+								- now I'm fully transitioning to{' '}
 								<a
 									href="https://go.dev"
 									target="_blank"
@@ -128,11 +128,11 @@ export default function About() {
 									Go
 								</a>
 								. I've already shipped a few{' '}
-								<a href="/projects" className="link">
+								<a href="/projects?tag=Go" className="link">
 									Go projects
 								</a>{' '}
 								and I'm actively looking to do more. I care about writing clean code
-								that holds up in production and getting things right — not just
+								that holds up in production and getting things right - not just
 								getting them done. I believe the best engineers never stop
 								questioning their assumptions, and that mindset drives everything I
 								build. See my{' '}
@@ -151,11 +151,10 @@ export default function About() {
 								together or just want to say hi, feel free to{' '}
 								<button
 									onClick={() => copyEmail(Site.socials.email)}
-									className="link"
+									className="link cursor-hand"
 									style={{
 										border: 'none',
 										padding: '0 2px',
-										cursor: 'pointer',
 										fontFamily: 'inherit',
 										fontSize: 'inherit',
 									}}
@@ -220,12 +219,11 @@ export default function About() {
 
 								<button
 									onClick={() => copyEmail(Site.socials.email)}
-									className="hover-primary inline-flex items-center gap-1.5 text-sm"
+									className="hover-primary inline-flex items-center gap-1.5 text-sm cursor-hand"
 									style={{
 										background: 'none',
 										border: 'none',
 										padding: 0,
-										cursor: 'pointer',
 										color: 'var(--subtext)',
 										fontFamily: 'inherit',
 									}}
@@ -289,20 +287,46 @@ export default function About() {
 
 				{/* Contact */}
 				<section
-					className="rounded-xl border p-6 text-center"
-					style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--overlay)' }}
+					className="relative overflow-hidden rounded-2xl border p-8 sm:p-10 text-center"
+					style={{
+						backgroundColor: 'var(--bg-surface)',
+						borderColor: 'var(--overlay)',
+						backgroundImage:
+							'radial-gradient(ellipse 60% 90% at 50% -20%, rgba(var(--primary-rgb, 0,213,217),0.14), transparent)',
+					}}
 				>
-					<h2 className="text-lg font-bold mb-2" style={{ color: 'var(--text)' }}>
+					<span
+						className="pointer-events-none absolute inset-x-12 top-0 h-px"
+						style={{
+							background:
+								'linear-gradient(90deg, transparent, var(--primary), transparent)',
+							opacity: 0.6,
+						}}
+					/>
+					<div
+						className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full"
+						style={{
+							backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.1)',
+							border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.3)',
+							color: 'var(--primary)',
+						}}
+					>
+						<IconMail size={18} />
+					</div>
+					<h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
 						Get In Touch
 					</h2>
-					<p className="text-sm mb-5" style={{ color: 'var(--subtext)' }}>
-						Whether you have a project in mind, a question, or just want to say hi — my
-						inbox is always open.
+					<p
+						className="text-sm mb-6 mx-auto leading-relaxed"
+						style={{ color: 'var(--subtext)', maxWidth: '46ch' }}
+					>
+						Have a project, a question, or just want to say hi. My inbox is
+						open. I will get back to you.
 					</p>
 					<div className="flex flex-wrap justify-center gap-3">
 						<button
 							onClick={() => copyEmail(Site.socials.email)}
-							className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium hover-bg-primary-up cursor-pointer"
+							className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium hover-bg-primary-up cursor-hand"
 							style={{
 								color: 'var(--primary)',
 								backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.1)',

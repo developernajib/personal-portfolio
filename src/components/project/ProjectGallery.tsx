@@ -8,16 +8,38 @@ import type { ProjectGalleryItem } from '@/data/projects'
 interface Props {
 	gallery: ProjectGalleryItem[]
 	projectTitle: string
+	title?: string
+	lightboxIndex?: number | null
+	onLightboxChange?: (index: number | null) => void
 }
 
-export default function ProjectGallery({ gallery, projectTitle }: Props) {
-	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+export default function ProjectGallery({
+	gallery,
+	projectTitle,
+	title = 'Application Preview',
+	lightboxIndex: controlledIndex,
+	onLightboxChange,
+}: Props) {
+	const [internalIndex, setInternalIndex] = useState<number | null>(null)
 	const [thumbErrors, setThumbErrors] = useState<Set<number>>(new Set())
+	const [fullErrors, setFullErrors] = useState<Set<number>>(new Set())
+
+	const isControlled = controlledIndex !== undefined
+	const lightboxIndex = isControlled ? controlledIndex : internalIndex
+	function setLightboxIndex(next: number | null | ((prev: number | null) => number | null)) {
+		const value = typeof next === 'function' ? next(lightboxIndex ?? null) : next
+		if (isControlled) onLightboxChange?.(value)
+		else setInternalIndex(value)
+	}
 
 	if (gallery.length === 0) return null
 
 	function handleThumbError(i: number) {
 		setThumbErrors((prev) => new Set(prev).add(i))
+	}
+
+	function handleFullError(i: number) {
+		setFullErrors((prev) => new Set(prev).add(i))
 	}
 
 	const lightboxItems = gallery.map((g) => ({
@@ -31,7 +53,7 @@ export default function ProjectGallery({ gallery, projectTitle }: Props) {
 			<div className="flex items-center gap-2">
 				<IconPhoto size={18} color="var(--primary)" />
 				<h2 className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-					Screenshots
+					{title}
 				</h2>
 			</div>
 
@@ -42,23 +64,34 @@ export default function ProjectGallery({ gallery, projectTitle }: Props) {
 						onClick={() => setLightboxIndex(i)}
 						className="hover-border-primary group relative aspect-video overflow-hidden rounded-lg border"
 						style={{ borderColor: 'var(--overlay)' }}
-						aria-label={`View screenshot ${i + 1}`}
+						aria-label={`View preview ${i + 1}`}
 					>
-						{!thumbErrors.has(i) ? (
-							<picture>
-								<source
-									media="(max-width: 768px)"
-									srcSet={thumbMobileSrc(item.src)}
-								/>
+						{!fullErrors.has(i) ? (
+							thumbErrors.has(i) ? (
 								<img
-									src={thumbSrc(item.src)}
+									src={item.src}
 									alt={item.caption ?? `Screenshot ${i + 1}`}
 									className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 									loading="lazy"
 									decoding="async"
-									onError={() => handleThumbError(i)}
+									onError={() => handleFullError(i)}
 								/>
-							</picture>
+							) : (
+								<picture>
+									<source
+										media="(max-width: 768px)"
+										srcSet={thumbMobileSrc(item.src)}
+									/>
+									<img
+										src={thumbSrc(item.src)}
+										alt={item.caption ?? `Screenshot ${i + 1}`}
+										className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+										loading="lazy"
+										decoding="async"
+										onError={() => handleThumbError(i)}
+									/>
+								</picture>
+							)
 						) : (
 							<ImagePlaceholder />
 						)}
@@ -71,6 +104,7 @@ export default function ProjectGallery({ gallery, projectTitle }: Props) {
 					items={lightboxItems}
 					currentIndex={lightboxIndex}
 					onClose={() => setLightboxIndex(null)}
+					onSelect={(i) => setLightboxIndex(i)}
 					onPrev={() =>
 						setLightboxIndex((prev) =>
 							prev !== null ? (prev - 1 + gallery.length) % gallery.length : null

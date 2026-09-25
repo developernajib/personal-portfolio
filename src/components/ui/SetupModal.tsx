@@ -136,7 +136,7 @@ export default function SetupModal({ missing, onDismiss }: Props) {
 
 				{/* Footer */}
 				<div className="px-6 pb-6 flex items-center justify-between gap-3">
-					<p className="text-xs" style={{ color: 'var(--overlay)' }}>
+					<p className="text-xs" style={{ color: 'var(--subtext)' }}>
 						Edit the files to add your own data, then restart the dev server.
 					</p>
 					<button

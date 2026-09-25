@@ -55,12 +55,11 @@ export default function TeamSection({ manager, team, accentColor }: Props) {
 								{manager.email && (
 									<button
 										onClick={() => copyEmail(manager.email!)}
-										className="flex items-center gap-1 text-xs transition-colors duration-150"
+										className="flex items-center gap-1 text-xs transition-colors duration-150 cursor-hand"
 										style={{
 											background: 'none',
 											border: 'none',
 											padding: 0,
-											cursor: 'pointer',
 											color: 'var(--subtext)',
 											fontFamily: 'inherit',
 										}}

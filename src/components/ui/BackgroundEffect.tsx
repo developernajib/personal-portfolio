@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState, useEffect } from 'react'
 import { useThrottledMouseMove } from '@/lib/hooks/useThrottledMouseMove'
 
-// Skip entirely on touch/mobile — no mousemove events, no DOM overhead
+// Skip entirely on touch/mobile - no mousemove events, no DOM overhead
 const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
 
 function BackgroundEffectInner() {

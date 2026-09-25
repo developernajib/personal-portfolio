@@ -19,8 +19,8 @@ export default function ConnectCTA() {
 			</div>
 
 			<p className="text-sm leading-relaxed mb-5 flex-1" style={{ color: 'var(--subtext)' }}>
-				I enjoy chatting about technology, ideas, or anything that sparks curiosity. If you
-				feel like saying hi or sharing a thought, I’d be happy to hear from you anytime.
+				If you want to discuss work or just say hello, send a message. My
+				inbox stays open and I reply as soon as possible.
 			</p>
 
 			<div className="space-y-2">
@@ -28,7 +28,7 @@ export default function ConnectCTA() {
 					href={Site.socials.linkedin}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="w-full flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border hover-bg-primary-up cursor-pointer"
+					className="w-full flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border hover-bg-primary-up cursor-hand"
 					style={{
 						color: 'var(--primary)',
 						borderColor: 'rgba(var(--primary-rgb, 0,213,217),0.3)',

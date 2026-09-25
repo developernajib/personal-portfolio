@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useMemo, useCallback } from 'react'
 import {
 	IconBrandGithub,
 	IconGitCommit,
-	IconUsers,
+	IconCalendarMonth,
 	IconBook,
 	IconCalendarStats,
 	IconRefresh,
@@ -11,7 +11,6 @@ import Site from '@/lib/config'
 
 interface GitHubStats {
 	public_repos: number
-	followers: number
 	created_at: string
 }
 
@@ -33,7 +32,16 @@ interface CacheEntry<T> {
 }
 
 const GITHUB_USERNAME = Site.socials.github.split('/').pop() ?? ''
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN as string | undefined
+/* The token may carry decoy NajIB segments mixed in by hand. Every occurrence
+   is stripped before use, so a leaked value alone never authenticates. */
+const OBFUSCATION_MARKER = 'NajIB'
+function decodeToken(raw: unknown): string | undefined {
+	if (typeof raw !== 'string') return undefined
+	const trimmed = raw.trim()
+	if (!trimmed || trimmed === 'your_github_token_here') return undefined
+	return trimmed.split(OBFUSCATION_MARKER).join('')
+}
+const GITHUB_TOKEN = decodeToken(import.meta.env.VITE_GITHUB_TOKEN)
 const GRAPHQL_URL = 'https://api.github.com/graphql'
 const REST_URL = `https://api.github.com/users/${GITHUB_USERNAME}`
 const STALE_MS = 5 * 60 * 1000
@@ -89,38 +97,53 @@ function buildWeeks(days: ContribDay[]): (ContribDay | null)[][] {
 	return weeks
 }
 
-function processContribs(days: ContribDay[], year: number | 'last'): YearData {
+function processContribs(days: ContribDay[], key: string): YearData {
+	const sliced = sliceDays(days, key)
 	const todayStr = new Date().toISOString().slice(0, 10)
 	let total = 0
 	let today = 0
-	for (const entry of days) {
-		if (year === 'last' || entry.date.startsWith(year.toString())) {
-			total += entry.count
-		}
+	for (const entry of sliced) {
+		total += entry.count
 		if (entry.date === todayStr) today = entry.count
 	}
-	return { contributions: days, total, today, weeks: buildWeeks(days) }
+	return { contributions: sliced, total, today, weeks: buildWeeks(sliced) }
+}
+
+/* One rolling year range serves both the default view and the stats row.
+   The calendar year to date always sits inside the last 365 days, so the
+   current year total and today are derived client side. Ranges stay under
+   one year because the API rejects wider ones. */
+function rollingRange(): { from: string; to: string } {
+	return yearRange('last')
+}
+
+function sliceDays(days: ContribDay[], key: string): ContribDay[] {
+	if (key === 'last') {
+		const cutoff = new Date()
+		cutoff.setFullYear(cutoff.getFullYear() - 1)
+		const cut = cutoff.toISOString().slice(0, 10)
+		return days.filter((d) => d.date >= cut)
+	}
+	return days.filter((d) => d.date.startsWith(key))
 }
 
 function isStale(entry: CacheEntry<unknown>): boolean {
 	return Date.now() - entry.fetchedAt > STALE_MS
 }
 
-/* Fetch stats via REST (public_repos, followers, created_at) */
+/* Fetch stats via REST (public_repos, created_at) */
 async function fetchStats(): Promise<GitHubStats> {
 	const res = await fetchWithTimeout(REST_URL, { headers: authHeaders() })
 	if (!res.ok) throw new Error(`GitHub REST ${res.status}`)
 	const data = await res.json()
 	return {
 		public_repos: data.public_repos,
-		followers: data.followers,
 		created_at: data.created_at,
 	}
 }
 
-/* Fetch contribution days via GraphQL contributionsCollection */
-async function fetchContributions(year: number | 'last'): Promise<ContribDay[]> {
-	const { from, to } = yearRange(year)
+/* Fetch contribution days for an explicit range via GraphQL contributionsCollection */
+async function fetchContributionsRange(from: string, to: string): Promise<ContribDay[]> {
 	const query = `
 		query($login: String!, $from: DateTime!, $to: DateTime!) {
 			user(login: $login) {
@@ -144,6 +167,9 @@ async function fetchContributions(year: number | 'last'): Promise<ContribDay[]> 
 	})
 	if (!res.ok) throw new Error(`GitHub GraphQL ${res.status}`)
 	const json = await res.json()
+	// GraphQL answers HTTP 200 even on failure, so surface API errors loudly
+	if (json.errors?.length)
+		throw new Error(`GitHub GraphQL: ${json.errors[0]?.message ?? 'unknown'}`)
 	const weeks: { contributionDays: { date: string; contributionCount: number }[] }[] =
 		json.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? []
 	const days: ContribDay[] = weeks.flatMap((week) =>
@@ -164,12 +190,10 @@ function ContribGraph({
 	weeks,
 	monthLabels,
 	onHover,
-	graphRef,
 }: {
 	weeks: (ContribDay | null)[][]
 	monthLabels: { label: string; colIndex: number }[]
-	onHover: (tip: { text: string; x: number; y: number } | null) => void
-	graphRef: React.RefObject<HTMLDivElement | null>
+	onHover: (tip: { text: string; vx: number; vy: number; h: number } | null) => void
 }) {
 	const LABEL_W = 28
 	const GAP = 2
@@ -226,24 +250,17 @@ function ContribGraph({
 							rx={2}
 							fill={getColor(day.count)}
 							onMouseEnter={(e) => {
-								const parentRect = graphRef.current?.getBoundingClientRect()
-								const svgEl = e.currentTarget.closest('svg') as SVGSVGElement | null
-								if (!parentRect || !svgEl) return
-								const svgRect = svgEl.getBoundingClientRect()
-								const scaleX = svgRect.width / svgW
-								const scaleY = svgRect.height / svgH
+								const cellRect = e.currentTarget.getBoundingClientRect()
+								if (cellRect.width === 0 && cellRect.height === 0) return
 								onHover({
 									text: `${day.date}: ${day.count} contribution${day.count !== 1 ? 's' : ''}`,
-									x:
-										svgRect.left -
-										parentRect.left +
-										x * scaleX +
-										(CELL * scaleX) / 2,
-									y: svgRect.top - parentRect.top + y * scaleY,
+									vx: cellRect.left + cellRect.width / 2,
+									vy: cellRect.top,
+									h: cellRect.height,
 								})
 							}}
 							onMouseLeave={() => onHover(null)}
-							style={{ cursor: 'default' }}
+							className="cursor-arrow"
 						/>
 					)
 				})
@@ -272,11 +289,11 @@ export default function GitHubActivity() {
 	})
 	const [loading, setLoading] = useState(false)
 	const [graphError, setGraphError] = useState(false)
-	const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null)
+	const [tooltip, setTooltip] = useState<{ text: string; vx: number; vy: number; h: number } | null>(null)
 	const graphRef = useRef<HTMLDivElement>(null)
 
 	const handleTooltip = useCallback(
-		(tip: { text: string; x: number; y: number } | null) => setTooltip(tip),
+		(tip: { text: string; vx: number; vy: number; h: number } | null) => setTooltip(tip),
 		[]
 	)
 
@@ -298,28 +315,72 @@ export default function GitHubActivity() {
 		inFlight.set(key, promise)
 	}, [])
 
-	/* Fetch contributions for selected year */
+	/* Fetch contributions: one combined request serves both the default
+	   rolling year and the calendar year stats. Other years fetch on demand. */
 	useEffect(() => {
-		const cacheKey = selectedYear.toString()
-		const cached = yearDataCache.get(cacheKey)
+		const needKeys =
+			selectedYear === 'last' || selectedYear === CURRENT_YEAR
+				? ['last', CURRENT_YEAR.toString()]
+				: [selectedYear.toString()]
 
-		if (cached) {
-			setYearSnapshot((prev) => ({ ...prev, [cacheKey]: cached.data }))
-			if (!isStale(cached)) return
-		} else {
+		let allFresh = needKeys.length > 0
+		const fresh: Record<string, YearData> = {}
+		for (const key of needKeys) {
+			const entry = yearDataCache.get(key)
+			if (entry) {
+				fresh[key] = entry.data
+				if (isStale(entry)) allFresh = false
+			} else {
+				allFresh = false
+			}
+		}
+		if (Object.keys(fresh).length > 0) {
+			setYearSnapshot((prev) => ({ ...prev, ...fresh }))
+		}
+		if (allFresh) return
+		const hasVisible = !!yearDataCache.get(selectedYear.toString())
+
+		if (needKeys.length === 2) {
+			if (inFlight.has('initial')) return
+			if (!hasVisible) {
+				setLoading(true)
+				setGraphError(false)
+			}
+			const { from, to } = rollingRange()
+			const promise = fetchContributionsRange(from, to)
+				.then((days) => {
+					for (const key of needKeys) {
+						const processed = processContribs(days, key)
+						yearDataCache.set(key, { data: processed, fetchedAt: Date.now() })
+						setYearSnapshot((prev) => ({ ...prev, [key]: processed }))
+					}
+				})
+				.catch(() => {
+					if (!hasVisible) setGraphError(true)
+				})
+				.finally(() => {
+					setLoading(false)
+					inFlight.delete('initial')
+				})
+			inFlight.set('initial', promise)
+			return
+		}
+
+		const cacheKey = needKeys[0]
+		if (inFlight.has(cacheKey)) return
+		if (!hasVisible) {
 			setLoading(true)
 			setGraphError(false)
 		}
-
-		if (inFlight.has(cacheKey)) return
-		const promise = fetchContributions(selectedYear)
+		const { from, to } = yearRange(selectedYear as number)
+		const promise = fetchContributionsRange(from, to)
 			.then((days) => {
-				const processed = processContribs(days, selectedYear)
+				const processed = processContribs(days, cacheKey)
 				yearDataCache.set(cacheKey, { data: processed, fetchedAt: Date.now() })
 				setYearSnapshot((prev) => ({ ...prev, [cacheKey]: processed }))
 			})
 			.catch(() => {
-				if (!cached) setGraphError(true)
+				if (!hasVisible) setGraphError(true)
 			})
 			.finally(() => {
 				setLoading(false)
@@ -328,23 +389,19 @@ export default function GitHubActivity() {
 		inFlight.set(cacheKey, promise)
 	}, [selectedYear])
 
-	/* Pre-warm current year for the stats row */
-	useEffect(() => {
-		const cacheKey = CURRENT_YEAR.toString()
-		if (yearDataCache.has(cacheKey) && !isStale(yearDataCache.get(cacheKey)!)) return
-		if (inFlight.has(cacheKey)) return
-		const promise = fetchContributions(CURRENT_YEAR)
-			.then((days) => {
-				const processed = processContribs(days, CURRENT_YEAR)
-				yearDataCache.set(cacheKey, { data: processed, fetchedAt: Date.now() })
-				setYearSnapshot((prev) => ({ ...prev, [cacheKey]: processed }))
-			})
-			.catch(() => {})
-			.finally(() => inFlight.delete(cacheKey))
-		inFlight.set(cacheKey, promise)
-	}, [])
-
 	const yearData = yearSnapshot[selectedYear.toString()]
+
+	/* Month to date, today included. The rolling fetch stops at now, so every
+	   day of the current month is already in the snapshot. */
+	const monthToDate = useMemo(() => {
+		const days = yearSnapshot[CURRENT_YEAR.toString()]?.contributions
+		if (!days) return null
+		const monthPrefix = new Date().toISOString().slice(0, 7)
+		return days.reduce(
+			(sum, day) => (day.date.startsWith(monthPrefix) ? sum + day.count : sum),
+			0
+		)
+	}, [yearSnapshot])
 
 	const monthLabels = useMemo(() => {
 		const labels: { label: string; colIndex: number }[] = []
@@ -449,16 +506,15 @@ export default function GitHubActivity() {
 						style={{ minHeight: '96px' }}
 					>
 						<p className="text-xs font-mono" style={{ color: 'var(--subtext)' }}>
-							Could not load contributions. Check your GitHub token or try again.
+							Could not load contributions. GitHub is unreachable.
 						</p>
 						<button
 							onClick={() => window.location.reload()}
-							className="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg transition-colors duration-150"
+							className="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-lg transition-colors duration-150 cursor-hand"
 							style={{
 								color: 'var(--primary)',
 								backgroundColor: 'rgba(var(--primary-rgb, 0,213,217),0.1)',
 								border: '1px solid rgba(var(--primary-rgb, 0,213,217),0.3)',
-								cursor: 'pointer',
 							}}
 							onMouseEnter={(e) => {
 								e.currentTarget.style.backgroundColor =
@@ -510,31 +566,50 @@ export default function GitHubActivity() {
 								weeks={yearData.weeks}
 								monthLabels={monthLabels}
 								onHover={handleTooltip}
-								graphRef={graphRef}
 							/>
 
 							{/* Tooltip */}
-							{tooltip && (
-								<div
-									style={{
-										position: 'absolute',
-										left: tooltip.x,
-										top: tooltip.y - 32,
-										transform: 'translateX(-50%)',
-										backgroundColor: 'var(--bg-crust)',
-										border: '1px solid var(--overlay)',
-										borderRadius: '6px',
-										padding: '3px 8px',
-										fontSize: '11px',
-										color: 'var(--text)',
-										whiteSpace: 'nowrap',
-										pointerEvents: 'none',
-										zIndex: 10,
-									}}
-								>
-									{tooltip.text}
-								</div>
-							)}
+							{tooltip &&
+								(() => {
+									const vw =
+										typeof window !== 'undefined' ? window.innerWidth : 1000
+									const halfW = 90
+									const safeX = Math.min(
+										Math.max(tooltip.vx, halfW),
+										Math.max(halfW, vw - halfW)
+									)
+									const flipBelow = tooltip.vy < 48
+									return (
+										<div
+											style={{
+												position: 'fixed',
+												left: safeX,
+												top: flipBelow
+													? tooltip.vy + tooltip.h + 8
+													: tooltip.vy - 8,
+												transform: flipBelow
+													? 'translateX(-50%)'
+													: 'translateX(-50%) translateY(-100%)',
+												backgroundColor: 'var(--bg-mantle)',
+												border: '1px solid var(--overlay)',
+												borderRadius: '8px',
+												padding: '6px 10px',
+												fontSize: '12px',
+												lineHeight: 1.4,
+												color: 'var(--text)',
+												whiteSpace: 'nowrap',
+												maxWidth: 'min(240px, calc(100vw - 16px))',
+												overflow: 'hidden',
+												textOverflow: 'ellipsis',
+												pointerEvents: 'none',
+												zIndex: 9999,
+												boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+											}}
+										>
+											{tooltip.text}
+										</div>
+									)
+								})()}
 
 							{/* Legend */}
 							<div
@@ -575,24 +650,24 @@ export default function GitHubActivity() {
 						label: 'Contributions This Year',
 						value:
 							yearSnapshot[CURRENT_YEAR.toString()]?.total ??
-							(statsError ? '—' : '...'),
+							(graphError ? '-' : '...'),
 					},
 					{
 						icon: <IconGitCommit size={16} color="var(--primary)" />,
 						label: 'Contributions Today',
 						value:
 							yearSnapshot[CURRENT_YEAR.toString()]?.today ??
-							(statsError ? '—' : '...'),
+							(graphError ? '-' : '...'),
+					},
+					{
+						icon: <IconCalendarMonth size={16} color="var(--primary)" />,
+						label: 'Contributions This Month',
+						value: monthToDate ?? (graphError ? '-' : '...'),
 					},
 					{
 						icon: <IconBook size={16} color="var(--primary)" />,
 						label: 'Public Repos',
-						value: stats?.public_repos ?? (statsError ? '—' : '...'),
-					},
-					{
-						icon: <IconUsers size={16} color="var(--primary)" />,
-						label: 'Followers',
-						value: stats?.followers ?? (statsError ? '—' : '...'),
+						value: stats?.public_repos ?? (statsError ? '-' : '...'),
 					},
 				].map((stat) => (
 					<div

@@ -1,6 +1,6 @@
 interface SlabTitleProps {
 	title: string
-	config?: string // e.g. "4c 3i" — size + c=colored i=italic per word
+	config?: string // e.g. "4c 3i" - size + c=colored i=italic per word
 	href?: string
 	as?: 'h1' | 'h2'
 }

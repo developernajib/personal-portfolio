@@ -8,7 +8,6 @@
 		"clean": "rimraf dist",
 		"build": "npm run clean && tsc -b && vite build",
 		"build:analyze": "npm run clean && tsc -b && vite build --mode analyze",
-		"lint": "eslint .",
 		"start": "vite preview",
 		"preview": "vite preview",
 		"format": "prettier --write .",
@@ -23,7 +22,6 @@
 		"remark-gfm": "^4.0.1"
 	},
 	"devDependencies": {
-		"@fontsource/jetbrains-mono": "^5.2.8",
 		"@tabler/icons-react": "^3.31.0",
 		"@tailwindcss/vite": "^4.0.14",
 		"@types/leaflet": "^1.9.21",

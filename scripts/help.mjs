@@ -38,7 +38,7 @@ function item(text) {
 // ─── Title ────────────────────────────────────────────────────────────────────
 
 line()
-console.log(`${BOLD}${MAGENTA}  DevNajib Portfolio — Setup & Usage Guide${RESET}`)
+console.log(`${BOLD}${MAGENTA}  DevNajib Portfolio - Setup & Usage Guide${RESET}`)
 console.log(`${DIM}  A personal portfolio built with React + Vite + TypeScript${RESET}`)
 
 // ─── 1. Installation ──────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ cmd('npm install')
 
 header('2. Data Files Setup')
 line(`  ${DIM}The portfolio reads personal data from the data/ directory.${RESET}`)
-line(`  ${DIM}These files are not included in the repo — copy from examples:${RESET}`)
+line(`  ${DIM}These files are not included in the repo - copy from examples:${RESET}`)
 line()
 
 const dataFiles = [
@@ -64,6 +64,7 @@ const dataFiles = [
 	['data/experience.ts', 'data/experience.example.ts', 'Work experience'],
 	['data/certificates.ts', 'data/certificates.example.ts', 'Certifications'],
 	['data/technologies.ts', 'data/technologies.example.ts', 'Tech stack'],
+	['data/skills.ts', 'data/skills.example.ts', 'Extra skills for the Technologies page'],
 	['data/education.ts', 'data/education.example.ts', 'Education history'],
 	[
 		'data/currentlyWorkingOn.ts',
@@ -73,7 +74,7 @@ const dataFiles = [
 ]
 
 dataFiles.forEach(([target, example, desc]) => {
-	console.log(`  ${CYAN}${target}${RESET} — ${DIM}${desc}${RESET}`)
+	console.log(`  ${CYAN}${target}${RESET} - ${DIM}${desc}${RESET}`)
 	cmd(`cp ${example} ${target}`)
 })
 
@@ -85,29 +86,34 @@ cmd(dataFiles.map(([t, e]) => `cp ${e} ${t}`).join(' && '))
 
 header('3. Editing Data Files')
 
-line(`  ${BOLD}data/config.ts${RESET} — Site-wide settings`)
+line(`  ${BOLD}data/config.ts${RESET} - Site-wide settings`)
 item('name         → short name shown in header (e.g. "Najib")')
 item('fullName     → full name for SEO / titles')
 item('title        → your role (e.g. "Full-Stack Engineer")')
-item('email        → contact email')
-item('github       → GitHub username (used for activity widget)')
-item('linkedin     → LinkedIn profile URL')
-item('image        → path to your photo in public/assets/')
-item('resume       → path or URL to your resume')
+item('image        → profile photo path in public/assets/ (e.g. /assets/me.webp)')
+item('url          → live site URL')
+item('description  → one-liner used in meta tags')
+item('location     → { city, country, timezone, lat, lng } for the map widget')
+item('socials      → { github, linkedin, telegram, email } full profile URLs')
+item('resume       → read from the VITE_RESUME_URL env var, leave as-is')
 
 line()
-line(`  ${BOLD}data/projects.ts${RESET} — Each project entry:`)
+line(`  ${BOLD}data/projects.ts${RESET} - Each project entry:`)
 item('slug         → URL key (e.g. "my-project" → /projects/my-project)')
-item('image        → /projects/my-project.jpg')
+item('image        → /projects/my-project.webp')
 item('gallery      → array of { src, caption } for screenshots')
 item('liveUrl      → live demo URL')
+item('extraLiveUrls → array of { label, url } for extra storefront links')
 item('githubUrl    → source code URL')
 item('featured     → true to show on homepage')
+item('order        → display serial, lower shows first')
 
 line()
-line(`  ${BOLD}data/certificates.ts${RESET} — Each certificate:`)
-item('image        → /certificates/my-cert.jpg')
+line(`  ${BOLD}data/certificates.ts${RESET} - Each certificate:`)
+item('image        → /certificates/my-cert.webp')
+item('gallery      → array of { src, caption } for extra scans')
 item('credentialUrl → link to verify the credential')
+item('order        → display serial, lower shows first')
 
 // ─── 4. Image Files ───────────────────────────────────────────────────────────
 
@@ -121,14 +127,14 @@ item(`${CYAN}public/logos/${RESET}        → company logos`)
 
 line()
 line(`  ${BOLD}Image naming conventions:${RESET}`)
-item('my-project.jpg           → full-res (used in hero / lightbox)')
-item('my-project-thumb.jpg     → thumbnail (450px, used in gallery grid / mobile hero)')
-item('my-project-thumb-mobile.jpg → mobile gallery thumbnail (200px)')
+item('my-project.webp           → full-res (used in hero / lightbox)')
+item('my-project-thumb.webp     → thumbnail (900px for projects, 450px for certificates)')
+item('my-project-thumb-mobile.webp → mobile thumbnail (450px for projects, 200px for certificates)')
 
 line()
 line(`  ${BOLD}Generate thumbnails with ImageMagick:${RESET}`)
-cmd('magick input.jpg -resize 450x -strip -quality 80 output-thumb.jpg')
-cmd('magick output-thumb.jpg -resize 200x -strip -quality 75 output-thumb-mobile.jpg')
+cmd('magick input.png -resize 900x -strip -quality 82 output-thumb.webp')
+cmd('magick output-thumb.webp -resize 450x -strip -quality 80 output-thumb-mobile.webp')
 
 // ─── 5. Development ───────────────────────────────────────────────────────────
 
@@ -138,8 +144,7 @@ const scripts = [
 	['npm run dev', 'Start development server with hot reload'],
 	['npm run build', 'Type-check and build for production'],
 	['npm run preview', 'Preview the production build locally'],
-	['npm run start', 'Serve production build on port 3000'],
-	['npm run lint', 'Run ESLint checks'],
+	['npm run start', 'Alias for npm run preview'],
 	['npm run format', 'Format code with Prettier'],
 	['npm run help', 'Show this guide'],
 ]

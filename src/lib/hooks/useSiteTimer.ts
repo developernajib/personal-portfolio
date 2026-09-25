@@ -13,7 +13,7 @@ function formatTime(seconds: number): string {
 }
 
 /**
- * Site timer that updates DOM directly via ref — zero React re-renders.
+ * Site timer that updates DOM directly via ref - zero React re-renders.
  * Returns a ref to attach to the <span> that displays the timer.
  */
 export function useSiteTimer(): React.RefObject<HTMLSpanElement | null> {

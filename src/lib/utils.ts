@@ -42,21 +42,21 @@ export function imgVariant(src: string, suffix: string): string {
 
 /**
  * Returns the thumbnail path for a given image src.
- * All thumbnails are JPEG regardless of original format.
- * thumbSrc('/projects/foo.png') → '/projects/foo-thumb.jpg'
+ * Thumbnails are WebP regardless of source format.
+ * thumbSrc('/projects/foo.webp') → '/projects/foo-thumb.webp'
  */
 export function thumbSrc(src: string): string {
 	if (!src || src.startsWith('http') || src.startsWith('data:')) return src
-	return src.replace(/\.\w+$/, '-thumb.jpg')
+	return src.replace(/\.\w+$/, '-thumb.webp')
 }
 
 /**
  * Returns the mobile thumbnail path for a given image src.
- * thumbMobileSrc('/projects/foo.png') → '/projects/foo-thumb-mobile.jpg'
+ * thumbMobileSrc('/projects/foo.webp') → '/projects/foo-thumb-mobile.webp'
  */
 export function thumbMobileSrc(src: string): string {
 	if (!src || src.startsWith('http') || src.startsWith('data:')) return src
-	return src.replace(/\.\w+$/, '-thumb-mobile.jpg')
+	return src.replace(/\.\w+$/, '-thumb-mobile.webp')
 }
 
 export function isValidHttpUrl(url: string): boolean {

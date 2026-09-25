@@ -13,8 +13,10 @@ export interface Project {
 	date: string
 	tags: string[]
 	liveUrl?: string
+	extraLiveUrls?: { label: string; url: string }[]
 	githubUrl?: string
 	featured?: boolean
+	order?: number
 }
 
 export { projects } from '@data/projects'

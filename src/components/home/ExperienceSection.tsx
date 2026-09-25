@@ -20,15 +20,18 @@ export default function ExperienceSection() {
 				Experience
 			</h2>
 
-			{/* Featured job — prominent full card */}
+			{/* Featured job - prominent full card */}
 			{featuredJobs.map((item) => (
 				<div
 					key={item.id}
 					className="mb-4 rounded-xl border p-3.5 sm:p-5 transition-all duration-200"
 					style={{
 						backgroundColor: 'var(--bg-surface)',
-						borderColor: 'var(--primary)',
+						borderColor: item.highlight ? 'var(--primary)' : 'var(--overlay)',
 						borderLeftWidth: '3px',
+						...(item.highlight && {
+							boxShadow: '0 0 24px rgba(var(--primary-rgb, 0,213,217), 0.12)',
+						}),
 					}}
 				>
 					<div className="flex items-start gap-3 mb-3">
@@ -73,7 +76,7 @@ export default function ExperienceSection() {
 								>
 									<IconCalendarEvent size={11} />
 									<span>
-										{formatDate(item.startDate, { yearMonthOnly: true })} —{' '}
+										{formatDate(item.startDate, { yearMonthOnly: true })} -{' '}
 										{item.endDate
 											? formatDate(item.endDate, { yearMonthOnly: true })
 											: 'Present'}
@@ -121,7 +124,7 @@ export default function ExperienceSection() {
 				</div>
 			))}
 
-			{/* Past jobs — compact inline rows */}
+			{/* Past jobs - compact inline rows */}
 			<div
 				className="rounded-xl border px-4 py-3 flex flex-wrap items-center gap-x-6 gap-y-3"
 				style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--overlay)' }}
@@ -175,7 +178,7 @@ export default function ExperienceSection() {
 				className="mt-4 inline-flex items-center gap-1.5 text-sm hover-primary"
 				style={{ color: 'var(--subtext)' }}
 			>
-				Full experience page <IconArrowRight size={14} />
+				Full experience <IconArrowRight size={14} />
 			</Link>
 		</section>
 	)

@@ -15,6 +15,7 @@ import { useTheme } from '@/lib/useTheme'
 import { useSiteTimer } from '@/lib/hooks/useSiteTimer'
 import Site from '@/lib/config'
 import EmailCopyButton from '@/components/ui/EmailCopyButton'
+import Tooltip from '@/components/ui/Tooltip'
 
 const socialLinks = [
 	{ href: Site.socials.github, label: 'GitHub', Icon: IconBrandGithub },
@@ -177,16 +178,18 @@ export default function BottomNav() {
 								className="p-2 rounded-lg"
 							/>
 						</div>
-						<div className="flex items-center gap-1.5" title="Time on site">
-							<IconClock size={13} style={{ color: 'var(--subtext)' }} />
-							<span
-								ref={timerRef}
-								className="font-mono text-xs font-bold"
-								style={{ color: accentColor }}
-							>
-								00:00
-							</span>
-						</div>
+						<Tooltip content="Time on site" position="top">
+							<div className="flex items-center gap-1.5">
+								<IconClock size={13} style={{ color: 'var(--subtext)' }} />
+								<span
+									ref={timerRef}
+									className="font-mono text-xs font-bold"
+									style={{ color: accentColor }}
+								>
+									00:00
+								</span>
+							</div>
+						</Tooltip>
 					</div>
 
 					{/* Copyright */}
@@ -198,7 +201,21 @@ export default function BottomNav() {
 				</div>
 			</div>
 
-			{/* Floating bottom nav bar — glass morphism */}
+			{/* Soft veil above the nav - hints content below without showing it */}
+			<div
+				aria-hidden="true"
+				className="fixed bottom-0 left-0 right-0 z-40 lg:hidden pointer-events-none"
+				style={{
+					height: '6.5rem',
+					background: 'linear-gradient(to top, var(--bg-base) 25%, transparent)',
+					backdropFilter: 'blur(3px)',
+					WebkitBackdropFilter: 'blur(3px)',
+					maskImage: 'linear-gradient(to top, black 45%, transparent)',
+					WebkitMaskImage: 'linear-gradient(to top, black 45%, transparent)',
+				}}
+			/>
+
+			{/* Floating bottom nav bar - glass morphism */}
 			<div
 				className="fixed bottom-0 left-0 right-0 z-50 lg:hidden px-3"
 				style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))' }}

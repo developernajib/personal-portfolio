@@ -1,44 +1,17 @@
-import { useState } from 'react'
+import { useMemo } from 'react'
 import Container from '@/components/ui/Container'
 import { IconCertificate } from '@tabler/icons-react'
 import SlabTitle from '@/components/ui/SlabTitle'
 import CertificateCard from '@/components/ui/CertificateCard'
-import Lightbox from '@/components/ui/Lightbox'
 import BackgroundEffect from '@/components/ui/BackgroundEffect'
 import { certificates } from '@/data/certificates'
-import type { Certificate } from '@/data/certificates'
+import { sortByOrder } from '@/lib/sort'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function Certificates() {
 	useDocTitle('Certificates')
-	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
-	const lightboxItems = certificates.map((c) => ({
-		src: c.image || '',
-		alt: c.title,
-		caption: `${c.title} — ${c.issuer}`,
-	}))
-
-	function openLightbox(cert: Certificate) {
-		const idx = certificates.findIndex((c) => c.id === cert.id)
-		if (idx !== -1 && cert.image) {
-			setLightboxIndex(idx)
-		}
-	}
-
-	function closeLightbox() {
-		setLightboxIndex(null)
-	}
-
-	function prevImage() {
-		setLightboxIndex((prev) =>
-			prev !== null ? (prev - 1 + lightboxItems.length) % lightboxItems.length : null
-		)
-	}
-
-	function nextImage() {
-		setLightboxIndex((prev) => (prev !== null ? (prev + 1) % lightboxItems.length : null))
-	}
+	const ordered = useMemo(() => sortByOrder(certificates), [])
 
 	return (
 		<div className="relative">
@@ -50,37 +23,19 @@ export default function Certificates() {
 				</div>
 
 				<p className="mb-8 text-sm" style={{ color: 'var(--subtext)' }}>
-					Certifications and professional development courses I've completed.{' '}
-					<span style={{ color: 'var(--overlay)' }}>
-						Click a certificate image to view it full-screen.
-					</span>
+					Courses and certs I finished, with proof.
 				</p>
 
-				{certificates.length > 0 ? (
+				{ordered.length > 0 ? (
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-						{certificates.map((cert) => (
-							<CertificateCard
-								key={cert.id}
-								certificate={cert}
-								onImageClick={openLightbox}
-							/>
+						{ordered.map((cert) => (
+							<CertificateCard key={cert.id} certificate={cert} />
 						))}
 					</div>
 				) : (
 					<p style={{ color: 'var(--subtext)' }}>No certificates yet.</p>
 				)}
 			</Container>
-
-			{/* Lightbox */}
-			{lightboxIndex !== null && lightboxItems[lightboxIndex]?.src && (
-				<Lightbox
-					items={lightboxItems.filter((item) => item.src)}
-					currentIndex={lightboxIndex}
-					onClose={closeLightbox}
-					onPrev={prevImage}
-					onNext={nextImage}
-				/>
-			)}
 		</div>
 	)
 }
