@@ -23,7 +23,7 @@ export default function TagBadge({ tag, onClick, active }: TagBadgeProps) {
 		return (
 			<button
 				onClick={onClick}
-				className={`${base} cursor-hand hover:-translate-y-px`}
+				className={`${base} cursor-hand`}
 				style={activeInlineStyle}
 				onMouseEnter={(e) => {
 					if (active) return

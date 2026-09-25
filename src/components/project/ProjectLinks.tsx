@@ -14,7 +14,7 @@ export default function ProjectLinks({ project }: Props) {
 	if (!live && extras.length === 0 && !source) return null
 
 	return (
-		<div className="mt-8 flex flex-wrap gap-2">
+		<div className="mb-8 flex flex-wrap gap-2">
 			{live && (
 				<a
 					href={live}

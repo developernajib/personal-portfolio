@@ -15,75 +15,75 @@ import { markProjectVisited } from '@/lib/visited'
 import useDocTitle from '@/lib/hooks/useDocTitle'
 
 export default function ProjectDetail() {
-	const { slug } = useParams<{ slug: string }>()
-	const project = projects.find((p) => p.slug === slug)
-	useDocTitle(project?.title)
-	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
-	const gallery = project?.gallery ?? []
-	const heroIndex = Math.max(
-		0,
-		gallery.findIndex((g) => g.src === project?.image)
-	)
+    const { slug } = useParams<{ slug: string }>()
+    const project = projects.find((p) => p.slug === slug)
+    useDocTitle(project?.title)
+    const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+    const gallery = project?.gallery ?? []
+    const heroIndex = Math.max(
+        0,
+        gallery.findIndex((g) => g.src === project?.image)
+    )
 
-	useEffect(() => {
-		if (slug) markProjectVisited(slug)
-	}, [slug])
+    useEffect(() => {
+        if (slug) markProjectVisited(slug)
+    }, [slug])
 
-	if (!project) {
-		return (
-			<Container className="py-16 text-center">
-				<p className="text-lg mb-4" style={{ color: 'var(--subtext)' }}>
-					Project not found.
-				</p>
-				<Link
-					to="/projects"
-					className="flex items-center justify-center gap-1.5 text-sm transition-colors duration-150"
-					style={{ color: 'var(--primary)' }}
-				>
-					<IconArrowLeft size={16} />
-					Back to Projects
-				</Link>
-			</Container>
-		)
-	}
+    if (!project) {
+        return (
+            <Container className="py-16 text-center">
+                <p className="text-lg mb-4" style={{ color: 'var(--subtext)' }}>
+                    Project not found.
+                </p>
+                <Link
+                    to="/projects"
+                    className="flex items-center justify-center gap-1.5 text-sm transition-colors duration-150"
+                    style={{ color: 'var(--primary)' }}
+                >
+                    <IconArrowLeft size={16} />
+                    Back to Projects
+                </Link>
+            </Container>
+        )
+    }
 
-	return (
-		<div className="relative">
-			<BackgroundEffect />
-			<Container className="relative z-10 py-8 md:py-10">
-				<ProjectDetailHeader project={project} />
+    return (
+        <div className="relative">
+            <BackgroundEffect />
+            <Container className="relative z-10 py-8 md:py-10">
+                <ProjectDetailHeader project={project} />
 
-				{project.image && (
-					<div
-						className="mb-8 overflow-hidden rounded-xl border"
-						style={{ borderColor: 'var(--overlay)' }}
-					>
-						<ProjectHeroImage
-							src={project.image}
-							alt={project.title}
-							onOpen={
-								gallery.length > 0 ? () => setLightboxIndex(heroIndex) : undefined
-							}
-						/>
-					</div>
-				)}
+                {project.image && (
+                    <div
+                        className="mb-8 overflow-hidden rounded-xl border"
+                        style={{ borderColor: 'var(--overlay)' }}
+                    >
+                        <ProjectHeroImage
+                            src={project.image}
+                            alt={project.title}
+                            onOpen={
+                                gallery.length > 0 ? () => setLightboxIndex(heroIndex) : undefined
+                            }
+                        />
+                    </div>
+                )}
 
-				<ProjectDescription
-					description={project.description}
-					longDescription={project.longDescription}
-				/>
+                <ProjectLinks project={project} />
+                <ProjectDescription
+                    description={project.description}
+                    longDescription={project.longDescription}
+                />
 
-				{project.gallery && project.gallery.length > 0 && (
-					<ProjectGallery
-						gallery={project.gallery}
-						projectTitle={project.title}
-						lightboxIndex={lightboxIndex}
-						onLightboxChange={setLightboxIndex}
-					/>
-				)}
+                {project.gallery && project.gallery.length > 0 && (
+                    <ProjectGallery
+                        gallery={project.gallery}
+                        projectTitle={project.title}
+                        lightboxIndex={lightboxIndex}
+                        onLightboxChange={setLightboxIndex}
+                    />
+                )}
 
-				<ProjectLinks project={project} />
-			</Container>
-		</div>
-	)
+            </Container>
+        </div>
+    )
 }
